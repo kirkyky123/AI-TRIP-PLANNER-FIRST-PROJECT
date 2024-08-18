@@ -68,7 +68,7 @@ function Header() {
             <a href="/my-trips">
               <Button
                 variant="outline"
-                className="rounded-full hover:bg-gradient-to-tr from-orange-200 to-[#26ae75]
+                className="rounded-2xl w-18 sm:w-24 border-black hover:bg-gradient-to-tr from-orange-200 to-[#26ae75]
             hover:shadow-gray-600 hover:shadow-sm hover:border-gray-800 hover:scale-105">
                 Trips
               </Button>
