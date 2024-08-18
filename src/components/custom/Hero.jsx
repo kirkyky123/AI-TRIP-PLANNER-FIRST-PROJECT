@@ -27,9 +27,9 @@ function Hero() {
           Get started, It&apos;s free!
         </Button>
       </Link>
-      <div className="flex flex-col gap-20">
-        <img src="/laptop-landing.png" />
-        <img src="/phone-landing.png" />
+      <div className="flex flex-col xl:flex-row  gap-20 my-5">
+        <img src="/laptop-landing.png" className="xl:h-[500px] xl:w-[600px] object-contain"/>
+        <img src="/phone-landing.png" className="xl:size-[600px] object-contain"/>
       </div>
     </div>
   );
