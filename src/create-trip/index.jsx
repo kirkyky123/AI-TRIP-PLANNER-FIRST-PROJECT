@@ -227,15 +227,15 @@ function CreateTrip() {
             <div
               key={index}
               onClick={() => inputChange(budget.id, "budget")}
-              className={`my-5 mx-5 p-4 border hover:shadow-xl cursor-pointer rounded-xl select-none 
+              className={`my-5 mx-0 p-2 sm:mx-5 sm:p-4 border hover:shadow-xl cursor-pointer rounded-xl select-none 
                 hover:shadow-gray-500 hover:scale-110 transition-all
                 ${
                   formData?.budget === budget.title &&
                   "shadow-xl border-black border bg-gradient-to-tr from-orange-200/[.7] to-green-400/65"
                 }`}>
-              <h2 className="text-3xl">{budget.img}</h2>
-              <h2 className="font-bold text-xl py-2">{budget.title}</h2>
-              <h2 className="text-gray-700 text-sm font-semibold">
+              <h2 className="text-lg sm:text-xl md:text-3xl">{budget.img}</h2>
+              <h2 className="text-base md:text-xl lg:text-2xl py-2 font-bold">{budget.title}</h2>
+              <h2 className="text-gray-700 text-sm md:text-base lg:text-xl font-semibold md:font-medium">
                 {budget.description}
               </h2>
             </div>
@@ -250,17 +250,17 @@ function CreateTrip() {
             <div
               key={index}
               onClick={() => inputChange(people.id, "people")}
-              className={`my-5 mx-5 p-4 border cursor-pointer rounded-xl select-none hover:shadow-lg hover:shadow-gray-500 hover:scale-110 transition-all
+              className={`my-5 mx-0 p-2 sm:mx-5 sm:p-4 border cursor-pointer rounded-xl select-none hover:shadow-lg hover:shadow-gray-500 hover:scale-110 transition-all
                 ${
                   formData?.people === people.title &&
                   "shadow-xl border-black border bg-gradient-to-tr from-green-400/65 to-orange-200/[.7]"
                 }`}>
-              <h2 className="text-3xl">{people.img}</h2>
-              <h2 className="font-bold text-xl py-2">{people.title}</h2>
-              <h2 className="text-gray-700 text-sm font-semibold">
+              <h2 className="text-lg sm:text-xl md:text-3xl">{people.img}</h2>
+              <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl py-2 font-bold">{people.title}</h2>
+              <h2 className="text-gray-700 text-sm md:text-base lg:text-xl font-semibold md:font-medium">
                 {people.description}
               </h2>
-              <h2 className="text-gray-500 font-extralight text-sm mt-2">
+              <h2 className="text-gray-500 font-extralight text-sm lg:text-base mt-2">
                 ({people.amount})
               </h2>
             </div>
