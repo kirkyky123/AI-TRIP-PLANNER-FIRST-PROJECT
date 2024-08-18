@@ -269,9 +269,10 @@ function CreateTrip() {
           <div className="flex items-center justify-center">
             <Button
               onClick={createTrip}
-              className="text-lg border-gray-500 border font-semibold bg-green-600/[50]
+              className="border-gray-500 border font-semibold bg-green-600/[50]
                          hover:bg-gradient-to-tr from-orange-400 to-green-500 hover:shadow-md hover:shadow-gray-500
-                         hover:scale-105 transition-all"
+                         hover:scale-105 transition-all
+                         w-24 text-sm sm:text-lg sm:w-32 lg:text-xl lg:w-48"
               disabled={loading}>
               {loading ? (
                 <AiOutlineLoading className="size-7 animate-spin" />
