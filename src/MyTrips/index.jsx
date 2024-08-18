@@ -1,9 +1,9 @@
-import { db } from "@/AiService/firedatabaseConfig";
-import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "react-router-dom";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import MyTripsCard from "./MyTripsCard";
 import { Button } from "@/components/ui/button";
+import { db } from "@/AiService/firedatabaseConfig";
 
 function MyTrips() {
   const navigation = useNavigation();
@@ -27,28 +27,31 @@ function MyTrips() {
     const querySnapshot = await getDocs(q);
     setUserTrips([]);
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
-      setUserTrips((p) => [...p, doc.data()]);
+      setUserTrips((prevTrips) => [...prevTrips, { id: doc.id, ...doc.data() }]);
     });
+  };
+
+  const removeTrip = (tripId) => {
+    setUserTrips((prevTrips) => prevTrips.filter((trip) => trip.id !== tripId));
   };
 
   return (
     <div className="sm:px-10 md:px-32 lg:px-46 xl:px-10 mt-10 px-5">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold inline-block mr-10">My Trips</h2>
-        <a href="/create-trip">
-          <Button
-            variant="outline"
-            className="inline rounded-full bg-black text-white hover:bg-gradient-to-tr from-orange-200 to-[#26ae75]
-            hover:shadow-gray-600 hover:shadow-sm hover:border-gray-800 hover:scale-105 mt-5">
-            Create new trip
-          </Button>
-        </a>
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold inline-block mr-10">My Trips</h2>
+      <a href="/create-trip">
+        <Button
+          variant="outline"
+          className="inline rounded-full bg-black text-white hover:bg-gradient-to-tr from-orange-200 to-[#26ae75]
+            hover:shadow-gray-600 hover:shadow-sm hover:border-black hover:scale-105 mt-5 border-transparent font-semibold">
+          Create new trip
+        </Button>
+      </a>
+      <h2 className="mt-0 text-gray-500 text-sm">(Click images)</h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 mt-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 mt-10 select-none">
         {userTrips?.length > 0
           ? userTrips.map((trip, index) => (
-              <MyTripsCard trip={trip} key={index} />
+              <MyTripsCard trip={trip} key={index} onDelete={removeTrip} />
             ))
           : [1, 2, 3, 4, 5, 6].map((item, index) => (
               <div

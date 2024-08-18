@@ -24,7 +24,7 @@ function Hero() {
       </p>
       <Link to={"/create-trip"}>
         <Button className="hover:shadow-md hover:shadow-gray-500">
-          Get started, It&apos;s free!
+          Jump in, It&apos;s free!
         </Button>
       </Link>
       <div className="flex flex-col xl:flex-row  gap-20 my-5">

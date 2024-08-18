@@ -281,8 +281,9 @@ function CreateTrip() {
               )}
             </Button>
           </div>
-
-          <Dialog open={openDialog}>
+        </div>
+      </div>
+      <Dialog open={openDialog}>
             <DialogContent>
               <DialogHeader>
                 <DialogDescription>
@@ -310,8 +311,6 @@ function CreateTrip() {
               </DialogHeader>
             </DialogContent>
           </Dialog>
-        </div>
-      </div>
     </div>
   );
 }
