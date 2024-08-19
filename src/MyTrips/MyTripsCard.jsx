@@ -44,7 +44,7 @@ function MyTripsCard({ trip, onDelete }) {
       <div className="flex justify-end mt-1 mr-1">
         <AlertDialog className="flex flex-col">
           <AlertDialogTrigger asChild>
-            <IoTrashBinSharp className="size-5 hover:text-red-500 hover:cursor-pointer hover:scale-125" />
+            <IoTrashBinSharp className="size-5 mr-1 mt-1 hover:text-red-500 hover:cursor-pointer hover:scale-125" />
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
