@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoTrashBinSharp } from "react-icons/io5";
 import {
   AlertDialog,
@@ -14,9 +14,28 @@ import {
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/AiService/firedatabaseConfig";
 import { toast } from "sonner";
+import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 
 function MyTripsCard({ trip, onDelete }) {
   const [photoUrl, setPhotoUrl] = useState("");
+
+  useEffect(() => {
+    if (trip) {
+      getPhoto();
+    }
+  }, [trip]);
+  const getPhoto = async () => {
+    const data = {
+      textQuery: trip?.userChoices?.location?.label
+    };
+
+    const res = await placeDetails(data).then((response) => {
+      console.log(response.data.places[0].photos[3].name);
+      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[5].name);
+      console.log(updatedPhotoURL);
+      setPhotoUrl(updatedPhotoURL);
+    })
+  };
 
   const deleteTripById = async (collectionName, tripId) => {
     try {

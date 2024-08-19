@@ -28,8 +28,8 @@ function Hero() {
         </Button>
       </Link>
       <div className="flex flex-col xl:flex-row  gap-20 my-5">
-        <img src="/laptop-landing.png" className="xl:h-[500px] xl:w-[600px] object-contain"/>
-        <img src="/phone-landing.png" className="xl:size-[600px] object-contain"/>
+        <img src="/laptop-landing-2.png" className="xl:h-[600px] xl:w-[700px] object-contain"/>
+        <img src="/phone-landing-2.png" className="xl:size-[800px] object-contain"/>
       </div>
     </div>
   );

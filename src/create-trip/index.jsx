@@ -190,7 +190,7 @@ function CreateTrip() {
 
       <div className="flex flex-col gap-8 mt-6">
         <div>
-          <h2 className="my-4 text-xl">Where are you going?</h2>
+          <h2 className="my-4 text-xl">Where are you going? <span className="text-sm text-gray-500">(pick popular locations for better results)</span></h2>
           <GooglePlacesAutocomplete
             apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
             selectProps={{
@@ -206,9 +206,9 @@ function CreateTrip() {
         </div>
 
         <div>
-          <h2 className="mb-4 text-xl">For how many days?</h2>
+          <h2 className="mb-4 text-xl">For how many days? <span className="text-sm text-gray-500">(1-7)</span></h2>
           <Input
-            placeholder={`Ex.2`}
+            placeholder={`Ex.3`}
             type="number"
             onChange={(e) => inputChange(e.target.value, "days")}
             className=""
