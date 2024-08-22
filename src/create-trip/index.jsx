@@ -2,6 +2,7 @@ import { chatSession } from "@/AiService/AiModel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PROMPT, selectBudget, selectTravelers } from "@/constants/options";
+import { VscLoading } from "react-icons/vsc";
 import { Mail } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
@@ -29,6 +30,7 @@ function CreateTrip() {
 
   const [formData, setFormData] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+  const [loadingDialog, setLoadingDialog] = useState(false);
 
   const router = useNavigate();
 
@@ -138,8 +140,8 @@ function CreateTrip() {
       setOpenDialog(true);
       return;
     }
-
     setLoading(true);
+    setLoadingDialog(true);
 
     const AI_PROMPT = PROMPT.replace("{location}", formData?.location.label)
       .replace("{days}", formData?.days)
@@ -151,14 +153,21 @@ function CreateTrip() {
     const result = await chatSession.sendMessage(AI_PROMPT);
     console.log(result?.response?.text());
     setLoading(false);
+    setLoadingDialog(false);
     saveTrip(result?.response?.text());
   };
 
   const formatTripInfo = (tripInfo) => {
     tripInfo = tripInfo.trim();
-    if (tripInfo.startsWith("```")) {
-      return (tripInfo = tripInfo.slice(7, -4));
+    if (tripInfo.startsWith("```json")) {
+      tripInfo = tripInfo.slice(7);
+    } else if (tripInfo.startsWith("```")) {
+      tripInfo = tripInfo.slice(3);
     }
+    if (tripInfo.endsWith("```")) {
+      tripInfo = tripInfo.slice(0, -3);
+    }
+    return tripInfo;
   };
 
   const saveTrip = async (tripInfo) => {
@@ -190,7 +199,12 @@ function CreateTrip() {
 
       <div className="flex flex-col gap-8 mt-6">
         <div>
-          <h2 className="my-4 text-xl">Where are you going? <span className="text-sm text-gray-500">(pick popular locations for better results)</span></h2>
+          <h2 className="my-4 text-xl">
+            Where are you going?{" "}
+            <span className="text-sm text-gray-500">
+              (pick popular locations for better results)
+            </span>
+          </h2>
           <GooglePlacesAutocomplete
             apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
             selectProps={{
@@ -206,7 +220,10 @@ function CreateTrip() {
         </div>
 
         <div>
-          <h2 className="mb-4 text-xl">For how many days? <span className="text-sm text-gray-500">(1-7)</span></h2>
+          <h2 className="mb-4 text-xl">
+            For how many days?{" "}
+            <span className="text-sm text-gray-500">(1-7)</span>
+          </h2>
           <Input
             placeholder={`Ex.3`}
             type="number"
@@ -234,7 +251,9 @@ function CreateTrip() {
                   "shadow-xl border-black border bg-gradient-to-tr from-orange-200/[.7] to-green-400/65"
                 }`}>
               <h2 className="text-lg sm:text-xl md:text-3xl">{budget.img}</h2>
-              <h2 className="text-base md:text-xl lg:text-2xl py-2 font-bold">{budget.title}</h2>
+              <h2 className="text-base md:text-xl lg:text-2xl py-2 font-bold">
+                {budget.title}
+              </h2>
               <h2 className="text-gray-700 text-sm md:text-base lg:text-xl font-semibold md:font-medium">
                 {budget.description}
               </h2>
@@ -256,7 +275,9 @@ function CreateTrip() {
                   "shadow-xl border-black border bg-gradient-to-tr from-green-400/65 to-orange-200/[.7]"
                 }`}>
               <h2 className="text-lg sm:text-xl md:text-3xl">{people.img}</h2>
-              <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl py-2 font-bold">{people.title}</h2>
+              <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl py-2 font-bold">
+                {people.title}
+              </h2>
               <h2 className="text-gray-700 text-sm md:text-base lg:text-xl font-semibold md:font-medium">
                 {people.description}
               </h2>
@@ -284,33 +305,40 @@ function CreateTrip() {
         </div>
       </div>
       <Dialog open={openDialog}>
-            <DialogContent>
-              <DialogHeader>
-                <DialogDescription>
-                  <div className="flex flex-col items-center mx-10 font-mono select-none">
-                    <img
-                      className="size-14 mt-2"
-                      src="logo.svg"
-                      alt="google logo"
-                    />
-                    <h2 className="my-5 text-2xl font-bold text-black">
-                      Sign In
-                    </h2>
-                    <p className="text-gray-700">
-                      Save your trips and access them anywhere
-                    </p>
-                    <Button
-                      className="mt-20 p-6 w-full text-lg font-semibold flex gap-5
+        <DialogContent>
+          <DialogHeader>
+            <DialogDescription>
+              <div className="flex flex-col items-center mx-10 font-mono select-none">
+                <img
+                  className="size-14 mt-2"
+                  src="logo.svg"
+                  alt="google logo"
+                />
+                <h2 className="my-5 text-2xl font-bold text-black">Sign In</h2>
+                <p className="text-gray-700">
+                  Save your trips and access them anywhere
+                </p>
+                <Button
+                  className="mt-20 p-6 w-full text-lg font-semibold flex gap-5
                         items-center justify-center bg-black"
-                      onClick={userLogin}>
-                      <FcGoogle className="text-2xl size-6" /> Sign In With
-                      Google
-                    </Button>
-                  </div>
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
+                  onClick={userLogin}>
+                  <FcGoogle className="text-2xl size-6" /> Sign In With Google
+                </Button>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={loadingDialog}>
+        <DialogContent>
+          <DialogDescription>
+            <div className="flex flex-col items-center mx-10 font-mono select-none">
+              <h2 className="text-xl text-black">Trip Loading</h2>
+              <VscLoading className="size-12 animate-spin mt-5 text-green-500" />
+            </div>
+          </DialogDescription>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

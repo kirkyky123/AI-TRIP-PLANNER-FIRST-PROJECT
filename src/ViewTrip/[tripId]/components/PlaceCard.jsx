@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
