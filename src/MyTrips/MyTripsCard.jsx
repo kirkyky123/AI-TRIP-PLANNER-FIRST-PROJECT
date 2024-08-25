@@ -31,7 +31,7 @@ function MyTripsCard({ trip, onDelete }) {
 
     const res = await placeDetails(data).then((response) => {
       console.log(response.data.places[0].photos[3].name);
-      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[5].name);
+      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[2].name);
       console.log(updatedPhotoURL);
       setPhotoUrl(updatedPhotoURL);
     })

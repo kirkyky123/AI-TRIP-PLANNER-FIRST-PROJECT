@@ -20,7 +20,7 @@ function PlaceCard({ place, index }) {
     const res = await placeDetails(data).then((response) => {
       const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
         "{NAME}",
-        response.data.places[0].photos[1].name
+        response.data.places[0].photos[0].name
       );
       setPhotoUrl(updatedPhotoURL);
     });
