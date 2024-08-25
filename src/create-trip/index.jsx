@@ -133,7 +133,7 @@ function CreateTrip() {
     }
 
     if (!formData?.people) {
-      toast.error("Please select number of travelers.");
+      toast.error("Please select amount of travelers.");
       return;
     }
 
