@@ -22,6 +22,7 @@ import axios from "axios";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/AiService/firedatabaseConfig";
 import { useNavigate } from "react-router-dom";
+import { MAX_DAYS } from "@/constants/variables";
 
 function CreateTrip() {
   const [place, setPlace] = useState(null);
@@ -121,8 +122,8 @@ function CreateTrip() {
       return;
     }
 
-    if (parseInt(formData?.days) > 7) {
-      toast.error("Can't exceed 7 days.");
+    if (parseInt(formData?.days) > MAX_DAYS) {
+      toast.error(`Can't exceed ${MAX_DAYS} days.`);
       return;
     }
 
@@ -222,7 +223,7 @@ function CreateTrip() {
         <div>
           <h2 className="mb-4 text-xl">
             For how many days?{" "}
-            <span className="text-sm text-gray-500">(1-7)</span>
+            <span className="text-sm text-gray-500">{`(1-${MAX_DAYS})`}</span>
           </h2>
           <Input
             placeholder={`Ex.3`}
@@ -248,7 +249,7 @@ function CreateTrip() {
                 hover:shadow-gray-500 hover:scale-110 transition-all
                 ${
                   formData?.budget === budget.title &&
-                  "shadow-xl border-black border bg-gradient-to-tr from-orange-200/[.7] to-green-400/65"
+                  "shadow-xl border-black border bg-gradient-to-br from-black/20 to-[#26ae75]/70"
                 }`}>
               <h2 className="text-lg sm:text-xl md:text-3xl">{budget.img}</h2>
               <h2 className="text-base md:text-xl lg:text-2xl py-2 font-bold">
@@ -272,13 +273,13 @@ function CreateTrip() {
               className={`my-5 mx-0 p-2 sm:mx-5 sm:p-4 border cursor-pointer rounded-xl select-none hover:shadow-lg hover:shadow-gray-500 hover:scale-110 transition-all
                 ${
                   formData?.people === people.title &&
-                  "shadow-xl border-black border bg-gradient-to-tr from-green-400/65 to-orange-200/[.7]"
+                  "shadow-xl border-black border bg-gradient-to-tr from-black/20 to-[#26ae75]/70"
                 }`}>
               <h2 className="text-lg sm:text-xl md:text-3xl">{people.img}</h2>
               <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl py-2 font-bold">
                 {people.title}
               </h2>
-              <h2 className="text-gray-700 text-sm md:text-base lg:text-xl font-semibold md:font-medium">
+              <h2 className="text-gray-700 text-sm md:text-base lg:text-xl font-semibold md:font-medium min-h-[42px]">
                 {people.description}
               </h2>
               <h2 className="text-gray-500 font-extralight text-sm lg:text-base mt-2">
@@ -290,8 +291,8 @@ function CreateTrip() {
           <div className="flex items-center justify-center">
             <Button
               onClick={createTrip}
-              className="border-gray-500 border font-semibold bg-green-600/[50]
-                         hover:bg-gradient-to-tr from-orange-400 to-green-500 hover:shadow-md hover:shadow-gray-500
+              className="border-gray-500 border font-semibold bg-green-700
+                         hover:bg-gradient-to-tr from-black to-[#26ae75] hover:shadow-md hover:shadow-gray-500
                          hover:scale-105 transition-all
                          w-24 text-sm sm:text-lg sm:w-32 lg:text-xl lg:w-48"
               disabled={loading}>
@@ -307,6 +308,7 @@ function CreateTrip() {
       <Dialog open={openDialog}>
         <DialogContent>
           <DialogHeader>
+            <DialogTitle></DialogTitle>
             <DialogDescription>
               <div className="flex flex-col items-center mx-10 font-mono select-none">
                 <img
@@ -331,6 +333,7 @@ function CreateTrip() {
       </Dialog>
       <Dialog open={loadingDialog}>
         <DialogContent>
+          <DialogTitle></DialogTitle>
           <DialogDescription>
             <div className="flex flex-col items-center mx-10 font-mono select-none">
               <h2 className="text-xl text-black">Trip Loading</h2>

@@ -30,7 +30,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <div className="font-mono">
+  <div>
     <StrictMode>
       <GoogleOAuthProvider
         clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>

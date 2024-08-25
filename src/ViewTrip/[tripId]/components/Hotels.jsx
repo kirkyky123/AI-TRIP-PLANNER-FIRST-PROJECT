@@ -12,7 +12,7 @@ function Hotels({ trip }) {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10 sm:gap-8">
         {trip?.tripInfo?.HotelOptions?.map((hotel, index) => (
-          <HotelCard hotel={hotel} />
+          <HotelCard hotel={hotel} key={index} />
         ))}
       </div>
     </div>

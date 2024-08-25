@@ -19,23 +19,23 @@ import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 function MyTripsCard({ trip, onDelete }) {
   const [photoUrl, setPhotoUrl] = useState("");
 
-  // useEffect(() => {
-  //   if (trip) {
-  //     getPhoto();
-  //   }
-  // }, [trip]);
-  // const getPhoto = async () => {
-  //   const data = {
-  //     textQuery: trip?.userChoices?.location?.label
-  //   };
+  useEffect(() => {
+    if (trip) {
+      getPhoto();
+    }
+  }, [trip]);
+  const getPhoto = async () => {
+    const data = {
+      textQuery: trip?.userChoices?.location?.label
+    };
 
-  //   const res = await placeDetails(data).then((response) => {
-  //     console.log(response.data.places[0].photos[3].name);
-  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[5].name);
-  //     console.log(updatedPhotoURL);
-  //     setPhotoUrl(updatedPhotoURL);
-  //   })
-  // };
+    const res = await placeDetails(data).then((response) => {
+      console.log(response.data.places[0].photos[3].name);
+      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[5].name);
+      console.log(updatedPhotoURL);
+      setPhotoUrl(updatedPhotoURL);
+    })
+  };
 
   const deleteTripById = async (collectionName, tripId) => {
     try {
@@ -43,7 +43,7 @@ function MyTripsCard({ trip, onDelete }) {
       await deleteDoc(docRef);
       console.log("Document successfully deleted!");
       onDelete(tripId);
-      toast("Trip deleted successfully!");
+      toast("Trip deleted successfully.");
     } catch (error) {
       console.error("Error deleting document: ", error);
     }

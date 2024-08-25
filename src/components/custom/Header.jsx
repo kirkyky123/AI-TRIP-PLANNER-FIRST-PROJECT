@@ -27,13 +27,11 @@ function Header() {
   const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
-    console.log(user);
     if (user) {
       setUserPicture(user.picture);
     } else {
       console.log("no user");
     }
-    console.log(userPicture);
   }, [user]);
 
   const userLogin = useGoogleLogin({
@@ -60,16 +58,26 @@ function Header() {
   };
 
   return (
-    <div className="p-3.5 shadow-md flex justify-between items-center px-5 bg-orange-200/[.3]">
-      <a href="/"><img src="/logo.svg" className="cursor-pointer " /></a>
-      <div>
+    <div className="p-3.5 shadow-lg flex justify-between items-center px-5 bg-gradient-to-tr from-black to-[#26ae75]/90 rounded-b-3xl">
+      <a href="/">
+        <img src="/logo.svg" className="cursor-pointer hover:scale-110" />
+      </a>
+      <div className="flex items-center gap-5">
+        <a href="/create-trip">
+          <Button
+            variant="outline"
+            className="inline rounded-full bg-black font-bold text-white hover:text-white hover:bg-gradient-to-br from-black/60 to-[#26ae75]/60
+            hover:shadow-gray-600 hover:shadow-sm hover:border-black hover:scale-105 border-transparent ease-in">
+            Create new trip
+          </Button>
+        </a>
         {user ? (
-          <div className="flex items-center gap-5">
+          <div className="flex gap-5">
             <a href="/my-trips">
               <Button
                 variant="outline"
-                className="rounded-2xl w-18 sm:w-24 border-black hover:bg-gradient-to-tr from-orange-200 to-[#26ae75]
-            hover:shadow-gray-600 hover:shadow-sm hover:border-gray-800 hover:scale-105">
+                className="rounded-2xl w-18 sm:w-24 hover:text-white border-black hover:bg-gradient-to-tr to-black/50 from-[#26ae75]/50
+            hover:shadow-gray-600 hover:shadow-sm hover:border-gray-800 hover:scale-110 font-bold ease-in">
                 Trips
               </Button>
             </a>
@@ -100,7 +108,8 @@ function Header() {
             <DialogTrigger asChild>
               <Button
                 variant="outline"
-                className="rounded-2xl font-bold bg-[#32c387] hover:bg-[#26ae75] border-black border hover:scale-105 hover:text-slate-200 text-gray-800">
+                className="rounded-2xl font-bold bg-[#38da97] hover:bg-[#329b6f] border-black border hover:scale-105 hover:text-white text-black
+                ease-in">
                 Sign In
               </Button>
             </DialogTrigger>
