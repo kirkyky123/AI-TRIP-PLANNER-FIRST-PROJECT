@@ -10,7 +10,7 @@ function Hero() {
           <span className="underline underline-offset-[12px] decoration-[#2a6a50] inline">
             Effortlessly
           </span>{" "}
-          design your perfect getaway using&nbsp;
+          design&nbsp;your perfect getaway using&nbsp;
           <span className="underline underline-offset-[12px] decoration-[#2a6a50] inline">
             AI
           </span>
