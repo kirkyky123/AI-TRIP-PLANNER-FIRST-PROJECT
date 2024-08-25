@@ -7,11 +7,11 @@ function Hero() {
     <div className="flex flex-col items-center mx-20 sm:mx-10 md:mx-20 lg:mx-40 xl:mx-72 gap-14">
       <div className="text-[50px] text-center font-extrabold mt-40 sm:mx-10 md:mx-20 lg:mx-32 xl:mx-50 tracking-normal">
         <h2 className="text-[#249566] hover:bg-gradient-to-tr from-black/20 to-green-300 rounded-xl py-2">
-          <span className="underline underline-offset-[12px] decoration-[#2a6a50] inline">
+          <span className="underline underline-offset-[14px] decoration-[#2a6a50] inline">
             Effortlessly
           </span>{" "}
           design&nbsp;your perfect getaway using&nbsp;
-          <span className="underline underline-offset-[12px] decoration-[#2a6a50] inline">
+          <span className="underline underline-offset-[8px] decoration-[#2a6a50] inline">
             AI
           </span>
           .
