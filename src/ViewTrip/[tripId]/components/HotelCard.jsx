@@ -5,23 +5,23 @@ import { Link } from "react-router-dom";
 function HotelCard({ hotel }) {
   const [photoUrl, setPhotoUrl] = useState("");
 
-  useEffect(() => {
-    if (hotel) {
-      getPhoto();
-    }
-  }, [hotel]);
-  const getPhoto = async () => {
-    const data = {
-      textQuery: hotel?.HotelName
-    };
+  // useEffect(() => {
+  //   if (hotel) {
+  //     getPhoto();
+  //   }
+  // }, [hotel]);
+  // const getPhoto = async () => {
+  //   const data = {
+  //     textQuery: hotel?.HotelName
+  //   };
 
-    const res = await placeDetails(data).then((response) => {
-      console.log(response.data.places[0].photos[3].name);
-      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
-      console.log(updatedPhotoURL);
-      setPhotoUrl(updatedPhotoURL);
-    })
-  };
+  //   const res = await placeDetails(data).then((response) => {
+  //     console.log(response.data.places[0].photos[3].name);
+  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
+  //     console.log(updatedPhotoURL);
+  //     setPhotoUrl(updatedPhotoURL);
+  //   })
+  // };
 
   return (
     <Link
