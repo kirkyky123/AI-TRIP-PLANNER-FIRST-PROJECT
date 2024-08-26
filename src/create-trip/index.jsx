@@ -154,7 +154,6 @@ function CreateTrip() {
     const result = await chatSession.sendMessage(AI_PROMPT);
     console.log(result?.response?.text());
     setLoading(false);
-    setLoadingDialog(false);
     saveTrip(result?.response?.text());
   };
 
@@ -168,8 +167,17 @@ function CreateTrip() {
     if (tripInfo.endsWith("```")) {
       tripInfo = tripInfo.slice(0, -3);
     }
-    return tripInfo;
+    
+    let fixedJson = escapeInnerQuotes(tripInfo);
+    console.log("hahajbdasbhdbasjgbdjasbjd " + fixedJson);
+    return fixedJson;
   };
+
+  function escapeInnerQuotes(jsonString) {
+    return jsonString.replace(/(?<=: ?")(.+?)(?="[,}])/g, function(match) {
+      return match.replace(/"/g, '\\"');
+    });
+  }
 
   const saveTrip = async (tripInfo) => {
     const updatedTripInfo = formatTripInfo(tripInfo);
@@ -184,6 +192,7 @@ function CreateTrip() {
       id: documentId,
     });
     setLoading(false);
+    setLoadingDialog(false);
     router("/view-trip/" + documentId);
   };
 
@@ -279,7 +288,7 @@ function CreateTrip() {
               <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl py-2 font-bold">
                 {people.title}
               </h2>
-              <h2 className="text-gray-700 text-sm md:text-base lg:text-xl font-semibold md:font-medium min-h-[42px]">
+              <h2 className="text-gray-700 text-sm md:text-base lg:text-xl font-semibold md:font-medium min-h-[50px]">
                 {people.description}
               </h2>
               <h2 className="text-gray-500 font-extralight text-sm lg:text-base mt-2">
@@ -310,7 +319,7 @@ function CreateTrip() {
           <DialogHeader>
             <DialogTitle></DialogTitle>
             <DialogDescription>
-              <div className="flex flex-col items-center mx-10 font-mono select-none">
+              <div className="flex flex-col items-center mx-10 select-none">
                 <img
                   className="size-14 mt-2"
                   src="logo.svg"
@@ -335,7 +344,7 @@ function CreateTrip() {
         <DialogContent>
           <DialogTitle></DialogTitle>
           <DialogDescription>
-            <div className="flex flex-col items-center mx-10 font-mono select-none">
+            <div className="flex flex-col items-center mx-10 select-none">
               <h2 className="text-xl text-black">Trip Loading</h2>
               <VscLoading className="size-12 animate-spin mt-5 text-green-500" />
             </div>

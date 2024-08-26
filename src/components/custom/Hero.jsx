@@ -18,7 +18,7 @@ function Hero() {
         </h2>{" "}
         <h2 className="mt-10">Start your adventure now!</h2>
       </div>
-      <p className="text-gray-500 text-center text-xl xl:mx-48 lg:mx-20 sm:mx-0">
+      <p className="text-gray-500 text-center text-xl xl:mx-64 lg:mx-20 sm:mx-0">
         Personalized itineraries, curated experiences, and seamless bookings.
         All powered by AI. Your perfect trip awaits!
       </p>
