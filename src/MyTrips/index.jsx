@@ -1,56 +1,151 @@
 import React, { useEffect, useState } from "react";
-import { useNavigation } from "react-router-dom";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { collection, getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
+import { useUser } from "@clerk/clerk-react";
 import MyTripsCard from "./MyTripsCard";
-import { Button } from "@/components/ui/button";
 import { db } from "@/AiService/firedatabaseConfig";
+import { motion } from "framer-motion";
+import { FaPlus } from "react-icons/fa";
+import { IoTrashBinSharp } from "react-icons/io5";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 function MyTrips() {
-  const navigation = useNavigation();
+  const navigate = useNavigate();
   const [userTrips, setUserTrips] = useState([]);
+  const { isLoaded, isSignedIn, user } = useUser();
 
   useEffect(() => {
-    getUserTrips();
-  }, []);
+    if (isLoaded) {
+      if (isSignedIn) {
+        getUserTrips();
+      } else {
+        navigate("/");
+      }
+    }
+  }, [isLoaded, isSignedIn, user]);
 
   const getUserTrips = async () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-      navigation("/");
-      return;
-    }
+    if (!user) return;
 
+    const userEmail = user.primaryEmailAddress.emailAddress;
     const q = query(
       collection(db, "trips"),
-      where("userEmail", "==", user?.email)
+      where("userEmail", "==", userEmail)
     );
-    const querySnapshot = await getDocs(q);
-    setUserTrips([]);
-    querySnapshot.forEach((doc) => {
-      setUserTrips((prevTrips) => [...prevTrips, { id: doc.id, ...doc.data() }]);
-    });
+    
+    try {
+      const querySnapshot = await getDocs(q);
+      const trips = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setUserTrips(trips);
+    } catch (error) {
+      console.error("Error fetching user trips:", error);
+    }
   };
 
   const removeTrip = (tripId) => {
     setUserTrips((prevTrips) => prevTrips.filter((trip) => trip.id !== tripId));
   };
 
+  const deleteAllTrips = async () => {
+    try {
+      for (const trip of userTrips) {
+        await deleteDoc(doc(db, "trips", trip.id));
+      }
+      setUserTrips([]);
+      toast.success("All trips deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting all trips:", error);
+      toast.error("Failed to delete all trips. Please try again.");
+    }
+  };
+
+  if (!isLoaded || !isSignedIn) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-green-500"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="sm:px-10 md:px-32 lg:px-46 xl:px-10 mt-10 px-5">
-      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold inline-block mr-10">My Trips</h2>
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-black via-green-800/10 to-green-300/40 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex justify-between items-center mb-8"
+        >
+          <h1 className="text-4xl font-extrabold text-white">My Trips</h1>
+          {userTrips.length > 0 && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <button className="p-2 bg-red-500 rounded-xl border-gray-700 border-2 text-white hover:bg-red-600 transition duration-300">
+                  Delete <span className="font-bold underline">All</span> Trips
+                </button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-2xl font-bold text-red-600">Delete All Trips</AlertDialogTitle>
+                  <AlertDialogDescription className="text-gray-700">
+                    <p className="mb-4">Are you sure you want to delete all <span className="font-bold text-blue-700">({userTrips.length})</span> of your trips? This action is <span className="font-bold text-red-600">permanent</span> and cannot be undone.</p>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="flex justify-center">
+                  <AlertDialogCancel className="bg-green-400 hover:bg-green-500 text-gray-800 mr-2">Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={deleteAllTrips}
+                    className="bg-red-600 hover:bg-red-700 text-white"
+                  >
+                    Delete All Trips
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
+        </motion.div>
 
-      <h2 className="mt-0 text-gray-500 text-sm">(Click images)</h2>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 mt-10 select-none">
-        {userTrips?.length > 0
-          ? userTrips.map((trip, index) => (
-              <MyTripsCard trip={trip} key={index} onDelete={removeTrip} />
-            ))
-          : [1, 2, 3, 4, 5, 6].map((item, index) => (
-              <div
-                key={index}
-                className="h-[400px] w-[400px] bg-slate-200 animate-pulse rounded-t-3xl"></div>
+        {userTrips.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {userTrips.map((trip, index) => (
+              <motion.div
+                key={trip.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <MyTripsCard trip={trip} onDelete={removeTrip} />
+              </motion.div>
             ))}
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-center text-white"
+          >
+            <p className="text-xl mb-4">You haven&apos;t created any trips yet.</p>
+            <button
+              onClick={() => navigate("/create-trip")}
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full inline-flex items-center transition duration-300"
+            >
+              <FaPlus className="mr-2" />
+              Create Your First Trip
+            </button>
+          </motion.div>
+        )}
       </div>
     </div>
   );

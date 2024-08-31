@@ -2,42 +2,65 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import CreateTrip from "./create-trip/index.jsx";
 import Header from "./components/custom/Header.jsx";
 import { Toaster } from "./components/ui/sonner.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import ViewTrip from "./ViewTrip/[tripId]/index.jsx";
 import MyTrips from "./MyTrips/index.jsx";
+import Contact from "./pages/Contact.jsx";
+import { ClerkProvider } from "@clerk/clerk-react";
+
+// Create a layout component that includes the Header and Outlet
+const Layout = () => (
+  <>
+    <Header />
+    <Outlet />
+  </>
+);
+
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <App />,
+      },
+      {
+        path: "/create-trip",
+        element: <CreateTrip />,
+      },
+      {
+        path: "/view-trip/:tripId",
+        element: <ViewTrip/>
+      },
+      {
+        path: "/my-trips",
+        element: <MyTrips/>
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      }
+    ],
   },
-  {
-    path: "/create-trip",
-    element: <CreateTrip />,
-  },
-  {
-    path: "/view-trip/:tripId",
-    element: <ViewTrip/>
-  },
-  {
-    path: "/my-trips",
-    element: <MyTrips/>
-  }
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <div>
-    <StrictMode>
-      <GoogleOAuthProvider
-        clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
-        <Header />
-        <Toaster />
-        <RouterProvider router={router} />
-      </GoogleOAuthProvider>
-    </StrictMode>
-  </div>
+  <StrictMode>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} domain="localhost">
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
+      <Toaster richColors={true} />
+      <RouterProvider router={router} />
+    </GoogleOAuthProvider>
+    </ClerkProvider>
+  </StrictMode>
 );

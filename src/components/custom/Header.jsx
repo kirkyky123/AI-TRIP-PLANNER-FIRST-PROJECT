@@ -1,149 +1,134 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import { useNavigate } from "react-router-dom";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { FcGoogle } from "react-icons/fc";
-import axios from "axios";
-import { Input } from "../ui/input";
-import { Label } from "@radix-ui/react-label";
+import { useLocation } from "react-router-dom";
+import { Menu } from "lucide-react";
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 
 function Header() {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const [userPicture, setUserPicture] = useState("");
-  const [openDialog, setOpenDialog] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isSignedIn } = useUser();
 
-  useEffect(() => {
-    if (user) {
-      setUserPicture(user.picture);
-    } else {
-      console.log("no user");
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const yOffset = -200;
+      const y =
+        section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
-  }, [user]);
-
-  const userLogin = useGoogleLogin({
-    onSuccess: (response) => getUserProfile(response),
-    onError: (error) => console.log(error),
-  });
-
-  const getUserProfile = (tokenInfo) => {
-    axios
-      .get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`,
-        {
-          headers: {
-            Authorization: `Bearer ${tokenInfo?.access_token}`,
-            Accept: "Application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        localStorage.setItem("user", JSON.stringify(response.data));
-        window.location.reload();
-      });
+    setIsMenuOpen(false);
   };
 
   return (
-    <div className="p-3.5 shadow-lg flex justify-between items-center px-5 bg-gradient-to-tr from-black to-[#26ae75]/90 rounded-b-3xl">
-      <a href="/">
-        <img src="/logo.svg" className="cursor-pointer hover:scale-110" />
-      </a>
-      <div className="flex items-center gap-5">
-        <a href="/create-trip">
-          <Button
-            variant="outline"
-            className="inline rounded-full bg-black font-bold text-white hover:text-white hover:bg-gradient-to-br from-black/60 to-[#26ae75]/60
-            hover:shadow-gray-600 hover:shadow-sm hover:border-black hover:scale-105 border-transparent ease-in">
-            Create new trip
-          </Button>
-        </a>
-        {user ? (
-          <div className="flex gap-5">
-            <a href="/my-trips">
-              <Button
-                variant="outline"
-                className="rounded-2xl w-18 sm:w-24 hover:text-white border-black hover:bg-gradient-to-tr to-black/50 from-[#26ae75]/50
-            hover:shadow-gray-600 hover:shadow-sm hover:border-gray-800 hover:scale-110 font-bold ease-in">
-                Trips
+    <div className="sticky top-0 z-50 bg-gradient-to-tr from-black to-[#26ae75]/90 shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center py-4">
+          <a href="/" className="flex items-center space-x-2 cursor-pointer hover:scale-110 transition-transform">
+            <img
+              src="/logo.svg"
+              className="h-10 w-10"
+              alt="Logo"
+            />
+            <span className="text-2xl font-bold text-white">TripPlanner</span>
+          </a>
+
+          {isHomePage && (
+            <>
+              <nav className="hidden lg:flex space-x-6">
+                {["Features", "Pricing", "Testimonials", "Contact"].map(
+                  (item) => (
+                    <button
+                      key={item}
+                      onClick={() => scrollToSection(item.toLowerCase())}
+                      className="text-white font-semibold hover:text-[#38da97] transition-all duration-300 px-3 py-2 rounded-lg hover:bg-white/10 transform hover:scale-105">
+                      {item}
+                    </button>
+                  )
+                )}
+              </nav>
+              <button
+                className="lg:hidden text-white"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <Menu size={24} />
+              </button>
+            </>
+          )}
+
+          <div className="flex items-center space-x-4">
+            <SignedIn>
+              <a href="/create-trip" className="hidden sm:block">
+                <Button
+                  className="font-bold bg-gradient-to-br from-blue-600/80 via-[#19915f] to-red-600/80 text-white border-2 border-black
+                  hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
+                  Create new trip
+                </Button>
+              </a>
+              <div className="flex items-center space-x-4">
+                <a href="/my-trips" className="hidden sm:block">
+                  <Button className="bg-black text-white font-bold hover:bg-gray-800 transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
+                    View Trips
+                  </Button>
+                </a>
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      avatarBox: "h-10 w-10 rounded-full border-2 border-[#38da97] hover:scale-110 transition-transform shadow-md hover:shadow-lg"
+                    }
+                  }}
+                />
+              </div>
+            </SignedIn>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <Button
+                  variant="outline"
+                  className="bg-black text-white font-bold hover:bg-gray-800 hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
+                  Sign In
+                </Button>
+              </SignInButton>
+            </SignedOut>
+          </div>
+        </div>
+      </div>
+      {isMenuOpen && isHomePage && (
+        <div className="lg:hidden bg-black/90 py-4 flex flex-col sm:flex-row">
+          {["Features", "Pricing", "Testimonials", "Contact"].map((item) => (
+            <button
+              key={item}
+              onClick={() => scrollToSection(item.toLowerCase())}
+              className="block w-full text-left text-white font-semibold hover:text-[#38da97] transition-all duration-300 px-6 py-2 sm:text-center
+              hover:bg-white/10">
+              {item}
+            </button>
+          ))}
+          <a href="/create-trip" className="block w-64 px-6 py-2 sm:hidden">
+            <Button
+              className="w-full font-bold bg-gradient-to-br from-blue-600/80 via-[#19915f] to-red-600/80 text-white border-2 border-gray-300
+              hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
+              Create new trip
+            </Button>
+          </a>
+          {isSignedIn ? (
+            <a href="/my-trips" className="block w-64 px-6 py-2 mt-2 sm:hidden">
+              <Button className="w-full bg-black text-white font-bold border-2 border-gray-300 hover:bg-gray-800 transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
+                View Trips
               </Button>
             </a>
-            <Popover>
-              <PopoverTrigger>
-                <img
-                  src={userPicture}
-                  className="size-10 rounded-full border-black border-2 hover:scale-105"
-                />
-              </PopoverTrigger>
-              <PopoverContent
-                className="rounded-xl ml-5 text-center p-2
-                        w-24 sm:w-28 md:w-32 lg:w-32 xl:w-32 2xl:w-32">
-                <h2
-                  onClick={() => {
-                    googleLogout();
-                    localStorage.clear();
-                    window.location.reload();
-                  }}
-                  className="cursor-pointer hover:scale-105">
-                  Logout
-                </h2>
-              </PopoverContent>
-            </Popover>
-          </div>
-        ) : (
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                variant="outline"
-                className="rounded-2xl font-bold bg-[#38da97] hover:bg-[#329b6f] border-black border hover:scale-105 hover:text-white text-black
-                ease-in">
-                Sign In
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:w-[500px] w-[350px]">
-              <DialogHeader>
-                <DialogTitle></DialogTitle>
-                <DialogDescription>
-                  <div className="flex flex-col items-center mx-5 font-mono select-none">
-                    <img
-                      className="size-14 mt-2"
-                      src="/logo.svg"
-                      alt="google logo"
-                    />
-                    <h2 className="my-5 text-2xl font-bold text-black">
-                      Sign In
-                    </h2>
-                    <p className="text-gray-700 text-center">
-                      Save your trips and access them anywhere
-                    </p>
-                    <Button
-                      className="mt-20 p-6 w-full text-lg font-semibold flex gap-5
-                        items-center justify-center bg-black"
-                      onClick={userLogin}>
-                      <FcGoogle className="text-2xl size-6" /> Sign In With
-                      Google
-                    </Button>
-                  </div>
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter></DialogFooter>
-            </DialogContent>
-          </Dialog>
-        )}
-      </div>
+          ) : (
+            <SignInButton mode="modal">
+              <div className="block w-64 px-6 py-2 mt-2 sm:hidden">
+                <Button
+                  variant="outline"
+                  className="w-full bg-black text-white font-bold hover:bg-gray-800 hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
+                  Sign In
+                </Button>
+              </div>
+            </SignInButton>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -3,37 +3,34 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PROMPT, selectBudget, selectTravelers } from "@/constants/options";
 import { VscLoading } from "react-icons/vsc";
-import { Mail } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { toast } from "sonner";
-import { FcGoogle } from "react-icons/fc";
 import { AiOutlineLoading } from "react-icons/ai";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/AiService/firedatabaseConfig";
 import { useNavigate } from "react-router-dom";
 import { MAX_DAYS } from "@/constants/variables";
+import { motion } from "framer-motion";
+import { useUser, useClerk } from "@clerk/clerk-react";
 
 function CreateTrip() {
   const [place, setPlace] = useState(null);
-
   const [loading, setLoading] = useState(false);
-
   const [formData, setFormData] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);
   const [loadingDialog, setLoadingDialog] = useState(false);
 
-  const router = useNavigate();
+  const { isSignedIn, user } = useUser();
+  const { openSignIn } = useClerk();
+  const navigate = useNavigate();
+
+  const [isWaitingForSignIn, setIsWaitingForSignIn] = useState(false);
 
   const inputChange = (value, name) => {
     if (name === "budget") {
@@ -76,33 +73,14 @@ function CreateTrip() {
     console.log(formData);
   }, [formData]);
 
-  const userLogin = useGoogleLogin({
-    onSuccess: (response) => getUserProfile(response),
-    onError: (error) => console.log(error),
-  });
-
-  const getUserProfile = (tokenInfo) => {
-    axios
-      .get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`,
-        {
-          headers: {
-            Authorization: `Bearer ${tokenInfo?.access_token}`,
-            Accept: "Application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        localStorage.setItem("user", JSON.stringify(response.data));
-        setOpenDialog(false);
-        createTrip();
-      });
-  };
+  useEffect(() => {
+    if (isWaitingForSignIn && isSignedIn) {
+      setIsWaitingForSignIn(false);
+      createTripAfterSignIn();
+    }
+  }, [isSignedIn, isWaitingForSignIn]);
 
   const createTrip = async () => {
-    const user = localStorage.getItem("user");
-
     if (!formData?.location) {
       toast.error("Please enter a location.");
       return;
@@ -137,10 +115,16 @@ function CreateTrip() {
       return;
     }
 
-    if (!user) {
-      setOpenDialog(true);
+    if (!isSignedIn) {
+      setIsWaitingForSignIn(true);
+      openSignIn();
       return;
     }
+
+    createTripAfterSignIn();
+  };
+
+  const createTripAfterSignIn = async () => {
     setLoading(true);
     setLoadingDialog(true);
 
@@ -167,14 +151,14 @@ function CreateTrip() {
     if (tripInfo.endsWith("```")) {
       tripInfo = tripInfo.slice(0, -3);
     }
-    
+
     let fixedJson = escapeInnerQuotes(tripInfo);
-    console.log("hahajbdasbhdbasjgbdjasbjd " + fixedJson);
+    console.log("fixed json: " + fixedJson);
     return fixedJson;
   };
 
   function escapeInnerQuotes(jsonString) {
-    return jsonString.replace(/(?<=: ?")(.+?)(?="[,}])/g, function(match) {
+    return jsonString.replace(/(?<=: ?")(.+?)(?="[,}])/g, function (match) {
       return match.replace(/"/g, '\\"');
     });
   }
@@ -183,166 +167,190 @@ function CreateTrip() {
     const updatedTripInfo = formatTripInfo(tripInfo);
     setLoading(true);
     const documentId = Date.now().toString();
-    const user = JSON.parse(localStorage.getItem("user"));
 
     await setDoc(doc(db, "trips", documentId), {
       userChoices: formData,
       tripInfo: JSON.parse(updatedTripInfo),
-      userEmail: user?.email,
+      userEmail: user?.primaryEmailAddress?.emailAddress,
       id: documentId,
     });
     setLoading(false);
     setLoadingDialog(false);
-    router("/view-trip/" + documentId);
+    navigate("/view-trip/" + documentId);
   };
 
   return (
-    <div className="sm:px-10 md:px-32 lg:px-46 xl:px-10 mt-10 px-5">
-      <h2 className="text-4xl font-bold">
-        Share your travel preferences{" "}
-        <span className="font-NotoColorEmoji">️️🛩️🌴</span>
-      </h2>
-      <p className="text-lg text-gray-500 mt-4 tracking-normal font-extralight">
-        Provide a few details and our AI will craft a personalized itinerary
-        just for you.
-      </p>
-
-      <div className="flex flex-col gap-8 mt-6">
-        <div>
-          <h2 className="my-4 text-xl">
-            Where are you going?{" "}
-            <span className="text-sm text-gray-500">
-              (pick popular locations for better results)
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-black via-green-800/10 to-green-300/40 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="sm:px-10 md:px-32 lg:px-46 xl:px-10 mt-10 px-5 text-white">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.1 }}>
+          <h2 className="text-4xl font-bold">
+            <span className="bg-gradient-to-l from-red-500 to-[#38da97] text-transparent bg-clip-text">
+              Share your travel preferences{" "}
             </span>
+            <span className="font-NotoColorEmoji text-white">️️🛩️🌴</span>
           </h2>
-          <GooglePlacesAutocomplete
-            apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
-            selectProps={{
-              place,
-              onChange: (v) => {
-                setPlace(v);
-                {
-                  inputChange(v, "location");
-                }
-              },
-            }}
-          />
-        </div>
+        </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-lg text-gray-400 mt-4 tracking-normal font-semibold">
+          Provide a few details and our AI will craft a personalized itinerary
+          just for you.
+        </motion.p>
 
-        <div>
-          <h2 className="mb-4 text-xl">
-            For how many days?{" "}
-            <span className="text-sm text-gray-500">{`(1-${MAX_DAYS})`}</span>
-          </h2>
-          <Input
-            placeholder={`Ex.3`}
-            type="number"
-            onChange={(e) => inputChange(e.target.value, "days")}
-            className=""
-          />
-        </div>
-      </div>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="flex flex-col gap-8 mt-6 text-black max-w-[600px]">
+          <div>
+            <h2 className="my-4 text-xl text-white">
+              Where are you going?{" "}
+              <span className="text-sm text-[#26ae75] font-bold">
+                (pick popular locations for better results)
+              </span>
+            </h2>
+            <GooglePlacesAutocomplete
+              apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
+              selectProps={{
+                place,
+                onChange: (v) => {
+                  setPlace(v);
+                  {
+                    inputChange(v, "location");
+                  }
+                },
+              }}
+            />
+          </div>
 
-      <div className="mt-12">
-        <h2 className="mt-3 text-xl">What&apos;s your budget?</h2>
-        {/* <p className="text-md text-gray-400">
-          <em>The AI will match the trip to your preferences</em>
-        </p> */}
+          <div>
+            <h2 className="mb-4 text-xl text-white">
+              For how many days?{" "}
+              <span className="text-sm text-[#26ae75] font-bold">{`(1-${MAX_DAYS})`}</span>
+            </h2>
+            <Input
+              placeholder={`Ex.3`}
+              type="number"
+              onChange={(e) => inputChange(e.target.value, "days")}
+              className="text-black"
+            />
+          </div>
+        </motion.div>
 
-        <div className="mt-2 grid grid-cols-3 gap-5">
-          {selectBudget.map((budget, index) => (
-            <div
-              key={index}
-              onClick={() => inputChange(budget.id, "budget")}
-              className={`my-5 mx-0 p-2 sm:mx-5 sm:p-4 border hover:shadow-xl cursor-pointer rounded-xl select-none 
-                hover:shadow-gray-500 hover:scale-110 transition-all
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-12">
+          <h2 className="mt-3 text-xl">What&apos;s your <span className="text-green-300 font-semibold">budget</span>?</h2>
+
+          <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-8 lg:gap-14 text-black">
+            {selectBudget.map((budget, index) => (
+              <div
+                className="hover:scale-105 sm:hover:scale-110 transition-all ease-in"
+                key={index}>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.3, delay: 0.05 * index }}
+                  onClick={() => inputChange(budget.id, "budget")}
+                  className={`my-3 sm:my-5 p-2 sm:p-4 border hover:shadow-lg cursor-pointer rounded-xl select-none 
+                hover:shadow-[#457d66] transition-all bg-white
                 ${
                   formData?.budget === budget.title &&
-                  "shadow-xl border-black border bg-gradient-to-br from-black/20 to-[#26ae75]/70"
+                  "shadow-lg border-black border bg-gradient-to-br from-black/20 to-[#26ae75]"
                 }`}>
-              <h2 className="text-lg sm:text-xl md:text-3xl">{budget.img}</h2>
-              <h2 className="text-base md:text-xl lg:text-2xl py-2 font-bold">
-                {budget.title}
-              </h2>
-              <h2 className="text-gray-700 text-sm md:text-base lg:text-xl font-semibold md:font-medium">
-                {budget.description}
-              </h2>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-8">
-        <h2 className="my-5 text-xl">How many people?</h2>
-        <div className="mt-2 grid grid-cols-3 gap-5">
-          {selectTravelers.map((people, index) => (
-            <div
-              key={index}
-              onClick={() => inputChange(people.id, "people")}
-              className={`my-5 mx-0 p-2 sm:mx-5 sm:p-4 border cursor-pointer rounded-xl select-none hover:shadow-lg hover:shadow-gray-500 hover:scale-110 transition-all
+                  <h2 className="text-2xl sm:text-3xl">{budget.img}</h2>
+                  <h2 className="text-lg sm:text-xl lg:text-2xl py-1 sm:py-2 font-bold">
+                    {budget.title}
+                  </h2>
+                  <h2 className="text-gray-700 text-sm sm:text-base lg:text-lg font-semibold sm:font-medium">
+                    {budget.description}
+                  </h2>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="mt-6 sm:mt-8">
+          <h2 className="my-3 sm:my-5 text-xl">How many <span className="text-green-300 font-semibold">people</span>?</h2>
+          <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-8 lg:gap-14 text-black">
+            {selectTravelers.map((people, index) => (
+              <div
+                className="hover:scale-105 sm:hover:scale-110 transition-all ease-in"
+                key={index}>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.3, delay: 0.05 * index }}
+                  onClick={() => inputChange(people.id, "people")}
+                  className={`my-3 sm:my-5 p-2 sm:p-4 border cursor-pointer rounded-xl select-none hover:shadow-lg
+                hover:shadow-[#457d66] transition-all bg-white
                 ${
                   formData?.people === people.title &&
-                  "shadow-xl border-black border bg-gradient-to-tr from-black/20 to-[#26ae75]/70"
+                  "shadow-lg border-black border bg-gradient-to-tr to-black/20 from-[#26ae75]"
                 }`}>
-              <h2 className="text-lg sm:text-xl md:text-3xl">{people.img}</h2>
-              <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl py-2 font-bold">
-                {people.title}
-              </h2>
-              <h2 className="text-gray-700 text-sm md:text-base lg:text-xl font-semibold md:font-medium min-h-[50px]">
-                {people.description}
-              </h2>
-              <h2 className="text-gray-500 font-extralight text-sm lg:text-base mt-2">
-                ({people.amount})
-              </h2>
-            </div>
-          ))}
-
-          <div className="flex items-center justify-center">
-            <Button
-              onClick={createTrip}
-              className="border-gray-500 border font-semibold bg-green-700
-                         hover:bg-gradient-to-tr from-black to-[#26ae75] hover:shadow-md hover:shadow-gray-500
-                         hover:scale-105 transition-all
-                         w-24 text-sm sm:text-lg sm:w-32 lg:text-xl lg:w-48"
-              disabled={loading}>
-              {loading ? (
-                <AiOutlineLoading className="size-7 animate-spin" />
-              ) : (
-                "Create Trip"
-              )}
-            </Button>
-          </div>
-        </div>
-      </div>
-      <Dialog open={openDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle></DialogTitle>
-            <DialogDescription>
-              <div className="flex flex-col items-center mx-10 select-none">
-                <img
-                  className="size-14 mt-2"
-                  src="logo.svg"
-                  alt="google logo"
-                />
-                <h2 className="my-5 text-2xl font-bold text-black">Sign In</h2>
-                <p className="text-gray-700">
-                  Save your trips and access them anywhere
-                </p>
-                <Button
-                  className="mt-20 p-6 w-full text-lg font-semibold flex gap-5
-                        items-center justify-center bg-black"
-                  onClick={userLogin}>
-                  <FcGoogle className="text-2xl size-6" /> Sign In With Google
-                </Button>
+                  <h2 className="text-2xl sm:text-3xl">{people.img}</h2>
+                  <h2 className="text-lg sm:text-xl lg:text-2xl py-1 sm:py-2 font-bold">
+                    {people.title}
+                  </h2>
+                  <h2 className="text-gray-700 text-sm sm:text-base lg:text-lg font-semibold sm:font-medium min-h-[40px] sm:min-h-[50px]">
+                    {people.description}
+                  </h2>
+                  <h2 className="text-gray-800 font-extralight text-xs sm:text-sm lg:text-base mt-1 sm:mt-2">
+                    ({people.amount})
+                  </h2>
+                </motion.div>
               </div>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+            ))}
+
+            <motion.div
+              initial={{ opacity: 0, rotateX: 90 }}
+              whileInView={{ opacity: 1, rotateX: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center justify-center">
+              <div className="relative z-10 flex cursor-pointer items-center overflow-hidden rounded-xl border border-black p-[2.5px] hover:scale-105">
+                <div className="animate-rotate absolute -inset-1 h-full w-full rounded-full bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
+                <div className="relative z-20 flex rounded-[0.60rem] bg-black">
+                  <Button
+                    onClick={createTrip}
+                    className="bg-black rounded-xl font-bold text-white hover:text-white
+                       hover:bg-gradient-to-br from-black/20 to-[#26ae75]/80 border border-gray-400/80 ease-in
+                         w-24 text-sm sm:text-lg sm:w-32 lg:text-xl lg:w-48"
+                    disabled={loading}>
+                    {loading ? (
+                      <AiOutlineLoading className="size-7 animate-spin" />
+                    ) : (
+                      "Create Trip"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
       <Dialog open={loadingDialog}>
         <DialogContent>
-          <DialogTitle></DialogTitle>
           <DialogDescription>
             <div className="flex flex-col items-center mx-10 select-none">
               <h2 className="text-xl text-black">Trip Loading</h2>

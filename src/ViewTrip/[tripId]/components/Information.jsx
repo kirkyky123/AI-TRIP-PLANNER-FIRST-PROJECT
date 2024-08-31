@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
@@ -36,69 +35,79 @@ function InformationSection({ trip }) {
   // };
 
   const copyTripLink = () => {
-    navigator.clipboard.writeText(
-      `https://kiran-ai-trip-planner-first-proj.vercel.app/view-trip/${trip?.id}`
-    );
+    navigator.clipboard.writeText(window.location.href);
     toast.success("Copied link!");
   };
 
   return (
-    <div>
-      <img
-        src={photoUrl ? photoUrl : "/banner2.jpg"}
-        alt="trip-banner"
-        className="w-full h-48 object-cover rounded-xl"
-      />
-      <div className="flex items-center mt-5 justify-between">
-  <h2 className="font-bold text-lg sm:text-xl md:text-2xl xl:text-3xl">
-    {trip?.userChoices?.location?.label}
-  </h2>
-  <Dialog>
-    <DialogTrigger asChild>
-      <Button
-        className="bg-white border border-transparent hover:border-black hover:border
-        hover:bg-slate-100 hover:bg-gradient-to-tr from-black/50 to-[#26ae75]/50 hover:shadow-black hover:shadow-sm hover:scale-105"
-      >
-        <FaShare className="text-black text-xl" />
-      </Button>
-    </DialogTrigger>
-    <DialogContent className="flex sm:max-w-[425px] text-center justify-center items-center">
-      <DialogHeader>
-        <DialogTitle className="text-2xl font-mono text-center">
-          Copy this trip 👉{" "}
-          <FaRegCopy
-            type="submit"
-            onClick={() => copyTripLink()}
-            className="size-8 cursor-pointer inline hover:scale-125"
-          >
-            Copy Trip Link
-          </FaRegCopy>
-        </DialogTitle>
-        <DialogDescription></DialogDescription>
-      </DialogHeader>
-      <DialogFooter></DialogFooter>
-    </DialogContent>
-  </Dialog>
-</div>
-      <div className="flex justify-between items-center">
-        <div className="my-5 flex flex-col gap-5 justify-end">
-          <div className="flex"></div>
-          <div className="flex gap-5">
-            <h2 className="border border-black p-2 px-4 bg-gray-200/90 rounded-full text-gray-700 font-extrabold text-[12px] sm:text-sm md:text-md lg:text-lg text-center">
-              <span className="text-lg"> 📆 </span> {trip?.userChoices?.days}{" "}
-              Day Trip
-            </h2>
-            <h2 className="border border-black p-2 px-4 bg-gray-200/90 rounded-full text-gray-700 font-extrabold text-[12px] sm:text-sm md:text-md lg:text-lg text-center">
-              <span className="text-xl">{trip?.userChoices?.budgetImg}</span>{" "}
-              {trip?.userChoices?.budget} Budget
-            </h2>
-            <h2 className="border border-black p-2 px-4 bg-gray-200/90 rounded-full text-gray-700 font-extrabold text-[12px] sm:text-sm md:text-md lg:text-lg text-center">
-              <span className="text-xl">{trip?.userChoices?.peopleImg}</span>{" "}
-              {trip?.userChoices?.people}
-            </h2>
-          </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative">
+        <img
+          src="/banner2.jpg"
+          alt="trip-banner"
+          className="w-full h-64 sm:h-80 md:h-96 object-cover rounded-xl shadow-lg"
+        />
+        <div className="absolute inset-0 bg-black opacity-40 rounded-xl"></div>
+        <div className="absolute inset-0 flex items-center justify-between p-6">
+          <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-white drop-shadow-lg">
+            {trip?.userChoices?.location?.label}
+          </h2>
         </div>
       </div>
+      <div className="mt-8">
+        <div className="flex flex-wrap gap-4 justify-center">
+          <InfoTag icon="📆" text={`${trip?.userChoices?.days} Day Trip`} />
+          <InfoTag
+            icon={trip?.userChoices?.budgetImg}
+            text={`${trip?.userChoices?.budget} Budget`}
+          />
+          <InfoTag
+            icon={trip?.userChoices?.peopleImg}
+            text={trip?.userChoices?.people}
+          />
+          <Dialog>
+            <DialogTrigger asChild>
+              <div className="relative z-10 flex cursor-pointer items-center overflow-hidden rounded-xl p-[2px] transition-transform hover:scale-105 ml-10">
+                <div className="animate-rotate absolute inset-0 h-full w-full rounded-xl bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
+                <div className="relative z-20 flex rounded-xl bg-black sm:p-2 ">
+                  <Button className="bg-black hover:bg-black w-full h-full">
+                    <FaShare className="text-white sm:text-xl" />
+                  </Button>
+                </div>
+              </div>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-mono text-center">
+                  Share this trip
+                </DialogTitle>
+              </DialogHeader>
+              <div className="flex items-center space-x-2">
+                <input
+                  className="flex-1 px-3 py-2 text-sm border rounded-md"
+                  value={window.location.href}
+                  readOnly
+                />
+                <Button
+                  onClick={copyTripLink}
+                  className="flex items-center space-x-2">
+                  <FaRegCopy />
+                  <span>Copy</span>
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InfoTag({ icon, text }) {
+  return (
+    <div className="flex items-center space-x-2 bg-gray-100 text-gray-800 px-4 py-2 rounded-full shadow-md">
+      <span className="text-2xl">{icon}</span>
+      <span className="font-semibold">{text}</span>
     </div>
   );
 }
