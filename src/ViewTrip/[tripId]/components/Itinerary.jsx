@@ -52,7 +52,7 @@ export default function Itinerary({ trip }) {
             </button>
             {expandedDays[itinerary.Day] && (
               <div>
-                <Separator className="bg-gray-700" />
+                <Separator className="bg-gradient-to-b from-gray-700 to-gray-900" />
                 <div className="p-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {itinerary.PlacesToVisit.map((place, placeIndex) => (

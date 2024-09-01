@@ -1,27 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 
 function HotelCard({ hotel }) {
   const [photoUrl, setPhotoUrl] = useState("");
 
-  // useEffect(() => {
-  //   if (hotel) {
-  //     getPhoto();
-  //   }
-  // }, [hotel]);
-  // const getPhoto = async () => {
-  //   const data = {
-  //     textQuery: hotel?.HotelName
-  //   };
+  useEffect(() => {
+    if (hotel) {
+      getPhoto();
+    }
+  }, [hotel]);
+  const getPhoto = async () => {
+    const data = {
+      textQuery: hotel?.HotelName
+    };
 
-  //   const res = await placeDetails(data).then((response) => {
-  //     console.log(response.data.places[0].photos[3].name);
-  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
-  //     console.log(updatedPhotoURL);
-  //     setPhotoUrl(updatedPhotoURL);
-  //   })
-  // };
+    const res = await placeDetails(data).then((response) => {
+      console.log(response.data.places[0].photos[3].name);
+      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
+      console.log(updatedPhotoURL);
+      setPhotoUrl(updatedPhotoURL);
+    })
+  };
 
   return (
     <motion.div
@@ -35,7 +36,7 @@ function HotelCard({ hotel }) {
         target="_blank"
         rel="noopener noreferrer"
         className="block">
-        <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+        <div className="bg-gradient-to-b from-gray-700 to-gray-900 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
           <div className="relative">
             <img
               src={photoUrl ? photoUrl : "/banner2.jpg"}
