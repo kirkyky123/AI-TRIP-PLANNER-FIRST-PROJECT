@@ -2,7 +2,13 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
-import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useUser,
+} from "@clerk/clerk-react";
 
 function Header() {
   const location = useLocation();
@@ -22,17 +28,22 @@ function Header() {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-gradient-to-tr from-black to-[#26ae75]/90 shadow-lg">
+    <div className="sticky top-0 z-50 bg-gradient-to-r from-black to-[#26ae75]/70 shadow-lg border-b border-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <a href="/" className="flex items-center space-x-2 cursor-pointer hover:scale-110 transition-transform">
-            <img
+          <div className="flex items-center space-x-2">
+            <a href="/">
+              <img
               src="/logo.svg"
-              className="h-10 w-10"
-              alt="Logo"
-            />
-            <span className="text-2xl font-bold text-white">TripPlanner</span>
-          </a>
+              className="h-10 w-10 cursor-pointer hover:scale-[1.03] transition-transform"
+                alt="Logo"
+              />
+            </a>
+
+            <span className="text-2xl font-bold text-white cursor-default">
+            TripPlanner
+          </span>
+          </div>
 
           {isHomePage && (
             <>
@@ -71,11 +82,12 @@ function Header() {
                     View Trips
                   </Button>
                 </a>
-                <UserButton 
+                <UserButton
                   appearance={{
                     elements: {
-                      avatarBox: "h-10 w-10 rounded-full border-2 border-[#38da97] hover:scale-110 transition-transform shadow-md hover:shadow-lg"
-                    }
+                      avatarBox:
+                        "h-10 w-10 rounded-full border-2 border-[#38da97] hover:scale-110 transition-transform shadow-md hover:shadow-lg",
+                    },
                   }}
                 />
               </div>

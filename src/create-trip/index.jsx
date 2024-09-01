@@ -282,6 +282,11 @@ function CreateTrip() {
               </div>
             ))}
           </div>
+          <h2 className="text-xl text-white text-center mt-4 -mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </h2>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 50 }}

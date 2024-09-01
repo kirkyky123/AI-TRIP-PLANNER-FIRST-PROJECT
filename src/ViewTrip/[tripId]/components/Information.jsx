@@ -12,6 +12,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
+import SwipeCards from "@/SwipeCards";
 
 function InformationSection({ trip }) {
   const [photoUrl, setPhotoUrl] = useState("");
@@ -41,9 +43,14 @@ function InformationSection({ trip }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="relative">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.5 }}
+        className="relative">
         <img
-          src="/banner2.jpg"
+          src={photoUrl ? photoUrl : "/banner2.jpg"}
           alt="trip-banner"
           className="w-full h-64 sm:h-80 md:h-96 object-cover rounded-xl shadow-lg"
         />
@@ -53,51 +60,79 @@ function InformationSection({ trip }) {
             {trip?.userChoices?.location?.label}
           </h2>
         </div>
-      </div>
+      </motion.div>
       <div className="mt-8">
-        <div className="flex flex-wrap gap-4 justify-center">
-          <InfoTag icon="📆" text={`${trip?.userChoices?.days} Day Trip`} />
-          <InfoTag
-            icon={trip?.userChoices?.budgetImg}
-            text={`${trip?.userChoices?.budget} Budget`}
-          />
-          <InfoTag
-            icon={trip?.userChoices?.peopleImg}
-            text={trip?.userChoices?.people}
-          />
-          <Dialog>
-            <DialogTrigger asChild>
-              <div className="relative z-10 flex cursor-pointer items-center overflow-hidden rounded-xl p-[2px] transition-transform hover:scale-105 ml-10">
-                <div className="animate-rotate absolute inset-0 h-full w-full rounded-xl bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
-                <div className="relative z-20 flex rounded-xl bg-black sm:p-2 ">
-                  <Button className="bg-black hover:bg-black w-full h-full">
-                    <FaShare className="text-white sm:text-xl" />
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-wrap gap-4 justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+            className="w-full sm:w-auto">
+            <InfoTag icon="📆" text={`${trip?.userChoices?.days} Day Trip`} />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.4 }}
+            className="w-full sm:w-auto">
+            <InfoTag
+              icon={trip?.userChoices?.budgetImg}
+              text={`${trip?.userChoices?.budget} Budget`}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
+            className="w-full sm:w-auto">
+            <InfoTag
+              icon={trip?.userChoices?.peopleImg}
+              text={trip?.userChoices?.people}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.6 }}>
+            <Dialog>
+              <DialogTrigger asChild>
+                <div className="relative z-10 flex justify-center cursor-pointer items-center overflow-hidden rounded-xl p-[2px] transition-transform hover:scale-105">
+                  <div className="animate-rotate absolute inset-0 h-full w-full rounded-xl bg-[conic-gradient(#ffffff_40deg,transparent_120deg)]"></div>
+                  <div className="relative z-20 flex rounded-xl bg-gradient-to-r from-gray-700 via-gray-200 to-gray-700 p-1 border-2 border-gray-800 w-24 sm:w-full">  
+                    <Button className="bg-black h-full w-full sm:w-16">
+                      <FaShare className="text-white text-sm sm:mr-0" />
+                    </Button>
+                  </div>
+                </div>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-mono text-center">
+                    Share this trip
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="flex items-center space-x-2">
+                  <input
+                    className="flex-1 px-3 py-2 text-sm border rounded-md"
+                    value={window.location.href}
+                    readOnly
+                  />
+                  <Button
+                    onClick={copyTripLink}
+                    className="flex items-center space-x-2">
+                    <FaRegCopy />
+                    <span>Copy</span>
                   </Button>
                 </div>
-              </div>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle className="text-2xl font-mono text-center">
-                  Share this trip
-                </DialogTitle>
-              </DialogHeader>
-              <div className="flex items-center space-x-2">
-                <input
-                  className="flex-1 px-3 py-2 text-sm border rounded-md"
-                  value={window.location.href}
-                  readOnly
-                />
-                <Button
-                  onClick={copyTripLink}
-                  className="flex items-center space-x-2">
-                  <FaRegCopy />
-                  <span>Copy</span>
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
+              </DialogContent>
+            </Dialog>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import ViewTrip from "./ViewTrip/[tripId]/index.jsx";
 import MyTrips from "./MyTrips/index.jsx";
 import Contact from "./pages/Contact.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
-
+import { dark } from "@clerk/themes";
 // Create a layout component that includes the Header and Outlet
 const Layout = () => (
   <>
@@ -20,10 +20,10 @@ const Layout = () => (
   </>
 );
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
-  throw new Error("Missing Publishable Key")
+  throw new Error("Missing Publishable Key");
 }
 
 const router = createBrowserRouter([
@@ -40,27 +40,29 @@ const router = createBrowserRouter([
       },
       {
         path: "/view-trip/:tripId",
-        element: <ViewTrip/>
+        element: <ViewTrip />,
       },
       {
         path: "/my-trips",
-        element: <MyTrips/>
+        element: <MyTrips />,
       },
       {
         path: "/contact",
         element: <Contact />,
-      }
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY} domain="localhost">
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+      publishableKey={PUBLISHABLE_KEY}>
       <Toaster richColors={true} />
       <RouterProvider router={router} />
-    </GoogleOAuthProvider>
     </ClerkProvider>
   </StrictMode>
 );
