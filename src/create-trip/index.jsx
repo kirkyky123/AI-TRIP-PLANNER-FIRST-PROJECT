@@ -17,7 +17,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/AiService/firedatabaseConfig";
 import { useNavigate } from "react-router-dom";
 import { MAX_DAYS } from "@/constants/variables";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { useUser, useClerk } from "@clerk/clerk-react";
 
 function CreateTrip() {
@@ -31,6 +31,7 @@ function CreateTrip() {
   const navigate = useNavigate();
 
   const [isWaitingForSignIn, setIsWaitingForSignIn] = useState(false);
+  const arrowControls = useAnimation();
 
   const inputChange = (value, name) => {
     if (name === "budget") {
@@ -71,7 +72,15 @@ function CreateTrip() {
 
   useEffect(() => {
     console.log(formData);
-  }, [formData]);
+    if (formData.people) {
+      arrowControls.stop();
+    } else {
+      arrowControls.start({
+        y: [0, 10, 0],
+        transition: { duration: 1, repeat: Infinity },
+      });
+    }
+  }, [formData.people, arrowControls]);
 
   useEffect(() => {
     if (isWaitingForSignIn && isSignedIn) {
@@ -185,7 +194,7 @@ function CreateTrip() {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5, delay: 0.1 }}>
           <h2 className="text-4xl font-bold">
             <span className="bg-gradient-to-l from-red-500 to-[#38da97] text-transparent bg-clip-text">
@@ -197,7 +206,7 @@ function CreateTrip() {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-lg text-gray-400 mt-4 tracking-normal font-semibold">
           Provide a few details and our AI will craft a personalized itinerary
@@ -207,7 +216,7 @@ function CreateTrip() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col gap-8 mt-6 text-black max-w-[600px]">
           <div>
@@ -248,7 +257,7 @@ function CreateTrip() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-12">
           <h2 className="mt-3 text-xl">What&apos;s your <span className="text-green-300 font-semibold">budget</span>?</h2>
@@ -262,7 +271,7 @@ function CreateTrip() {
                   key={index}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, amount: 0.3 }}
+                  viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: 0.3, delay: 0.05 * index }}
                   onClick={() => inputChange(budget.id, "budget")}
                   className={`my-3 sm:my-5 p-2 sm:p-4 border hover:shadow-lg cursor-pointer rounded-xl select-none 
@@ -282,16 +291,18 @@ function CreateTrip() {
               </div>
             ))}
           </div>
-          <h2 className="text-xl text-white text-center mt-4 -mb-4">
+          <motion.h2 
+            animate={arrowControls}
+            className="text-sm sm:text-xl text-white text-center mt-4 -mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
-          </h2>
+          </motion.h2>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5, delay: 0.5 }}
           className="mt-6 sm:mt-8">
           <h2 className="my-3 sm:my-5 text-xl">How many <span className="text-green-300 font-semibold">people</span>?</h2>
@@ -304,7 +315,7 @@ function CreateTrip() {
                   key={index}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, amount: 0.3 }}
+                  viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: 0.3, delay: 0.05 * index }}
                   onClick={() => inputChange(people.id, "people")}
                   className={`my-3 sm:my-5 p-2 sm:p-4 border cursor-pointer rounded-xl select-none hover:shadow-lg
@@ -330,7 +341,7 @@ function CreateTrip() {
             <motion.div
               initial={{ opacity: 0, rotateX: 90 }}
               whileInView={{ opacity: 1, rotateX: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.5 }}
               className="flex items-center justify-center">
               <div className="relative z-10 flex cursor-pointer items-center overflow-hidden rounded-xl border border-black p-[2.5px] hover:scale-105">

@@ -6,30 +6,10 @@ import PricingCard from "./PricingCard";
 import LandingFooter from "./LandingFooter";
 import Testimonials from "./Testimonials";
 import { motion } from "framer-motion";
-import { useUser, useSignIn } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
+import { SignInButton, SignedOut } from "@clerk/clerk-react";
 
 function Hero() {
-  const { isSignedIn } = useUser();
-  const { signIn } = useSignIn();
-  const navigate = useNavigate();
 
-  const handleCreateTrip = async () => {
-    if (isSignedIn) {
-      navigate("/create-trip");
-    } else {
-      try {
-        await signIn.create({
-          strategy: "oauth_google",
-          redirectUrl: window.location.origin + "/create-trip",
-          redirectUrlComplete: window.location.origin + "/create-trip",
-        });
-      } catch (err) {
-        console.error("Error during sign in:", err);
-        // Handle the error appropriately, maybe show a toast to the user
-      }
-    }
-  };
 
   return (
     <div className="bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-black via-green-800/10 to-green-300/40">
@@ -70,12 +50,15 @@ function Hero() {
           <div className="relative z-10 flex cursor-pointer items-center overflow-hidden rounded-xl border border-black p-[1.5px] hover:scale-105">
             <div className="animate-rotate absolute -inset-1 h-full w-full rounded-full bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
             <div className="relative z-20 flex rounded-[0.60rem] bg-black">
+            <SignedOut>
+              <SignInButton mode="modal">
               <Button
-                onClick={handleCreateTrip}
                 className="bg-black rounded-xl font-bold text-xl text-white hover:text-white
                          hover:bg-gradient-to-br from-black/20 to-[#26ae75]/80 border border-gray-600/70 ease-in">
                 Create a trip, It's free!
               </Button>
+              </SignInButton>
+            </SignedOut>
             </div>
           </div>
         </motion.div>

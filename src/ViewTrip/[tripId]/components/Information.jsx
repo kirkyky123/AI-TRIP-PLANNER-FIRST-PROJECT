@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaShare, FaRegCopy } from "react-icons/fa";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -13,28 +14,27 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import SwipeCards from "@/SwipeCards";
 
 function InformationSection({ trip }) {
   const [photoUrl, setPhotoUrl] = useState("");
 
-  useEffect(() => {
-    if (trip) {
-      getPhoto();
-    }
-  }, [trip]);
-  const getPhoto = async () => {
-    const data = {
-      textQuery: trip?.userChoices?.location?.label
-    };
+  // useEffect(() => {
+  //   if (trip) {
+  //     getPhoto();
+  //   }
+  // }, [trip]);
+  // const getPhoto = async () => {
+  //   const data = {
+  //     textQuery: trip?.userChoices?.location?.label
+  //   };
 
-    const res = await placeDetails(data).then((response) => {
-      console.log(response.data.places[0].photos[3].name);
-      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
-      console.log(updatedPhotoURL);
-      setPhotoUrl(updatedPhotoURL);
-    })
-  };
+  //   const res = await placeDetails(data).then((response) => {
+  //     console.log(response.data.places[0].photos[3].name);
+  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
+  //     console.log(updatedPhotoURL);
+  //     setPhotoUrl(updatedPhotoURL);
+  //   })
+  // };
 
   const copyTripLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -122,12 +122,14 @@ function InformationSection({ trip }) {
                     value={window.location.href}
                     readOnly
                   />
-                  <Button
-                    onClick={copyTripLink}
-                    className="flex items-center space-x-2">
-                    <FaRegCopy />
-                    <span>Copy</span>
-                  </Button>
+                  <DialogClose asChild>
+                    <Button
+                      onClick={copyTripLink}
+                      className="flex items-center space-x-2">
+                      <FaRegCopy />
+                      <span>Copy</span>
+                    </Button>
+                  </DialogClose>
                 </div>
               </DialogContent>
             </Dialog>

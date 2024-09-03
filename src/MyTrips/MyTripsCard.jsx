@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { FaCalendarAlt, FaMoneyBillWave, FaUsers } from "react-icons/fa";
 import {
@@ -16,8 +16,29 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/AiService/firedatabaseConfig";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 
-function MyTripsCard({ trip, onDelete, totalTrips, onDeleteAll }) {
+function MyTripsCard({ trip, onDelete }) {
+  const [photoUrl, setPhotoUrl] = useState("");
+
+  // useEffect(() => {
+  //   if (trip) {
+  //     getPhoto();
+  //   }
+  // }, [trip]);
+  // const getPhoto = async () => {
+  //   const data = {
+  //     textQuery: trip?.userChoices?.location?.label
+  //   };
+
+  //   const res = await placeDetails(data).then((response) => {
+  //     console.log(response.data.places[0].photos[3].name);
+  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[3].name);
+  //     console.log(updatedPhotoURL);
+  //     setPhotoUrl(updatedPhotoURL);
+  //   })
+  // };
+
   const deleteTripById = async (collectionName, tripId) => {
     try {
       const docRef = doc(db, collectionName, tripId);
@@ -33,14 +54,14 @@ function MyTripsCard({ trip, onDelete, totalTrips, onDeleteAll }) {
   return (
     <motion.div
       whileHover={{ scale: 1.03 }}
-      className="bg-white rounded-lg shadow-lg overflow-hidden">
+      className="bg-gradient-to-b from-gray-700 to-gray-900 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2">
       <div className="relative">
         <img
-          src={trip?.userChoices?.location?.photoUrl || "/banner2.jpg"}
+          src={photoUrl ? photoUrl : "/banner2.jpg"}
           alt={trip?.userChoices?.location?.label}
-          className="w-full h-48 object-cover"
+          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-150"
         />
-        <div className="absolute top-0 right-0 p-2 flex space-x-2">
+        <div className="absolute top-2 right-2 flex space-x-2">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <button className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 transition duration-300">
@@ -96,10 +117,10 @@ function MyTripsCard({ trip, onDelete, totalTrips, onDeleteAll }) {
         </div>
       </div>
       <div className="p-4">
-        <h2 className="text-2xl font-bold mb-2 text-gray-800">
+        <h2 className="text-2xl font-bold mb-2 text-white group-hover:text-green-400 transition-colors duration-300">
           {trip?.userChoices?.location?.label?.split(",")[0]}
         </h2>
-        <div className="space-y-2 font-semibold text-gray-700">
+        <div className="space-y-2 font-semibold text-gray-300">
           <div className="flex items-center">
             <FaCalendarAlt className="mr-2 text-blue-500" />
             <span>{trip?.userChoices?.days} day trip</span>
@@ -114,7 +135,7 @@ function MyTripsCard({ trip, onDelete, totalTrips, onDeleteAll }) {
           </div>
         </div>
       </div>
-      <div className="bg-gray-100 px-4 py-3">
+      <div className="bg-gray-800 px-4 py-3">
         <a
           href={`/view-trip/${trip?.id}`}
           className="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300">

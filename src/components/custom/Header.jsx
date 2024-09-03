@@ -32,17 +32,16 @@ function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-2">
-            <a href="/">
+            <a href="/" className="flex items-center cursor-pointer">
               <img
-              src="/logo.svg"
-              className="h-10 w-10 cursor-pointer hover:scale-[1.03] transition-transform"
+                src="/logo.svg"
+                className="h-10 w-10 hover:scale-[1.03] transition-transform"
                 alt="Logo"
               />
+              <span className="text-2xl font-bold text-white cursor-default ml-2">
+                TripPlanner
+              </span>
             </a>
-
-            <span className="text-2xl font-bold text-white cursor-default">
-            TripPlanner
-          </span>
           </div>
 
           {isHomePage && (

@@ -35,7 +35,7 @@ export default function Itinerary({ trip }) {
             key={index}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
             <button
@@ -57,15 +57,14 @@ export default function Itinerary({ trip }) {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {itinerary.PlacesToVisit.map((place, placeIndex) => (
                       <motion.div
-                        key={index}
+                        key={placeIndex}
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.5, delay: index * 0.5 }}>
+                        viewport={{ once: true, amount: 0.1 }}
+                        transition={{ duration: 0.5, delay: placeIndex * 0.1 }}>
                         <ItineraryCard
                           place={place}
                           index={placeIndex}
-                          key={placeIndex}
                         />
                       </motion.div>
                     ))}

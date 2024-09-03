@@ -6,25 +6,25 @@ import { Link } from "react-router-dom";
 function PlaceCard({ place, index }) {
   const [photoUrl, setPhotoUrl] = useState("");
 
-  useEffect(() => {
-    if (place) {
-      getPhoto();
-    }
-  }, [place]);
+  // useEffect(() => {
+  //   if (place) {
+  //     getPhoto();
+  //   }
+  // }, [place]);
 
-  const getPhoto = async () => {
-    const data = {
-      textQuery: place?.PlaceName,
-    };
+  // const getPhoto = async () => {
+  //   const data = {
+  //     textQuery: place?.PlaceName,
+  //   };
 
-    const res = await placeDetails(data).then((response) => {
-      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
-        "{NAME}",
-        response.data.places[0].photos[0].name
-      );
-      setPhotoUrl(updatedPhotoURL);
-    });
-  };
+  //   const res = await placeDetails(data).then((response) => {
+  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+  //       "{NAME}",
+  //       response.data.places[0].photos[0].name
+  //     );
+  //     setPhotoUrl(updatedPhotoURL);
+  //   });
+  // };
 
   return (
     <Link
@@ -34,7 +34,7 @@ function PlaceCard({ place, index }) {
       target="_blank"
       rel="noopener noreferrer"
       className="block group">
-      <div className="bg-gradient-to-b from-gray-700 to-gray-900 border border-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2">
+      <div className="bg-gradient-to-b from-green-900/70 to-green-900/20 border border-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2">
         <div className="relative">
           <img
             src={photoUrl ? photoUrl : "/banner2.jpg"}
