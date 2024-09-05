@@ -23,10 +23,10 @@ export default function Itinerary({ trip }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h1 className="text-3xl font-bold text-white mb-2">
+      <h1 className="text-3xl font-bold text-light-foreground dark:text-dark-foreground mb-2">
         Your Trip Itinerary
       </h1>
-      <p className="text-lg text-gray-400 mb-8">
+      <p className="text-lg text-light-foreground/70 dark:text-dark-foreground/70 mb-8">
         Click on each location for more details
       </p>
       <div className="space-y-8">
@@ -37,11 +37,11 @@ export default function Itinerary({ trip }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+            className="bg-gradient-to-b from-light-background to-light-secondary dark:from-gray-500 dark:to-dark-background border border-black dark:border-white rounded-lg overflow-hidden shadow-lg">
             <button
               onClick={() => toggleDay(itinerary.Day)}
-              className="w-full flex items-center justify-between p-6 text-left focus:outline-none hover:bg-gray-700 transition-colors duration-300">
-              <h2 className="text-2xl font-semibold text-white">
+              className="w-full flex items-center justify-between p-6 text-left focus:outline-none hover:bg-orange-100 dark:hover:bg-gray-700 transition-colors duration-300">
+              <h2 className="text-2xl font-semibold text-black dark:text-white">
                 {itinerary.Day}
               </h2>
               <ChevronDown

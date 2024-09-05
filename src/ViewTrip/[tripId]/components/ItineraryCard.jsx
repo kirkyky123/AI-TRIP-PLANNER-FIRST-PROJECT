@@ -34,7 +34,7 @@ function PlaceCard({ place, index }) {
       target="_blank"
       rel="noopener noreferrer"
       className="block group">
-      <div className="bg-gradient-to-b from-green-900/70 to-green-900/20 border border-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2">
+      <div className=" border border-black dark:border-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2">
         <div className="relative">
           <img
             src={photoUrl ? photoUrl : "/banner2.jpg"}
@@ -48,27 +48,27 @@ function PlaceCard({ place, index }) {
             {index + 1}
           </div>
         </div>
-        <div className="p-4">
-          <h2 className="text-xl font-semibold text-white mb-2 line-clamp-2 group-hover:text-green-400 transition-colors duration-300">
+        <div className="p-4 bg-gradient-to-b to-light-background from-blue-300 dark:from-gray-500 dark:to-dark-background">
+          <h2 className="text-xl font-semibold text-black dark:text-white mb-2 line-clamp-2 group-hover:text-green-800 dark:group-hover:text-green-400 transition-colors duration-300">
             {place.PlaceName}
           </h2>
-          <p className="text-sm text-gray-200 mb-4 line-clamp-3">
+          <p className="text-sm text-gray-700 dark:text-gray-200 mb-4 line-clamp-3">
             {place.PlaceDetails}
           </p>
           <div className="space-y-2 text-sm">
-            <p className="flex items-center text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
+            <p className="flex items-center text-gray-700 dark:text-gray-200 group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">
               <span className="text-lg mr-2">📍</span>
               <span className="underline underline-offset-2 line-clamp-1">
                 {place.PlaceAddress}
               </span>
             </p>
-            <p className="flex items-center text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
+            <p className="flex items-center text-gray-700 dark:text-gray-200 group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">
               <span className="text-lg mr-2">💲</span>
               <span>
                 {place.TicketPricing !== "N/A" ? place.TicketPricing : "Free"}
               </span>
             </p>
-            <p className="flex items-center text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
+            <p className="flex items-center text-gray-700 dark:text-gray-200 group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">
               <span className="text-lg mr-2">🚕</span>
               <span>
                 {index !== 0 ? place.TravelTime : "(Depends on hotel location)"}

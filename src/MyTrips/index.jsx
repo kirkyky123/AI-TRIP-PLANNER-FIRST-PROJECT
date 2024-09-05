@@ -79,7 +79,7 @@ function MyTrips() {
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-black via-green-800/10 to-green-300/40 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-light-background via-light-secondary to-light-primary/40 dark:from-dark-background dark:via-dark-primary/30 dark:to-dark-primary/20 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -87,7 +87,7 @@ function MyTrips() {
           transition={{ duration: 0.5 }}
           className="flex justify-between items-center mb-8"
         >
-          <h1 className="text-4xl font-extrabold text-white">My Trips</h1>
+          <h1 className="text-4xl font-extrabold text-light-foreground dark:text-dark-foreground">My Trips</h1>
           {userTrips.length > 0 && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -125,7 +125,7 @@ function MyTrips() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
-                <MyTripsCard trip={trip} onDelete={removeTrip} />
+                  <MyTripsCard trip={trip} onDelete={removeTrip}/>
               </motion.div>
             ))}
           </div>

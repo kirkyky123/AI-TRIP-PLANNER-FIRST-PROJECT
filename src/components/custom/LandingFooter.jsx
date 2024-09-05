@@ -30,7 +30,7 @@ function LandingFooter() {
   };
 
   return (
-    <footer className="w-full bg-black text-white py-10">
+    <footer className="w-screen bg-black text-white dark:bg-dark-background dark:text-dark-foreground py-10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -90,9 +90,6 @@ function LandingFooter() {
               <FaFacebookF className={socialMediaStyles} />
             </div>
           </div>
-        </div>
-        <div className="mt-8 text-center">
-          <p>&copy; 2024 AI Trip Planner. All rights reserved.</p>
         </div>
       </div>
     </footer>

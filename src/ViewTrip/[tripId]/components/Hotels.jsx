@@ -11,8 +11,8 @@ function Hotels({ trip }) {
       transition={{ duration: 0.5 }}
       className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
     >
-      <h1 className="text-3xl font-bold text-white mb-2">Hotel Recommendations</h1>
-      <p className="text-lg text-gray-400 mb-8">Click on the hotel card for location details</p>
+      <h1 className="text-3xl font-bold text-light-foreground dark:text-dark-foreground mb-2">Hotel Recommendations</h1>
+      <p className="text-lg text-light-foreground/70 dark:text-dark-foreground/70 mb-8">Click on the hotel cards for location details</p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {trip?.tripInfo?.HotelOptions?.map((hotel, index) => (
           <motion.div 

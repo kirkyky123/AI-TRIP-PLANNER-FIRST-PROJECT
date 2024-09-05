@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 import {
   SignedIn,
@@ -9,6 +9,7 @@ import {
   UserButton,
   useUser,
 } from "@clerk/clerk-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 function Header() {
   const location = useLocation();
@@ -27,8 +28,13 @@ function Header() {
     setIsMenuOpen(false);
   };
 
+  const goToContact = () => {
+    console.log("contact");
+    window.location.href = "/contact";
+  };
+
   return (
-    <div className="sticky top-0 z-50 bg-gradient-to-r from-black to-[#26ae75]/70 shadow-lg border-b border-black">
+    <div className="sticky top-0 z-50 bg-gradient-to-r from-light-background via-light-background/85 to-light-secondary dark:from-dark-background  dark:to-dark-primary/50 shadow-lg border-b border-light-border dark:border-dark-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-2">
@@ -38,7 +44,7 @@ function Header() {
                 className="h-10 w-10 hover:scale-[1.03] transition-transform"
                 alt="Logo"
               />
-              <span className="text-2xl font-bold text-white cursor-default ml-2">
+              <span className="text-2xl md:text-xl lg:text-2xl font-bold text-light-foreground dark:text-dark-foreground ml-2">
                 TripPlanner
               </span>
             </a>
@@ -51,15 +57,19 @@ function Header() {
                   (item) => (
                     <button
                       key={item}
-                      onClick={() => scrollToSection(item.toLowerCase())}
-                      className="text-white font-semibold hover:text-[#38da97] transition-all duration-300 px-3 py-2 rounded-lg hover:bg-white/10 transform hover:scale-105">
+                      onClick={
+                        item !== "Contact"
+                          ? () => scrollToSection(item.toLowerCase())
+                          : () => goToContact()
+                      }
+                      className="text-black dark:text-white font-semibold dark:hover:text-[#38da97] transition-all duration-300 px-3 py-2 rounded-lg hover:bg-black hover:text-white dark:hover:bg-white/10 transform hover:scale-105">
                       {item}
                     </button>
                   )
                 )}
               </nav>
               <button
-                className="lg:hidden text-white"
+                className="lg:hidden text-black dark:text-white"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 <Menu size={24} />
               </button>
@@ -67,10 +77,11 @@ function Header() {
           )}
 
           <div className="flex items-center space-x-4">
+            <ThemeToggle />
             <SignedIn>
               <a href="/create-trip" className="hidden sm:block">
                 <Button
-                  className="font-bold bg-gradient-to-br from-blue-600/80 via-[#19915f] to-red-600/80 text-white border-2 border-black
+                  className="font-bold bg-gradient-to-tr from-light-primary via-light-primary/50 to-light-secondary dark:from-black dark:via-black/50 dark:to-dark-primary text-white border-2 border-light-border dark:border-dark-border
                   hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
                   Create new trip
                 </Button>
@@ -95,7 +106,7 @@ function Header() {
               <SignInButton mode="modal">
                 <Button
                   variant="outline"
-                  className="bg-black text-white font-bold hover:bg-gray-800 hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
+                  className="bg-light-primary dark:bg-dark-primary text-white font-bold hover:bg-light-secondary dark:hover:bg-dark-secondary hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
                   Sign In
                 </Button>
               </SignInButton>
@@ -104,19 +115,19 @@ function Header() {
         </div>
       </div>
       {isMenuOpen && isHomePage && (
-        <div className="lg:hidden bg-black/90 py-4 flex flex-col sm:flex-row">
+        <div className="lg:hidden bg-light-background dark:bg-dark-background py-4 flex flex-col sm:flex-row">
           {["Features", "Pricing", "Testimonials", "Contact"].map((item) => (
             <button
               key={item}
               onClick={() => scrollToSection(item.toLowerCase())}
-              className="block w-full text-left text-white font-semibold hover:text-[#38da97] transition-all duration-300 px-6 py-2 sm:text-center
-              hover:bg-white/10">
+              className="block w-full text-left text-light-foreground dark:text-white font-semibold hover:text-white dark:hover:text-[#38da97] transition-all duration-300 px-6 py-2 sm:text-center
+              dark:hover:bg-white/10 hover:bg-black">
               {item}
             </button>
           ))}
           <a href="/create-trip" className="block w-64 px-6 py-2 sm:hidden">
             <Button
-              className="w-full font-bold bg-gradient-to-br from-blue-600/80 via-[#19915f] to-red-600/80 text-white border-2 border-gray-300
+              className="w-full font-bold bg-gradient-to-tr from-light-primary via-light-primary/50 to-light-secondary dark:from-black dark:via-black/50 dark:to-dark-primary text-white border-2 border-light-border dark:border-dark-border
               hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
               Create new trip
             </Button>

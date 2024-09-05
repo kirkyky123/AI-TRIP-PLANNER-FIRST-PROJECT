@@ -55,6 +55,24 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        light: {
+          background: "#F5F5DC", // Beige
+          foreground: "#333333",
+          primary: "#26ae75", // Your existing green
+          secondary: "#87CEEB", // Light sky blue
+          accent: "#FFB6C1", // Light pink
+          muted: "#E0E0E0",
+          border: "#D3D3D3",
+        },
+        dark: {
+          background: "#1A1A1A",
+          foreground: "#FFFFFF",
+          primary: "#38da97",
+          secondary: "#4A90E2",
+          accent: "#FF69B4",
+          muted: "#4A4A4A",
+          border: "#333333",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -77,6 +95,17 @@ module.exports = {
         rotateprice: {
           "0%": { transform: "rotate(0deg) scale(10)" },
           "100%": { transform: "rotate(-360deg) scale(10)" },
+        },
+        "shine-pulse": {
+          "0%": {
+            "background-position": "0% 0%",
+          },
+          "50%": {
+            "background-position": "100% 100%",
+          },
+          to: {
+            "background-position": "0% 0%",
+          },
         },
       },
       animation: {

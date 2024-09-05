@@ -53,8 +53,9 @@ function MyTripsCard({ trip, onDelete }) {
 
   return (
     <motion.div
-      whileHover={{ scale: 1.03 }}
-      className="bg-gradient-to-b from-gray-700 to-gray-900 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2">
+      whileHover={{ scale: 1.05 }}
+      className="bg-gradient-to-b from-light-background to-light-secondary dark:from-gray-700 dark:to-gray-900 rounded-lg overflow-hidden hover:shadow-white dark:hover:shadow-gray-400 hover:shadow-lg 
+      border-black dark:border-white border transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2">
       <div className="relative">
         <img
           src={photoUrl ? photoUrl : "/banner2.jpg"}
@@ -117,10 +118,10 @@ function MyTripsCard({ trip, onDelete }) {
         </div>
       </div>
       <div className="p-4">
-        <h2 className="text-2xl font-bold mb-2 text-white group-hover:text-green-400 transition-colors duration-300">
+        <h2 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white group-hover:text-green-400 transition-colors duration-300">
           {trip?.userChoices?.location?.label?.split(",")[0]}
         </h2>
-        <div className="space-y-2 font-semibold text-gray-300">
+        <div className="space-y-2 font-semibold text-gray-600 dark:text-gray-300">
           <div className="flex items-center">
             <FaCalendarAlt className="mr-2 text-blue-500" />
             <span>{trip?.userChoices?.days} day trip</span>
@@ -135,7 +136,7 @@ function MyTripsCard({ trip, onDelete }) {
           </div>
         </div>
       </div>
-      <div className="bg-gray-800 px-4 py-3">
+      <div className="px-4 py-3">
         <a
           href={`/view-trip/${trip?.id}`}
           className="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300">

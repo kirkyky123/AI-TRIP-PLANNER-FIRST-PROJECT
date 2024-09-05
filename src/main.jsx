@@ -12,6 +12,7 @@ import MyTrips from "./MyTrips/index.jsx";
 import Contact from "./pages/Contact.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { dark } from "@clerk/themes";
+import { ThemeProvider } from 'next-themes';
 // Create a layout component that includes the Header and Outlet
 const Layout = () => (
   <>
@@ -61,8 +62,10 @@ createRoot(document.getElementById("root")).render(
         baseTheme: dark,
       }}
       publishableKey={PUBLISHABLE_KEY}>
-      <Toaster richColors={true} />
-      <RouterProvider router={router} />
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Toaster />
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </ClerkProvider>
   </StrictMode>
 );
