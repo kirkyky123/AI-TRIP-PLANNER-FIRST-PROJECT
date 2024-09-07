@@ -104,7 +104,7 @@ function InformationSection({ trip }) {
                 <div className="relative z-10 flex justify-center cursor-pointer items-center overflow-hidden rounded-xl p-[2px] transition-transform hover:scale-105">
                   <div className="animate-rotate absolute inset-0 h-full w-full rounded-xl bg-[conic-gradient(#ffffff_40deg,transparent_120deg)]"></div>
                   <div className="relative z-20 flex rounded-xl bg-gradient-to-r from-gray-700 via-gray-200 to-gray-700 p-1 border-2 border-gray-800 w-24 sm:w-full">  
-                    <Button className="bg-black h-full w-full sm:w-16 hover:text-black">
+                    <Button className="bg-black h-full w-full sm:w-16 text-white hover:text-black">
                       <FaShare className="text-sm sm:mr-0" />
                     </Button>
                   </div>

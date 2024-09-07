@@ -106,7 +106,7 @@ function Header() {
                   appearance={{
                     elements: {
                       avatarBox:
-                        "h-10 w-10 rounded-full border-2 border-[#38da97] hover:scale-110 transition-transform shadow-md hover:shadow-lg",
+                        "h-10 w-10 rounded-full border-2 border-blue-500 dark:border-[#38da97] hover:scale-110 transition-transform shadow-md hover:shadow-lg",
                     },
                   }}
                 />
