@@ -116,7 +116,7 @@ function Header() {
               <SignInButton mode="modal">
                 <Button
                   variant="outline"
-                  className="bg-light-primary dark:bg-dark-primary text-white font-bold hover:bg-light-secondary dark:hover:bg-dark-secondary hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
+                  className="bg-black text-white font-bold hover:bg-light-secondary/80 dark:hover:bg-dark-primary/80 hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
                   Sign In
                 </Button>
               </SignInButton>
