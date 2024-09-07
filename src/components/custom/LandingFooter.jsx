@@ -13,8 +13,8 @@ function LandingFooter() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const socialMediaStyles =
-    "text-[#abe3cb] text-2xl hover:text-[#2db87e] transition-all duration-300 cursor-pointer transform hover:scale-125 hover:-translate-y-1";
-  const linkStyles = "text-gray-300 hover:text-[#26ae75] hover:underline";
+    "text-blue-400 dark:text-[#abe3cb] text-2xl hover:text-blue-500 dark:hover:text-[#2db87e] transition-all duration-300 cursor-pointer transform hover:scale-125 hover:-translate-y-1";
+  const linkStyles = "text-gray-800 dark:text-gray-300 hover:text-blue-500 dark:hover:text-[#26ae75]";
 
   const scrollToSection = (sectionId) => {
     if (isHomePage) {
@@ -30,7 +30,7 @@ function LandingFooter() {
   };
 
   return (
-    <footer className="w-screen bg-black text-white dark:bg-dark-background dark:text-dark-foreground py-10">
+    <footer className="w-screen bg-orange-200 text-black dark:bg-dark-background dark:text-dark-foreground py-10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>

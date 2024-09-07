@@ -17,6 +17,7 @@ import { db } from "@/AiService/firedatabaseConfig";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
+import { Link } from "react-router-dom";
 
 function MyTripsCard({ trip, onDelete }) {
   const [photoUrl, setPhotoUrl] = useState("");
@@ -54,8 +55,8 @@ function MyTripsCard({ trip, onDelete }) {
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
-      className="bg-gradient-to-b from-light-background to-light-secondary dark:from-gray-700 dark:to-gray-900 rounded-lg overflow-hidden hover:shadow-white dark:hover:shadow-gray-400 hover:shadow-lg 
-      border-black dark:border-white border transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2">
+      className="bg-gradient-to-b from-light-background to-light-secondary dark:from-gray-700 dark:to-gray-900 overflow-hidden hover:shadow-white dark:hover:shadow-gray-400 hover:shadow-lg 
+      border-black dark:border-white border transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2 rounded-t-2xl">
       <div className="relative">
         <img
           src={photoUrl ? photoUrl : "/banner2.jpg"}
@@ -137,11 +138,11 @@ function MyTripsCard({ trip, onDelete }) {
         </div>
       </div>
       <div className="px-4 py-3">
-        <a
-          href={`/view-trip/${trip?.id}`}
+        <Link
+          to={`/view-trip/${trip?.id}`}
           className="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300">
           View Trip Details
-        </a>
+        </Link>
       </div>
     </motion.div>
   );

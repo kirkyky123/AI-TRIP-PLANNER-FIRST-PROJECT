@@ -13,7 +13,13 @@ import Contact from "./pages/Contact.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { dark } from "@clerk/themes";
 import { ThemeProvider } from 'next-themes';
-// Create a layout component that includes the Header and Outlet
+import MouseFollower from "mouse-follower";
+import gsap from "gsap";
+
+MouseFollower.registerGSAP(gsap);
+
+const cursor = new MouseFollower();
+
 const Layout = () => (
   <>
     <Header />

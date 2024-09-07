@@ -46,7 +46,7 @@ function ContactForm() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-10">
+    <div className="w-full max-w-2xl mx-auto mt-10 ">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label

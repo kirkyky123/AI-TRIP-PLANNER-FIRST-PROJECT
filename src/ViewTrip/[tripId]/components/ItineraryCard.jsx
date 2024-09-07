@@ -34,7 +34,8 @@ function PlaceCard({ place, index }) {
       target="_blank"
       rel="noopener noreferrer"
       className="block group">
-      <div className=" border border-black dark:border-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2">
+      <div className=" border border-black dark:border-white overflow-hidden shadow-md hover:shadow-xl
+      transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2 rounded-2xl">
         <div className="relative">
           <img
             src={photoUrl ? photoUrl : "/banner2.jpg"}
@@ -48,7 +49,7 @@ function PlaceCard({ place, index }) {
             {index + 1}
           </div>
         </div>
-        <div className="p-4 bg-gradient-to-b to-light-background from-blue-300 dark:from-gray-500 dark:to-dark-background">
+        <div className="p-4 bg-gradient-to-b to-light-background from-blue-300 dark:from-gray-700 dark:to-dark-background">
           <h2 className="text-xl font-semibold text-black dark:text-white mb-2 line-clamp-2 group-hover:text-green-800 dark:group-hover:text-green-400 transition-colors duration-300">
             {place.PlaceName}
           </h2>

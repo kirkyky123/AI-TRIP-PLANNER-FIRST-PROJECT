@@ -189,7 +189,7 @@ function CreateTrip() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-light-background via-light-secondary to-light-primary/40 dark:from-dark-background dark:via-dark-primary/30 dark:to-dark-primary/20 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-orange-200 via-light-secondary to-light-primary/40 dark:from-dark-background dark:via-dark-primary/30 dark:to-dark-primary/20 py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:px-10 md:px-32 lg:px-46 xl:px-10 mt-10 px-5 text-light-foreground dark:text-dark-foreground">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -197,10 +197,12 @@ function CreateTrip() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5, delay: 0.1 }}>
           <h2 className="text-4xl font-bold">
-            <span className="bg-gradient-to-l from-red-500 to-light-primary text-transparent bg-clip-text">
+            <span className="bg-gradient-to-l from-red-500 to-blue-400 dark:to-light-primary text-transparent bg-clip-text">
               Share your travel preferences{" "}
             </span>
-            <span className="font-NotoColorEmoji text-light-foreground dark:text-dark-foreground">️️🛩️🌴</span>
+            <span className="text-light-foreground dark:text-dark-foreground">
+              ️️🛩️🌴
+            </span>
           </h2>
         </motion.div>
         <motion.p
@@ -220,9 +222,9 @@ function CreateTrip() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col gap-8 mt-6 text-light-foreground dark:text-black max-w-[600px]">
           <div>
-            <h2 className="my-4 text-xl text-light-foreground dark:text-dark-foreground">
+            <h2 className="my-4 text-xl text-light-foreground dark:text-dark-foreground font-semibold">
               Where are you going?{" "}
-              <span className="text-sm text-light-primary dark:text-dark-primary font-bold">
+              <span className="text-sm text-blue-500 dark:text-dark-primary font-semibold">
                 (pick popular locations for better results)
               </span>
             </h2>
@@ -241,9 +243,9 @@ function CreateTrip() {
           </div>
 
           <div>
-            <h2 className="mb-4 text-xl text-light-foreground dark:text-dark-foreground">
+            <h2 className="mb-4 text-xl text-light-foreground dark:text-dark-foreground font-semibold">
               For how many days?{" "}
-              <span className="text-sm text-light-primary dark:text-dark-primary font-bold">{`(1-${MAX_DAYS})`}</span>
+              <span className="text-sm text-blue-500 dark:text-dark-primary font-bold">{`(1-${MAX_DAYS})`}</span>
             </h2>
             <Input
               placeholder={`Ex.3`}
@@ -260,7 +262,13 @@ function CreateTrip() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-12">
-          <h2 className="mt-3 text-xl">What&apos;s your <span className="text-light-primary dark:text-dark-primary font-semibold">budget</span>?</h2>
+          <h2 className="mt-3 text-xl font-semibold">
+            What&apos;s your{" "}
+            <span className="text-blue-500 dark:text-dark-primary font-semibold">
+              budget
+            </span>
+            ?
+          </h2>
 
           <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-8 lg:gap-14 text-light-foreground dark:text-black">
             {selectBudget.map((budget, index) => (
@@ -274,11 +282,11 @@ function CreateTrip() {
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: 0.3, delay: 0.05 * index }}
                   onClick={() => inputChange(budget.id, "budget")}
-                  className={`my-3 sm:my-5 p-2 sm:p-4 border hover:shadow-lg cursor-pointer rounded-xl select-none 
+                  className={`my-3 sm:my-5 p-2 sm:p-4 border hover:shadow-md cursor-pointer rounded-xl select-none 
                 hover:shadow-blue-200 dark:hover:shadow-dark-primary transition-all bg-white dark:bg-white
                 ${
                   formData?.budget === budget.title &&
-                  "shadow-lg border-light-foreground dark:border-dark-foreground border bg-gradient-to-br from-light-background to-light-primary dark:to-black/70 dark:from-dark-primary"
+                  "shadow-lg border-light-foreground dark:border-dark-foreground border bg-gradient-to-br from-orange-200 to-blue-300 dark:to-black/70 dark:from-dark-primary"
                 }`}>
                   <h2 className="text-2xl sm:text-3xl">{budget.img}</h2>
                   <h2 className="text-lg sm:text-xl lg:text-2xl py-1 sm:py-2 font-bold">
@@ -291,11 +299,21 @@ function CreateTrip() {
               </div>
             ))}
           </div>
-          <motion.h2 
+          <motion.h2
             animate={arrowControls}
             className="text-sm sm:text-xl text-light-foreground dark:text-dark-foreground text-center mt-4 -mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 mx-auto"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
             </svg>
           </motion.h2>
         </motion.div>
@@ -305,7 +323,13 @@ function CreateTrip() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5, delay: 0.5 }}
           className="mt-6 sm:mt-8">
-          <h2 className="my-3 sm:my-5 text-xl">How many <span className="text-light-primary dark:text-dark-primary font-semibold">people</span>?</h2>
+          <h2 className="my-3 sm:my-5 text-xl font-semibold">
+            How many{" "}
+            <span className="text-blue-500 dark:text-dark-primary font-semibold">
+              people
+            </span>
+            ?
+          </h2>
           <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-8 lg:gap-14 text-light-foreground dark:text-black">
             {selectTravelers.map((people, index) => (
               <div
@@ -318,11 +342,11 @@ function CreateTrip() {
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: 0.3, delay: 0.05 * index }}
                   onClick={() => inputChange(people.id, "people")}
-                  className={`my-3 sm:my-5 p-2 sm:p-4 border cursor-pointer rounded-xl select-none hover:shadow-lg
+                  className={`my-3 sm:my-5 p-2 sm:p-4 border cursor-pointer rounded-xl select-none hover:shadow-md
                 hover:shadow-blue-200 dark:hover:shadow-dark-primary transition-all bg-white dark:bg-white
                 ${
                   formData?.people === people.title &&
-                  "shadow-lg border-light-foreground dark:border-dark-foreground border bg-gradient-to-tl  to-light-primary from-light-background dark:to-dark-primary dark:from-black/70"
+                  "shadow-lg border-light-foreground dark:border-dark-foreground border bg-gradient-to-tl  from-orange-200 to-blue-300 dark:to-dark-primary dark:from-black/70"
                 }`}>
                   <h2 className="text-2xl sm:text-3xl">{people.img}</h2>
                   <h2 className="text-lg sm:text-xl lg:text-2xl py-1 sm:py-2 font-bold">
@@ -344,13 +368,16 @@ function CreateTrip() {
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.5 }}
               className="flex items-center justify-center">
-                <div className="relative z-10 flex cursor-pointer items-center overflow-hidden rounded-xl p-[1.5px] hover:scale-105">
-              <div className="animate-rotate absolute -inset-1 h-full w-full rounded-full bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
-              <div className="relative z-20 flex rounded-[0.60rem] bg-black">
+              <div className="relative z-10 flex cursor-pointer items-center overflow-hidden rounded-xl p-[1.5px] hover:scale-105">
+                <div
+                  className="animate-rotate absolute -inset-1 h-full w-full rounded-full bg-[conic-gradient(#4bcbeb_40deg,transparent_120deg)]
+              dark:bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
+                <div className="relative z-20 flex rounded-[0.60rem] bg-light-foreground dark:bg-black hover:bg-gradient-to-br from-orange-200 to-blue-500
+                 dark:from-dark-background/20 dark:to-dark-primary/80 ease-in">
                   <Button
                     onClick={createTrip}
                     className="bg-light-foreground dark:bg-black rounded-xl font-bold text-light-background dark:text-white hover:text-light-background dark:hover:text-white
-                       hover:bg-gradient-to-br from-light-background/20 dark:from-dark-background/20 to-light-primary/80 dark:to-dark-primary/80 ease-in
+                       hover:bg-gradient-to-br from-orange-300 to-blue-600 dark:from-dark-background/20 dark:to-dark-primary/80 ease-in
                          w-24 text-sm sm:text-lg sm:w-32 lg:text-xl lg:w-48"
                     disabled={loading}>
                     {loading ? (
@@ -369,7 +396,9 @@ function CreateTrip() {
         <DialogContent>
           <DialogDescription>
             <div className="flex flex-col items-center mx-10 select-none">
-              <h2 className="text-xl text-light-foreground dark:text-dark-foreground">Trip Loading</h2>
+              <h2 className="text-xl text-light-foreground dark:text-dark-foreground">
+                Trip Loading
+              </h2>
               <VscLoading className="size-12 animate-spin mt-5 text-light-primary dark:text-dark-primary" />
             </div>
           </DialogDescription>

@@ -10,8 +10,10 @@ import {
   useUser,
 } from "@clerk/clerk-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { useTheme } from "next-themes";
 
 function Header() {
+  const { theme, setTheme } = useTheme();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,16 +40,24 @@ function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-2">
-            <a href="/" className="flex items-center cursor-pointer">
-              <img
-                src="/logo.svg"
-                className="h-10 w-10 hover:scale-[1.03] transition-transform"
-                alt="Logo"
-              />
+            <Link to="/" className="flex items-center cursor-pointer">
+              {theme === "light" ? (
+                <img
+                  src="/logo.svg"
+                  className="h-10 w-10 hover:scale-[1.03] transition-transform"
+                  alt="Logo"
+                />
+              ) : (
+                <img
+                  src="/darklogo.svg"
+                  className="h-10 w-10 hover:scale-[1.03] transition-transform"
+                  alt="Logo"
+                />
+              )}
               <span className="text-2xl md:text-xl lg:text-2xl font-bold text-light-foreground dark:text-dark-foreground ml-2">
                 TripPlanner
               </span>
-            </a>
+            </Link>
           </div>
 
           {isHomePage && (
@@ -79,19 +89,19 @@ function Header() {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             <SignedIn>
-              <a href="/create-trip" className="hidden sm:block">
+              <Link to="/create-trip" className="hidden sm:block">
                 <Button
-                  className="font-bold bg-gradient-to-tr from-light-primary via-light-primary/50 to-light-secondary dark:from-black dark:via-black/50 dark:to-dark-primary text-white border-2 border-light-border dark:border-dark-border
-                  hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
+                  className="font-bold bg-gradient-to-tr from-blue-400 via-orange-200 to-blue-400 dark:from-dark-primary dark:via-black dark:to-dark-primary text-black dark:text-white
+                  border-2 border-light-border dark:border-dark-border transition-all rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
                   Create new trip
                 </Button>
-              </a>
+              </Link>
               <div className="flex items-center space-x-4">
-                <a href="/my-trips" className="hidden sm:block">
-                  <Button className="bg-black text-white font-bold hover:bg-gray-800 transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
+                <Link to="/my-trips" className="hidden sm:block">
+                  <Button className="bg-black text-white font-bold hover:bg-gray-800 transition-all rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
                     View Trips
                   </Button>
-                </a>
+                </Link>
                 <UserButton
                   appearance={{
                     elements: {
@@ -125,19 +135,19 @@ function Header() {
               {item}
             </button>
           ))}
-          <a href="/create-trip" className="block w-64 px-6 py-2 sm:hidden">
+          <Link to="/create-trip" className="block w-64 px-6 py-2 sm:hidden">
             <Button
               className="w-full font-bold bg-gradient-to-tr from-light-primary via-light-primary/50 to-light-secondary dark:from-black dark:via-black/50 dark:to-dark-primary text-white border-2 border-light-border dark:border-dark-border
               hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
               Create new trip
             </Button>
-          </a>
+          </Link>
           {isSignedIn ? (
-            <a href="/my-trips" className="block w-64 px-6 py-2 mt-2 sm:hidden">
+            <Link to="/my-trips" className="block w-64 px-6 py-2 mt-2 sm:hidden">
               <Button className="w-full bg-black text-white font-bold border-2 border-gray-300 hover:bg-gray-800 transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">
                 View Trips
               </Button>
-            </a>
+            </Link>
           ) : (
             <SignInButton mode="modal">
               <div className="block w-64 px-6 py-2 mt-2 sm:hidden">

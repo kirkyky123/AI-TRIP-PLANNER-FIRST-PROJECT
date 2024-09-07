@@ -37,7 +37,7 @@ export default function Itinerary({ trip }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="bg-gradient-to-b from-light-background to-light-secondary dark:from-gray-500 dark:to-dark-background border border-black dark:border-white rounded-lg overflow-hidden shadow-lg">
+            className="bg-gradient-to-b from-light-background to-light-secondary dark:from-gray-700 dark:to-dark-background border border-black dark:border-white rounded-lg overflow-hidden shadow-lg">
             <button
               onClick={() => toggleDay(itinerary.Day)}
               className="w-full flex items-center justify-between p-6 text-left focus:outline-none hover:bg-orange-100 dark:hover:bg-gray-700 transition-colors duration-300">

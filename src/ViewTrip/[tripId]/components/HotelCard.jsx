@@ -29,14 +29,17 @@ function HotelCard({ hotel }) {
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5 }}
-    >
+      transition={{ duration: 0.5 }}>
       <Link
-        to={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.HotelName + " " + hotel.HotelAddress)}`}
+        to={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+          hotel.HotelName + " " + hotel.HotelAddress
+        )}`}
         target="_blank"
         rel="noopener noreferrer"
         className="block">
-        <div className="bg-gradient-to-b from-gray-700 to-gray-900 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+        <div
+          className="bg-gradient-to-b to-light-background from-blue-300 dark:from-gray-700 dark:to-gray-900
+         overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-t-2xl">
           <div className="relative">
             <img
               src={photoUrl ? photoUrl : "/banner2.jpg"}
@@ -48,13 +51,19 @@ function HotelCard({ hotel }) {
             </div>
           </div>
           <div className="p-6">
-            <h2 className="text-xl font-semibold text-white mb-3 line-clamp-2">{hotel.HotelName}</h2>
-            <p className="text-md text-gray-300 mb-4 flex items-center">
+            <h2 className="text-xl font-semibold text-black dark:text-white mb-3 line-clamp-2">
+              {hotel.HotelName}
+            </h2>
+            <p className="text-md text-gray-500 dark:text-gray-300 mb-4 flex items-center">
               <span className="text-xl mr-2">📍</span>
-              <span className="text-sm underline underline-offset-2 line-clamp-2">{hotel.HotelAddress}</span>
+              <span className="text-sm underline underline-offset-2 line-clamp-2">
+                {hotel.HotelAddress}
+              </span>
             </p>
             <div className="flex justify-between items-center">
-              <span className="text-md font-medium text-green-400 tracking-wide">💵 {hotel.Price}</span>
+              <span className="text-md font-medium text-green-700 dark:text-green-400 tracking-wide">
+                💵 {hotel.Price}
+              </span>
             </div>
           </div>
         </div>
