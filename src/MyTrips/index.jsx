@@ -99,14 +99,14 @@ function MyTrips() {
                 <AlertDialogHeader>
                   <AlertDialogTitle className="text-2xl font-bold text-red-600">Delete All Trips</AlertDialogTitle>
                   <AlertDialogDescription className="text-gray-700">
-                    <p className="mb-4 text-black dark:text-white">Are you sure you want to delete all <span className="font-bold text-blue-700">({userTrips.length})</span> of your trips? This action is <span className="font-bold text-red-600">permanent</span> and cannot be undone.</p>
+                    <p className="mb-4 text-black dark:text-white">Are you sure you want to delete all <span className="font-bold text-blue-700 dark:text-blue-500">({userTrips.length})</span> of your trips? This action is <span className="font-bold text-red-600">permanent</span> and cannot be undone.</p>
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="flex justify-center">
-                  <AlertDialogCancel className="bg-green-400 hover:bg-green-500 text-gray-800 mr-2">Cancel</AlertDialogCancel>
+                  <AlertDialogCancel className="bg-green-400 hover:bg-green-500 text-gray-800 mr-2 rounded-xl">Cancel</AlertDialogCancel>
                   <AlertDialogAction
                     onClick={deleteAllTrips}
-                    className="bg-red-600 hover:bg-red-700 text-white"
+                    className="bg-red-600 hover:bg-red-700 text-white rounded-xl"
                   >
                     Delete All Trips
                   </AlertDialogAction>
