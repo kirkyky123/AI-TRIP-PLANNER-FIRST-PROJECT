@@ -22,24 +22,6 @@ import { Link } from "react-router-dom";
 function MyTripsCard({ trip, onDelete }) {
   const [photoUrl, setPhotoUrl] = useState("");
 
-  // useEffect(() => {
-  //   if (trip) {
-  //     getPhoto();
-  //   }
-  // }, [trip]);
-  // const getPhoto = async () => {
-  //   const data = {
-  //     textQuery: trip?.userChoices?.location?.label
-  //   };
-
-  //   const res = await placeDetails(data).then((response) => {
-  //     console.log(response.data.places[0].photos[3].name);
-  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[3].name);
-  //     console.log(updatedPhotoURL);
-  //     setPhotoUrl(updatedPhotoURL);
-  //   })
-  // };
-
   const deleteTripById = async (collectionName, tripId) => {
     try {
       const docRef = doc(db, collectionName, tripId);
@@ -49,6 +31,45 @@ function MyTripsCard({ trip, onDelete }) {
       toast("Trip deleted successfully.");
     } catch (error) {
       console.error("Error deleting document: ", error);
+    }
+  };
+
+  const formatDateRange = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const options = { month: "short", day: "numeric", year: "2-digit" };
+
+    if (
+      start.getMonth() === end.getMonth() &&
+      start.getFullYear() === end.getFullYear()
+    ) {
+      return `${start.toLocaleDateString("en-US", {
+        month: "short",
+      })} ${start.getDate()}${getOrdinalSuffix(
+        start.getDate()
+      )} - ${end.getDate()}${getOrdinalSuffix(end.getDate())}, ${start
+        .getFullYear()
+        .toString()
+        .slice(-2)}`;
+    } else {
+      return `${start.toLocaleDateString(
+        "en-US",
+        options
+      )} - ${end.toLocaleDateString("en-US", options)}`;
+    }
+  };
+
+  const getOrdinalSuffix = (day) => {
+    if (day > 3 && day < 21) return "th";
+    switch (day % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
     }
   };
 
@@ -76,7 +97,7 @@ function MyTripsCard({ trip, onDelete }) {
                   Delete Trip
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-gray-700">
-                  <p className="mb-4">
+                  <p className="mb-4 text-black dark:text-white">
                     Are you sure you want to delete this trip? This action is{" "}
                     <span className="font-bold text-red-600">permanent</span>{" "}
                     and cannot be undone.
@@ -90,14 +111,28 @@ function MyTripsCard({ trip, onDelete }) {
                       </li>
                       <li className="flex items-center">
                         <FaCalendarAlt className="mr-2 text-blue-500 text-lg" />
-                        <span>{trip?.userChoices?.days} day trip</span>
+                        <span>
+                          {trip?.userChoices?.days} day trip{" "}
+                          <span className="text-blue-600 dark:text-orange-700 underline">
+                            (
+                            {formatDateRange(
+                              trip?.userChoices?.startDate,
+                              trip?.userChoices?.endDate
+                            )}
+                            )
+                          </span>
+                        </span>
                       </li>
                       <li className="flex items-center">
-                        <h2 className="text-lg -ml-1 mr-1">{trip?.userChoices?.budgetImg}</h2>
+                        <h2 className="text-lg -ml-1 mr-1">
+                          {trip?.userChoices?.budgetImg}
+                        </h2>
                         <span>{trip?.userChoices?.budget} budget</span>
                       </li>
                       <li className="flex items-center">
-                        <h2 className="text-lg -ml-1 mr-1">{trip?.userChoices?.peopleImg}</h2>
+                        <h2 className="text-lg -ml-1 mr-1">
+                          {trip?.userChoices?.peopleImg}
+                        </h2>
                         <span>{trip?.userChoices?.people}</span>
                       </li>
                     </ul>
@@ -105,12 +140,12 @@ function MyTripsCard({ trip, onDelete }) {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter className="flex justify-center">
-                <AlertDialogCancel className="bg-green-400 hover:bg-green-500 text-gray-800 mr-2">
+                <AlertDialogCancel className="bg-green-400 hover:bg-green-500 text-gray-800 mr-2 rounded-xl">
                   Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => deleteTripById("trips", trip?.id)}
-                  className="bg-red-600 hover:bg-red-700 text-white">
+                  className="bg-red-600 hover:bg-red-700 text-white rounded-xl">
                   Delete Permanently
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -122,17 +157,31 @@ function MyTripsCard({ trip, onDelete }) {
         <h2 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white group-hover:text-green-400 transition-colors duration-300">
           {trip?.userChoices?.location?.label?.split(",")[0]}
         </h2>
-        <div className="space-y-2 font-semibold text-gray-600 dark:text-gray-300">
+        <div className="space-y-2 font-semibold text-gray-800 dark:text-gray-300">
           <div className="flex items-center">
             <FaCalendarAlt className="mr-2 text-blue-500" />
-            <span>{trip?.userChoices?.days} day trip</span>
+            <span>
+              {trip?.userChoices?.days} day trip{" "}
+              <span className="text-blue-600 dark:text-orange-700 underline">
+                (
+                {formatDateRange(
+                  trip?.userChoices?.startDate,
+                  trip?.userChoices?.endDate
+                )}
+                )
+              </span>
+            </span>
           </div>
           <div className="flex items-center">
-            <h2 className="text-lg -ml-1 mr-1">{trip?.userChoices?.budgetImg}</h2>
+            <h2 className="text-lg -ml-1 mr-1">
+              {trip?.userChoices?.budgetImg}
+            </h2>
             <span>{trip?.userChoices?.budget} budget</span>
           </div>
           <div className="flex items-center">
-            <h2 className="text-lg -ml-1 mr-1">{trip?.userChoices?.peopleImg}</h2>
+            <h2 className="text-lg -ml-1 mr-1">
+              {trip?.userChoices?.peopleImg}
+            </h2>
             <span>{trip?.userChoices?.people}</span>
           </div>
         </div>

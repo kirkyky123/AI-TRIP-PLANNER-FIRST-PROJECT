@@ -32,7 +32,8 @@ function ViewTrip() {
   };
 
   return (
-    <div className="py-10 px-10 sm:px-12 md:px-18 lg:px-30 xl:px-42 bg-gradient-to-br from-light-background via-light-secondary to-light-primary/40 dark:from-dark-background dark:via-dark-primary/30 dark:to-dark-primary/20">
+    <div className="py-10 px-10 sm:px-12 md:px-18 lg:px-30 xl:px-42 bg-gradient-to-br from-light-background via-light-secondary to-light-primary/40 
+    dark:from-dark-background/20 dark:via-dark-primary/30 dark:to-dark-secondary/20">
       <InformationSection trip={trip} />
       <div className="mx-2">
         <Hotels trip={trip} />

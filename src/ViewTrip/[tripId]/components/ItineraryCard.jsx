@@ -49,8 +49,8 @@ function PlaceCard({ place, index }) {
             {index + 1}
           </div>
         </div>
-        <div className="p-4 bg-gradient-to-b to-light-background from-blue-300 dark:from-gray-700 dark:to-dark-background">
-          <h2 className="text-xl font-semibold text-black dark:text-white mb-2 line-clamp-2 group-hover:text-green-800 dark:group-hover:text-green-400 transition-colors duration-300">
+        <div className="p-4 bg-gradient-to-b to-light-background from-blue-300 dark:from-green-800 dark:to-black">
+          <h2 className="text-xl font-semibold text-black dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-red-400 transition-colors text-center duration-300">
             {place.PlaceName}
           </h2>
           <p className="text-sm text-gray-700 dark:text-gray-200 mb-4 line-clamp-3">

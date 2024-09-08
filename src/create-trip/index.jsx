@@ -19,12 +19,22 @@ import { useNavigate } from "react-router-dom";
 import { MAX_DAYS } from "@/constants/variables";
 import { motion, useAnimation } from "framer-motion";
 import { useUser, useClerk } from "@clerk/clerk-react";
+import { DateRange } from "react-date-range";
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 
 function CreateTrip() {
   const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState({});
   const [loadingDialog, setLoadingDialog] = useState(false);
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection'
+    }
+  ]);
 
   const { isSignedIn, user } = useUser();
   const { openSignIn } = useClerk();
@@ -89,6 +99,19 @@ function CreateTrip() {
     }
   }, [isSignedIn, isWaitingForSignIn]);
 
+  const handleDateChange = (ranges) => {
+    setDateRange([ranges.selection]);
+    const start = ranges.selection.startDate;
+    const end = ranges.selection.endDate;
+    const days = Math.round((end - start) / (1000 * 60 * 60 * 24)) + 1;
+    setFormData(prevData => ({
+      ...prevData, 
+      days: days,
+      startDate: start.toISOString(),
+      endDate: end.toISOString()
+    }));
+  };
+
   const createTrip = async () => {
     if (!formData?.location) {
       toast.error("Please enter a location.");
@@ -96,21 +119,12 @@ function CreateTrip() {
     }
 
     if (!formData?.days) {
-      if (isNaN(parseInt(formData?.days))) {
-        toast.error("Please enter a number for days.");
-        return;
-      }
-      toast.error("Please enter amount of days.");
+      toast.error("Please select travel dates.");
       return;
     }
 
-    if (parseInt(formData?.days) === 0) {
-      toast.error("Days can't be 0.");
-      return;
-    }
-
-    if (parseInt(formData?.days) > MAX_DAYS) {
-      toast.error(`Can't exceed ${MAX_DAYS} days.`);
+    if (formData?.days < 1 || formData?.days > 7) {
+      toast.error("Trip duration must be between 1 and 7 days.");
       return;
     }
 
@@ -244,14 +258,16 @@ function CreateTrip() {
 
           <div>
             <h2 className="mb-4 text-xl text-light-foreground dark:text-dark-foreground font-semibold">
-              For how many days?{" "}
-              <span className="text-sm text-blue-500 dark:text-dark-primary font-bold">{`(1-${MAX_DAYS})`}</span>
+              When are you traveling?{" "}
+              <span className="text-sm text-blue-500 dark:text-dark-primary font-bold">(1-7 days)</span>
             </h2>
-            <Input
-              placeholder={`Ex.3`}
-              type="number"
-              onChange={(e) => inputChange(e.target.value, "days")}
-              className="text-light-foreground dark:text-black bg-white"
+            <DateRange
+              editableDateInputs={true}
+              onChange={handleDateChange}
+              moveRangeOnFirstSelection={false}
+              ranges={dateRange}
+              minDate={new Date()}
+              maxDate={new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)}
             />
           </div>
         </motion.div>
@@ -393,13 +409,13 @@ function CreateTrip() {
         </motion.div>
       </div>
       <Dialog open={loadingDialog}>
-        <DialogContent>
+        <DialogContent className="bg-light-background dark:bg-dark-background">
           <DialogDescription>
             <div className="flex flex-col items-center mx-10 select-none">
               <h2 className="text-xl text-light-foreground dark:text-dark-foreground">
                 Trip Loading
               </h2>
-              <VscLoading className="size-12 animate-spin mt-5 text-light-primary dark:text-dark-primary" />
+              <VscLoading className="size-12 animate-spin mt-5 text-blue-400 dark:text-dark-primary" />
             </div>
           </DialogDescription>
         </DialogContent>

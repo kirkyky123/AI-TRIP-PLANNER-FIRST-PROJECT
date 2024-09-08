@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import InfoTag from "./InfoTag";
 
 function InformationSection({ trip }) {
   const [photoUrl, setPhotoUrl] = useState("");
@@ -39,6 +40,45 @@ function InformationSection({ trip }) {
   const copyTripLink = () => {
     navigator.clipboard.writeText(window.location.href);
     toast.success("Copied link!");
+  };
+
+  const formatDateRange = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const options = { month: "short", day: "numeric", year: "2-digit" };
+
+    if (
+      start.getMonth() === end.getMonth() &&
+      start.getFullYear() === end.getFullYear()
+    ) {
+      return `${start.toLocaleDateString("en-US", {
+        month: "short",
+      })} ${start.getDate()}${getOrdinalSuffix(
+        start.getDate()
+      )} - ${end.getDate()}${getOrdinalSuffix(end.getDate())}, ${start
+        .getFullYear()
+        .toString()
+        .slice(-2)}`;
+    } else {
+      return `${start.toLocaleDateString(
+        "en-US",
+        options
+      )} - ${end.toLocaleDateString("en-US", options)}`;
+    }
+  };
+
+  const getOrdinalSuffix = (day) => {
+    if (day > 3 && day < 21) return "th";
+    switch (day % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
   };
 
   return (
@@ -73,7 +113,13 @@ function InformationSection({ trip }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.3 }}
             className="w-full sm:w-auto">
-            <InfoTag icon="📆" text={`${trip?.userChoices?.days} Day Trip`} />
+            <InfoTag
+              icon="📆"
+              text={`${trip?.userChoices?.days} Day (${formatDateRange(
+                trip?.userChoices?.startDate,
+                trip?.userChoices?.endDate
+              )})`}
+            />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -102,15 +148,16 @@ function InformationSection({ trip }) {
             <Dialog>
               <DialogTrigger asChild>
                 <div className="relative z-10 flex justify-center cursor-pointer items-center overflow-hidden rounded-xl p-[2px] transition-transform hover:scale-105">
-                  <div className="animate-rotate absolute inset-0 h-full w-full rounded-xl bg-[conic-gradient(#ffffff_40deg,transparent_120deg)]"></div>
-                  <div className="relative z-20 flex rounded-xl bg-gradient-to-r from-gray-700 via-gray-200 to-gray-700 p-1 border-2 border-gray-800 w-24 sm:w-full">  
-                    <Button className="bg-black h-full w-full sm:w-16 text-white hover:text-black">
+                  <div className="animate-rotate absolute inset-0 h-full w-full rounded-xl bg-[conic-gradient(#ffffff_40deg,transparent_120deg)]
+                              dark:bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
+                  <div className="relative z-20 flex rounded-xl bg-gradient-to-br from-blue-400 via-gray-200 to-blue-400 dark:from-[#26ae75] dark:via-black dark:to-[#26ae75] p-1 border-2 border-light-border dark:border-black w-24 sm:w-full">
+                    <Button className="bg-transparent h-full w-full sm:w-16 text-black dark:text-white">
                       <FaShare className="text-sm sm:mr-0" />
                     </Button>
                   </div>
                 </div>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-md">
+              <DialogContent className="sm:max-w-md bg-light-background dark:bg-dark-background">
                 <DialogHeader>
                   <DialogTitle className="text-2xl font-mono text-center">
                     Share this trip
@@ -136,15 +183,6 @@ function InformationSection({ trip }) {
           </motion.div>
         </motion.div>
       </div>
-    </div>
-  );
-}
-
-function InfoTag({ icon, text }) {
-  return (
-    <div className="flex items-center space-x-2 bg-light-secondary dark:bg-gray-200 text-light-foreground px-4 py-2 rounded-full shadow-md">
-      <span className="text-2xl">{icon}</span>
-      <span className="font-semibold">{text}</span>
     </div>
   );
 }
