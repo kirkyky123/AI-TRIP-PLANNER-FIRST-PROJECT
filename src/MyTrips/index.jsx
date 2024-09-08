@@ -99,7 +99,7 @@ function MyTrips() {
                 <AlertDialogHeader>
                   <AlertDialogTitle className="text-2xl font-bold text-red-600">Delete All Trips</AlertDialogTitle>
                   <AlertDialogDescription className="text-gray-700">
-                    <p className="mb-4">Are you sure you want to delete all <span className="font-bold text-blue-700">({userTrips.length})</span> of your trips? This action is <span className="font-bold text-red-600">permanent</span> and cannot be undone.</p>
+                    <p className="mb-4 text-black dark:text-white">Are you sure you want to delete all <span className="font-bold text-blue-700">({userTrips.length})</span> of your trips? This action is <span className="font-bold text-red-600">permanent</span> and cannot be undone.</p>
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="flex justify-center">
