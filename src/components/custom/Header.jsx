@@ -36,7 +36,7 @@ function Header() {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-gradient-to-r from-light-background via-light-background/85 to-light-secondary dark:from-dark-background  dark:to-dark-primary/50 shadow-lg border-b border-light-border dark:border-dark-border">
+    <div className="sticky top-0 z-50 bg-gradient-to-tr from-light-background via-light-background/85 to-light-secondary dark:from-dark-background  dark:to-dark-primary/50 shadow-lg border-b border-light-border dark:border-dark-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-2">
