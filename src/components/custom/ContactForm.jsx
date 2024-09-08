@@ -12,7 +12,7 @@ import { FaXTwitter } from "react-icons/fa6";
 
 function ContactForm() {
 
-  const socialMediaStyles = "text-[#abe3cb] text-2xl hover:text-[#2db87e] transition-all duration-300 cursor-pointer transform hover:scale-125 hover:-translate-y-1";
+  const socialMediaStyles = "text-2xl text-gray-700 dark:text-white hover:text-blue-600 dark:hover:text-[#38d996] transition-all duration-300 cursor-pointer transform hover:scale-125 hover:-translate-y-1";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -46,12 +46,12 @@ function ContactForm() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-10 ">
+    <div className="w-full max-w-2xl mx-auto mt-4 flex flex-col">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label
             htmlFor="name"
-            className="block text-lg font-bold text-[#abe3cb]">
+            className="block text-lg font-bold text-blue-500 dark:text-[#abe3cb]">
             Name
           </label>
           <input
@@ -62,14 +62,14 @@ function ContactForm() {
             onChange={handleChange}
             className={`mt-1 block w-full rounded-md border font-semibold ${
               errors.name ? 'border-red-500' : 'border-gray-600'
-            } bg-black text-white px-3 py-2 focus:border-[#2db87e] focus:outline-none focus:ring-1 focus:ring-[#2db87e]`}
+            } bg-white dark:bg-black text-black dark:text-white px-3 py-2 focus:border-orange-300 dark:focus:border-[#2db87e] focus:outline-none focus:ring-1 focus:ring-orange-300 dark:focus:ring-[#2db87e]`}
           />
           {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
         </div>
         <div>
           <label
             htmlFor="email"
-            className="block text-lg font-bold text-[#abe3cb]">
+            className="block text-lg font-bold text-blue-500 dark:text-[#abe3cb]">
             Email
           </label>
           <input
@@ -80,14 +80,14 @@ function ContactForm() {
             onChange={handleChange}
             className={`mt-1 block w-full rounded-md border font-semibold ${
               errors.email ? 'border-red-500' : 'border-gray-600'
-            } bg-black text-white px-3 py-2 focus:border-[#2db87e] focus:outline-none focus:ring-1 focus:ring-[#2db87e]`}
+            } bg-white dark:bg-black text-black dark:text-white px-3 py-2 focus:border-orange-300 dark:focus:border-[#2db87e] focus:outline-none focus:ring-1 focus:ring-orange-300 dark:focus:ring-[#2db87e]`}
           />
           {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
         </div>
         <div>
           <label
             htmlFor="message"
-            className="block text-lg font-bold text-[#abe3cb]">
+            className="block text-lg font-bold text-blue-500 dark:text-[#abe3cb]">
             Message
           </label>
           <textarea
@@ -98,14 +98,16 @@ function ContactForm() {
             rows="4"
             className={`mt-1 block w-full rounded-md border ${
               errors.message ? 'border-red-500' : 'border-gray-600'
-            } bg-black text-white px-3 py-2 focus:border-[#2db87e] focus:outline-none focus:ring-1 focus:ring-[#2db87e] resize-none`}
+            } bg-white dark:bg-black text-black dark:text-white px-3 py-2 focus:border-orange-300 dark:focus:border-[#2db87e] focus:outline-none focus:ring-1 focus:ring-orange-300 dark:focus:ring-[#2db87e] resize-none`}
           ></textarea>
           {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
         </div>
-        <div>
+        <div className="flex justify-center">
           <Button
             type="submit"
-            className="w-full border-2 border-[#2db87e] bg-black text-white font-bold py-2 px-4 rounded-md hover:bg-[#26ae75] transition duration-300">
+            className="w-fit items-center text-lg rounded-xl border-2 border-gray-700 bg-white dark:bg-black text-black dark:text-white font-semibold px-4
+            hover:bg-gradient-to-tr from-orange-200 to-blue-300 dark:hover:bg-gradient-to-tr dark:from-green-600 dark:to-black 
+            hover:scale-105 transition duration-300">
             Send Message
           </Button>
         </div>

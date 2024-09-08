@@ -13,8 +13,8 @@ function LandingFooter() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const socialMediaStyles =
-    "text-blue-400 dark:text-[#abe3cb] text-2xl hover:text-blue-500 dark:hover:text-[#2db87e] transition-all duration-300 cursor-pointer transform hover:scale-125 hover:-translate-y-1";
-  const linkStyles = "text-gray-800 dark:text-gray-300 hover:text-blue-500 dark:hover:text-[#26ae75]";
+    "text-gray-700 dark:text-white text-2xl hover:text-blue-500 dark:hover:text-[#2db87e] cursor-pointer transition-all duration-300 transform hover:scale-125 hover:-translate-y-1";
+  const linkStyles = "text-gray-800 dark:text-gray-300 hover:text-blue-500 dark:hover:text-[#26ae75] transform transition-all duration-300";
 
   const scrollToSection = (sectionId) => {
     if (isHomePage) {
@@ -68,14 +68,14 @@ function LandingFooter() {
             <h3 className="text-xl font-bold mb-4">Legal</h3>
             <ul>
               <li>
-                <a href="#" className={linkStyles}>
+              <Link to="/" className={linkStyles}>
                   Terms of Service
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className={linkStyles}>
+              <Link to="/contact" className={linkStyles}>
                   Privacy Policy
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

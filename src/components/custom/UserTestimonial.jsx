@@ -24,7 +24,7 @@ function UserTestimonial({ image, name, text, border }) {
           ev.currentTarget.style.setProperty("--x", `${xPercentage * 100}%`);
           ev.currentTarget.style.setProperty("--y", `${yPercentage * 100}%`);
         }}
-        className={`group relative rounded-lg shadow-md p-6 mb-4 flex flex-col items-center text-center ${border} border-2 bg-black
+        className={`group relative rounded-lg shadow-md p-6 mb-4 flex flex-col items-center text-center ${border} border-2 bg-orange-200 dark:bg-black
                     transition-transform ease-out hover:[transform:rotateX(var(--x-rotation))_rotateY(var(--y-rotation))_scale(1.1)]`}
       >
         <img
@@ -32,9 +32,9 @@ function UserTestimonial({ image, name, text, border }) {
           alt={name}
           className="w-24 h-24 rounded-full mb-4 object-cover"
         />
-        <p className="text-gray-400 italic mb-4 font-semibold">{text}</p>
-        <p className="text-white font-bold text-xl">-{name}</p>
-        <div className="pointer-events-none absolute inset-0 group-hover:bg-[radial-gradient(at_var(--x)_var(--y),rgba(220,255,220,0.3)_20%,transparent_80%)]"/>
+        <p className="text-gray-700 dark:text-gray-400 italic mb-4 font-semibold">{text}</p>
+        <p className="text-black dark:text-white font-bold text-xl">-{name}</p>
+        <div className="pointer-events-none absolute inset-0 group-hover:bg-[radial-gradient(at_var(--x)_var(--y),rgba(173,216,230,0.3)_20%,transparent_80%)] dark:group-hover:bg-[radial-gradient(at_var(--x)_var(--y),rgba(220,255,220,0.3)_20%,transparent_80%)]"/>
       </div>
     </div>
   );

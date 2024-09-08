@@ -6,7 +6,6 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import CreateTrip from "./create-trip/index.jsx";
 import Header from "./components/custom/Header.jsx";
 import { Toaster } from "./components/ui/sonner.jsx";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import ViewTrip from "./ViewTrip/[tripId]/index.jsx";
 import MyTrips from "./MyTrips/index.jsx";
 import Contact from "./pages/Contact.jsx";
@@ -19,6 +18,7 @@ import gsap from "gsap";
 MouseFollower.registerGSAP(gsap);
 
 const cursor = new MouseFollower();
+
 
 const Layout = () => (
   <>

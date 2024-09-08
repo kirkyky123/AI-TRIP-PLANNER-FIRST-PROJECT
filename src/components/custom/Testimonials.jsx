@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import Marquee from "@/components/magicui/marquee";
 import UserTestimonial from "./UserTestimonial";
 
 function Testimonials() {
@@ -35,50 +35,16 @@ function Testimonials() {
     },
   ];
 
-  const scrollContainerRef = useRef(null);
-  const [isPaused, setIsPaused] = useState(false);
-
-  useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    let scrollInterval;
-
-    if (!isPaused) {
-      scrollInterval = setInterval(() => {
-        if (scrollContainer) {
-          scrollContainer.scrollLeft += 1; // Increased scroll speed
-          if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
-            scrollContainer.scrollLeft = 18; // Reset scroll to the beginning
-          }
-        }
-      }, 10); // Decreased interval for faster scrolling
-    }
-
-    return () => {
-      clearInterval(scrollInterval);
-    };
-  }, [isPaused]);
+  const firstRow = testimonials.slice(0, Math.ceil(testimonials.length / 2));
 
   return (
-    <div
-      className="overflow-hidden relative"
-      ref={scrollContainerRef}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}>
-      <div className="flex mt-10 mb-5 px-4 sm:px-12">
-        {testimonials.concat(testimonials).map((testimonial, index) => (
-          <div
-            key={index}
-            className="w-80 flex-shrink-0 mx-4 transition-transform duration-300 hover:scale-105">
-            <UserTestimonial
-              name={testimonial.name}
-              text={testimonial.text}
-              image={testimonial.image}
-              border={testimonial.border}
-            />
+      <Marquee pauseOnHover className="[--duration:20s]">
+        {firstRow.map((testimonial, index) => (
+          <div key={index} className="w-80 flex-shrink-0 mx-4 transition-transform duration-300 hover:scale-105 mt-10">
+          <UserTestimonial key={index} {...testimonial} />
           </div>
         ))}
-      </div>
-    </div>
+      </Marquee>
   );
 }
 

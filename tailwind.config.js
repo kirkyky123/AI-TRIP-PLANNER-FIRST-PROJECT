@@ -18,8 +18,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        'NotoColorEmoji': ["Noto Color Emoji", "sans-serif"],
-        'BebasNeue': ["Bebas Neue", "sans-serif"],
+
       },
       colors: {
         border: "hsl(var(--border))",
@@ -107,12 +106,18 @@ module.exports = {
             "background-position": "0% 0%",
           },
         },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         rotate: "rotate 7s linear infinite",
         rotateprice: "rotate 10s linear infinite",
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
     },
   },
