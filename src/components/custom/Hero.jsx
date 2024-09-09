@@ -15,11 +15,11 @@ import { useTheme } from "next-themes";
 
 function Hero() {
   const { theme } = useTheme();
-  return (
+  return ( 
     <div className="bg-gradient-to-br from-light-background via-light-secondary/80 to-light-secondary/60 dark:from-dark-background dark:via-dark-primary/20 dark:to-dark-primary/10">
       <div className="flex flex-col items-center mx-20 sm:mx-10 md:mx-30 lg:mx-20 gap-14">
         <div className="text-[50px] text-center font-extrabold mt-40 sm:mx-10 md:mx-20 lg:mx-32 xl:mx-40 tracking-normal">
-          <h2 className="text-black bg-gradient-to-b from-blue-500 via-blue-600 to-blue-500 dark:to-[#38da97] dark:via-[#38da97]/80 dark:from-[#38da97] text-transparent bg-clip-text">
+          <h2 className="text-blue-500 dark:text-[#38da97]">
             <BoxReveal boxColor={theme === "light" ? "#0096FF" : "#38da97"} duration={0.5}>
               <span className="underline underline-offset-[14px] decoration-[#dc4a4a] dark:decoration-[#e0e3e6] inline bg-gradient-to-l from-blue-500 to-orange-500 dark:to-red-500 dark:from-[#38da97] text-transparent bg-clip-text">
                 Effortlessly
