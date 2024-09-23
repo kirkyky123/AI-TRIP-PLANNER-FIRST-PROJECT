@@ -12,9 +12,9 @@ import ShineBorder from "../magicui/shine-border";
 import HyperText from "../magicui/hyper-text";
 import { useTheme } from "next-themes";
 
-
 function Hero() {
   const { theme } = useTheme();
+  
   return ( 
     <div className="bg-gradient-to-br from-light-background via-light-secondary/80 to-light-secondary/60 dark:from-dark-background dark:via-dark-primary/20 dark:to-dark-primary/10">
       <div className="flex flex-col items-center mx-20 sm:mx-10 md:mx-30 lg:mx-20 gap-14">
@@ -61,7 +61,7 @@ function Hero() {
                               dark:bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
               <div className="relative z-20 flex rounded-[0.60rem] bg-light-foreground dark:bg-black hover:bg-gradient-to-br dark:from-black/20 dark:to-[#26ae75]/80">
                 <SignedOut>
-                  <SignInButton mode="modal">
+                  <SignInButton mode="modal" forceRedirectUrl="/create-trip">
                     <div className="flex justify-center">
                       <Button
                         className="bg-light-foreground dark:bg-black rounded-xl font-bold text-xl text-white hover:text-white

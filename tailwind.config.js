@@ -55,11 +55,11 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
         light: {
-          background: "#F5F5DC", // Beige
+          background: "#F5F5DC",
           foreground: "#333333",
-          primary: "#26ae75", // Your existing green
-          secondary: "#87CEEB", // Light sky blue
-          accent: "#FFB6C1", // Light pink
+          primary: "#26ae75",
+          secondary: "#87CEEB",
+          accent: "#FFB6C1",
           muted: "#E0E0E0",
           border: "#D3D3D3",
         },

@@ -113,7 +113,7 @@ function Header() {
               </div>
             </SignedIn>
             <SignedOut>
-              <SignInButton mode="modal">
+              <SignInButton mode="modal" forceRedirectUrl="/create-trip">
                 <Button
                   variant="outline"
                   className="bg-black text-white font-bold hover:bg-light-secondary/80 dark:hover:bg-dark-primary/80 hover:text-white transition-all duration-300 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105">

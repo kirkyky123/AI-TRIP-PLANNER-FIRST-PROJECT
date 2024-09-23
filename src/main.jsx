@@ -61,6 +61,8 @@ const router = createBrowserRouter([
   },
 ]);
 
+
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ClerkProvider
