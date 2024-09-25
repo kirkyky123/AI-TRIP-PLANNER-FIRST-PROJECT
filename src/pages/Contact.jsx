@@ -13,7 +13,7 @@ function Contact() {
             : "linear-gradient(to right, #ef4444, #38da97, #3b82f6)"
         }
         duration={0.4}>
-        <h1 className="text-4xl font-bold text-center mt-20 bg-gradient-to-l from-blue-500 to-orange-500 dark:from-blue-400 dark:via-[#38da97] dark:to-red-600 text-transparent bg-clip-text">
+        <h1 className="text-4xl font-bold text-center mt-14 bg-gradient-to-l from-blue-500 to-orange-500 dark:from-blue-400 dark:via-[#38da97] dark:to-red-600 text-transparent bg-clip-text">
           Get in touch
         </h1>
       </BoxReveal>

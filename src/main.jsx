@@ -11,17 +11,18 @@ import MyTrips from "./MyTrips/index.jsx";
 import Contact from "./pages/Contact.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { dark } from "@clerk/themes";
-import { ThemeProvider } from 'next-themes';
+import { ThemeProvider } from "next-themes";
 import MouseFollower from "mouse-follower";
 import gsap from "gsap";
+import ScrollToTop from "./components/custom/ScrollToTop.jsx";
 
 MouseFollower.registerGSAP(gsap);
 
 const cursor = new MouseFollower();
 
-
 const Layout = () => (
   <>
+    <ScrollToTop />
     <Header />
     <Outlet />
   </>
@@ -61,17 +62,15 @@ const router = createBrowserRouter([
   },
 ]);
 
-
-
 createRoot(document.getElementById("root")).render(
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-      }}
-      publishableKey={PUBLISHABLE_KEY}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <Toaster />
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </ClerkProvider>
+  <ClerkProvider
+    appearance={{
+      baseTheme: dark,
+    }}
+    publishableKey={PUBLISHABLE_KEY}>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <Toaster />
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  </ClerkProvider>
 );

@@ -11,6 +11,7 @@ import {
 import { FaXTwitter } from "react-icons/fa6";
 import BoxReveal from "../magicui/box-reveal";
 import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
 
 function ContactForm() {
   const { theme } = useTheme();
@@ -45,7 +46,7 @@ function ContactForm() {
     if (validateForm()) {
       console.log("Form submitted:", formData);
       setFormData({ name: "", email: "", message: "" });
-      toast.success("Email sent successfully!");
+      toast.success("Email successfully sent!");
     }
   };
 
@@ -55,8 +56,8 @@ function ContactForm() {
         <div>
           <BoxReveal
             boxColor={theme === "light" ? "#3b82f6" : "#abe3cb"}
-            duration={0.1}
-            delay={0.1}>
+            duration={0.2}
+            delay={0.2}>
             <label
               htmlFor="name"
               className="block text-lg font-bold text-blue-500 dark:text-[#abe3cb] ">
@@ -65,9 +66,9 @@ function ContactForm() {
           </BoxReveal>
           <BoxReveal
             boxColor={theme === "light" ? "#FFFFFF" : "#000000"}
-            duration={0.2}
+            duration={0.3}
             width="100%"
-            delay={0.2}>
+            delay={0.3}>
             <input
               type="text"
               id="name"
@@ -86,8 +87,8 @@ function ContactForm() {
         <div>
           <BoxReveal
             boxColor={theme === "light" ? "#3b82f6" : "#abe3cb"}
-            duration={0.3}
-            delay={0.3}>
+            duration={0.4}
+            delay={0.4}>
             <label
               htmlFor="email"
               className="block text-lg font-bold text-blue-500 dark:text-[#abe3cb]">
@@ -96,9 +97,9 @@ function ContactForm() {
           </BoxReveal>
           <BoxReveal
             boxColor={theme === "light" ? "#FFFFFF" : "#000000"}
-            duration={0.4}
+            duration={0.5}
             width="100%"
-            delay={0.4}>
+            delay={0.5}>
             <input
               type="email"
               id="email"
@@ -117,8 +118,8 @@ function ContactForm() {
         <div>
           <BoxReveal
             boxColor={theme === "light" ? "#3b82f6" : "#abe3cb"}
-            duration={0.5}
-            delay={0.5}>
+            duration={0.6}
+            delay={0.6}>
             <label
               htmlFor="message"
               className="block text-lg font-bold text-blue-500 dark:text-[#abe3cb]">
@@ -127,9 +128,9 @@ function ContactForm() {
           </BoxReveal>
           <BoxReveal
             boxColor={theme === "light" ? "#FFFFFF" : "#000000"}
-            duration={0.6}
+            duration={0.7}
             width="100%"
-            delay={0.6}>
+            delay={0.7}>
             <textarea
               id="message"
               name="message"
@@ -148,8 +149,8 @@ function ContactForm() {
         <div className="flex justify-center">
           <BoxReveal
             boxColor={theme === "light" ? "#FFFFFF" : "#abe3cb"}
-            duration={0.7}
-            delay={0.6}
+            duration={0.6}
+            delay={0.8}
             width="100%">
             <div className="flex justify-center my-1">
               <Button
@@ -164,12 +165,48 @@ function ContactForm() {
         </div>
       </form>
       <div className="mt-8 flex justify-center space-x-6">
-        <FaGithub className={socialMediaStyles} />
-        <FaLinkedinIn className={socialMediaStyles} />
-        <FaXTwitter className={socialMediaStyles} />
-        <FaInstagram className={socialMediaStyles} />
-        <FaTiktok className={socialMediaStyles} />
-        <FaFacebookF className={socialMediaStyles} />
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, delay: 1 }}
+        >
+          <FaGithub className={socialMediaStyles} />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25, delay: 1.1 }}
+        >
+          <FaLinkedinIn className={socialMediaStyles} />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 1.2 }}
+        >
+          <FaXTwitter className={socialMediaStyles} />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 1.3 }}
+        >
+          <FaInstagram className={socialMediaStyles} />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 1.4 }}
+        >
+          <FaTiktok className={socialMediaStyles} />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 1.5 }}
+        >
+          <FaFacebookF className={socialMediaStyles} />
+        </motion.div>
       </div>
     </div>
   );

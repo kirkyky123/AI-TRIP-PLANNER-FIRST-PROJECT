@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Menu } from "lucide-react";
 import {
   SignedIn,
@@ -15,6 +15,7 @@ import { useTheme } from "next-themes";
 function Header() {
   const { theme } = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isSignedIn } = useUser();
@@ -32,7 +33,7 @@ function Header() {
 
   const goToContact = () => {
     console.log("contact");
-    window.location.href = "/contact";
+    navigate("/contact");
   };
 
   return (
