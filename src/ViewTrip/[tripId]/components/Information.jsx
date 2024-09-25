@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaShare, FaRegCopy } from "react-icons/fa";
 import {
   Dialog,
@@ -19,23 +20,23 @@ import InfoTag from "./InfoTag";
 function InformationSection({ trip }) {
   const [photoUrl, setPhotoUrl] = useState("");
 
-  // useEffect(() => {
-  //   if (trip) {
-  //     getPhoto();
-  //   }
-  // }, [trip]);
-  // const getPhoto = async () => {
-  //   const data = {
-  //     textQuery: trip?.userChoices?.location?.label
-  //   };
+  useEffect(() => {
+    if (trip) {
+      getPhoto();
+    }
+  }, [trip]);
+  const getPhoto = async () => {
+    const data = {
+      textQuery: trip?.userChoices?.location?.label
+    };
 
-  //   const res = await placeDetails(data).then((response) => {
-  //     console.log(response.data.places[0].photos[3].name);
-  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
-  //     console.log(updatedPhotoURL);
-  //     setPhotoUrl(updatedPhotoURL);
-  //   })
-  // };
+    const res = await placeDetails(data).then((response) => {
+      console.log(response.data.places[0].photos[3].name);
+      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
+      console.log(updatedPhotoURL);
+      setPhotoUrl(updatedPhotoURL);
+    })
+  };
 
   const copyTripLink = () => {
     navigator.clipboard.writeText(window.location.href);

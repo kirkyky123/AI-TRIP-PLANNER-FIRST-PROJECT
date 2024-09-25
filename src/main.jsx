@@ -63,14 +63,16 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <ClerkProvider
-    appearance={{
-      baseTheme: dark,
-    }}
-    publishableKey={PUBLISHABLE_KEY}>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <Toaster />
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  </ClerkProvider>
+  <StrictMode>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+      publishableKey={PUBLISHABLE_KEY}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Toaster />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </ClerkProvider>
+  </StrictMode>
 );

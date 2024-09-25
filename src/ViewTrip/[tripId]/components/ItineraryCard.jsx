@@ -6,25 +6,25 @@ import { Link } from "react-router-dom";
 function PlaceCard({ place, index }) {
   const [photoUrl, setPhotoUrl] = useState("");
 
-  // useEffect(() => {
-  //   if (place) {
-  //     getPhoto();
-  //   }
-  // }, [place]);
+  useEffect(() => {
+    if (place) {
+      getPhoto();
+    }
+  }, [place]);
 
-  // const getPhoto = async () => {
-  //   const data = {
-  //     textQuery: place?.PlaceName,
-  //   };
+  const getPhoto = async () => {
+    const data = {
+      textQuery: place?.PlaceName,
+    };
 
-  //   const res = await placeDetails(data).then((response) => {
-  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
-  //       "{NAME}",
-  //       response.data.places[0].photos[0].name
-  //     );
-  //     setPhotoUrl(updatedPhotoURL);
-  //   });
-  // };
+    const res = await placeDetails(data).then((response) => {
+      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+        "{NAME}",
+        response.data.places[0].photos[0].name
+      );
+      setPhotoUrl(updatedPhotoURL);
+    });
+  };
 
   return (
     <Link

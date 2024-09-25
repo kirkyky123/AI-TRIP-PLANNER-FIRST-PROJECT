@@ -43,7 +43,7 @@ function Hero() {
                   : "linear-gradient(to right, #808080, #808080)"
               }
               duration={0.6}>
-              <h2 className="mt-10 text-black dark:text-gray-200 text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+              <h2 className="mt-10 text-black dark:text-gray-200 text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl mx-8 sm:mx-0">
                 <HyperText text="Start your adventure now!" duration={50} />
               </h2>
             </BoxReveal>
@@ -202,7 +202,7 @@ function Hero() {
                 </h2>
               </BoxReveal>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center min-w-80">
               <BoxReveal
                 boxColor={
                   theme === "light"
@@ -210,7 +210,7 @@ function Hero() {
                     : "linear-gradient(to right, #38da97, #38da97)"
                 }
                 duration={1}>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
                   <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}

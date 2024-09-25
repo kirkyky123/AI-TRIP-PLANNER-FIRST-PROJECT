@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useRef, useState } from "react";
 
 function UserTestimonial({ image, name, text, border }) {
