@@ -1,0 +1,417 @@
+{
+  "HotelOptions": [
+    {
+      "HotelName": "The Gritti Palace, a Luxury Collection Hotel, Venice",
+      "HotelAddress": "Campo Santa Maria del Giglio, 2467, 30124 Venezia VE, Italy",
+      "Price": "$800-1200 per night",
+      "Rating": 5,
+      "Description": "A historic palace hotel offering opulent rooms, stunning views of the Grand Canal, a Michelin-starred restaurant, and impeccable service. Experience luxury and grandeur in the heart of Venice."
+    },
+    {
+      "HotelName": "Hotel Danieli, a Luxury Collection Hotel, Venice",
+      "HotelAddress": "Riva degli Schiavoni, 4196, 30122 Venezia VE, Italy",
+      "Price": "$600-900 per night",
+      "Rating": 4.8,
+      "Description": "A luxurious hotel with a prime location on the Riva degli Schiavoni, offering elegant rooms, panoramic views, multiple restaurants, and a rooftop terrace for breathtaking sunsets."
+    },
+    {
+      "HotelName": "Hotel Bauer Palazzo, Venice",
+      "HotelAddress": "San Moisè, 2154, 30124 Venezia VE, Italy",
+      "Price": "$500-700 per night",
+      "Rating": 4.7,
+      "Description": "An elegant hotel on the Grand Canal, featuring spacious rooms, a rooftop terrace with stunning city views, a Michelin-starred restaurant, and a charming courtyard."
+    },
+    {
+      "HotelName": "The St. Regis Venice",
+      "HotelAddress": "Campo Santa Maria Formosa, 5250, 30122 Venezia VE, Italy",
+      "Price": "$400-600 per night",
+      "Rating": 4.6,
+      "Description": "A modern and sophisticated hotel with a prime location near the Rialto Bridge, offering luxurious rooms, a rooftop pool and bar, and a world-class restaurant."
+    }
+  ],
+  "ItineraryDetails": [
+    {
+      "Day": "Day 1",
+      "PlacesToVisit": [
+        {
+          "PlaceName": "Morning Gondola Ride through the Grand Canal",
+          "PlaceNameSearch": "Gondola Ride",
+          "PlaceDetails": "Experience the magic of Venice from a traditional gondola. Glide through the Grand Canal, admiring iconic landmarks like the Rialto Bridge and the Doge's Palace. Enjoy a romantic and unforgettable journey through the city's heart.",
+          "PlaceAddress": "Various Gondola Stations throughout Venice",
+          "TicketPricing": "$100-150 (per gondola)",
+          "Rating": 5,
+          "BestTimeToVisit": "10:00 AM - 11:30 AM",
+          "TravelTime": "(5 mins from The Gritti Palace)"
+        },
+        {
+          "PlaceName": "Lunch at Ristorante La Caravella",
+          "PlaceNameSearch": "Ristorante La Caravella",
+          "PlaceDetails": "Indulge in a delicious seafood lunch at this acclaimed restaurant, known for its exquisite cuisine and its romantic ambiance. Enjoy fresh seafood dishes with stunning views of the Grand Canal.",
+          "PlaceAddress": "Campo San Polo, 2951, 30125 Venezia VE, Italy",
+          "TicketPricing": "$50-75 (depends on order)",
+          "Rating": 4.8,
+          "BestTimeToVisit": "1:00 PM - 2:00 PM",
+          "TravelTime": "(10 mins from Gondola Ride)"
+        },
+        {
+          "PlaceName": "Afternoon at the Doge's Palace",
+          "PlaceNameSearch": "Doge's Palace",
+          "PlaceDetails": "Explore the opulent former residence of the Doge of Venice, renowned for its impressive architecture, intricate artwork, and fascinating history. Immerse yourself in the grandeur of Venetian power and artistry.",
+          "PlaceAddress": "Piazza San Marco, 1, 30124 Venezia VE, Italy",
+          "TicketPricing": "$25",
+          "Rating": 4.8,
+          "BestTimeToVisit": "3:00 PM - 5:00 PM",
+          "TravelTime": "(15 mins from Ristorante La Caravella)"
+        },
+        {
+          "PlaceName": "Evening at the Rialto Bridge",
+          "PlaceNameSearch": "Rialto Bridge",
+          "PlaceDetails": "Take a romantic stroll across this iconic bridge, offering stunning views of the Grand Canal and the bustling Rialto Market. Enjoy the lively atmosphere and capture picturesque photos of the city.",
+          "PlaceAddress": "Rialto Bridge, 30124 Venezia VE, Italy",
+          "TicketPricing": "Free",
+          "Rating": 4.8,
+          "BestTimeToVisit": "7:00 PM - 8:00 PM",
+          "TravelTime": "(10 mins from Doge's Palace)"
+        },
+        {
+          "PlaceName": "Dinner at Ristorante Al Ponte",
+          "PlaceNameSearch": "Ristorante Al Ponte",
+          "PlaceDetails": "Enjoy a romantic dinner with breathtaking views at this acclaimed restaurant, located on the Rialto Bridge. Indulge in exquisite Venetian cuisine and savor the ambiance of this iconic landmark.",
+          "PlaceAddress": "Rialto Bridge, 30124 Venezia VE, Italy",
+          "TicketPricing": "$60-80 (depends on order)",
+          "Rating": 4.5,
+          "BestTimeToVisit": "9:00 PM - 10:00 PM",
+          "TravelTime": "(5 mins from Rialto Bridge)"
+        }
+      ]
+    },
+    {
+      "Day": "Day 2",
+      "PlacesToVisit": [
+        {
+          "PlaceName": "Morning at St. Mark's Square",
+          "PlaceNameSearch": "St. Mark's Square",
+          "PlaceDetails": "Immerse yourself in the heart of Venice, exploring this iconic square surrounded by stunning landmarks like St. Mark's Basilica, the Doge's Palace, and the Campanile. Enjoy the vibrant atmosphere and admire the architecture.",
+          "PlaceAddress": "Piazza San Marco, 30124 Venezia VE, Italy",
+          "TicketPricing": "Free",
+          "Rating": 5,
+          "BestTimeToVisit": "9:00 AM - 11:00 AM",
+          "TravelTime": "(10 mins from The Gritti Palace)"
+        },
+        {
+          "PlaceName": "Lunch at Ristorante Harry's Bar",
+          "PlaceNameSearch": "Ristorante Harry's Bar",
+          "PlaceDetails": "Indulge in a luxurious lunch at this legendary bar, renowned for its elegant ambiance and its signature Bellini cocktail. Enjoy classic Venetian dishes and experience a touch of Venetian history.",
+          "PlaceAddress": "Campo San Marco, 1323, 30124 Venezia VE, Italy",
+          "TicketPricing": "$40-60 (depends on order)",
+          "Rating": 4.5,
+          "BestTimeToVisit": "12:30 PM - 1:30 PM",
+          "TravelTime": "(5 mins from St. Mark's Square)"
+        },
+        {
+          "PlaceName": "Afternoon at the Peggy Guggenheim Collection",
+          "PlaceNameSearch": "Peggy Guggenheim Collection",
+          "PlaceDetails": "Explore the impressive collection of modern art housed in a stunning palazzo, featuring works by Picasso, Kandinsky, and Dalí. Immerse yourself in the world of avant-garde art and enjoy the captivating atmosphere.",
+          "PlaceAddress": "Dorsoduro, 701, 30123 Venezia VE, Italy",
+          "TicketPricing": "$18",
+          "Rating": 4.6,
+          "BestTimeToVisit": "3:00 PM - 5:00 PM",
+          "TravelTime": "(20 mins from Ristorante Harry's Bar)"
+        },
+        {
+          "PlaceName": "Evening at the Scuola Grande di San Rocco",
+          "PlaceNameSearch": "Scuola Grande di San Rocco",
+          "PlaceDetails": "Admire the magnificent collection of Tintoretto's masterpieces, depicting biblical scenes and stories of San Rocco. Explore the beautifully decorated halls and immerse yourself in the artistry of this Venetian masterpiece.",
+          "PlaceAddress": "Campo San Rocco, 4700, 30125 Venezia VE, Italy",
+          "TicketPricing": "$15",
+          "Rating": 4.7,
+          "BestTimeToVisit": "7:00 PM - 8:30 PM",
+          "TravelTime": "(15 mins from Peggy Guggenheim Collection)"
+        },
+        {
+          "PlaceName": "Dinner at Ristorante Antica Locanda Montin",
+          "PlaceNameSearch": "Ristorante Antica Locanda Montin",
+          "PlaceDetails": "Enjoy a romantic dinner at this charming restaurant, known for its traditional Venetian cuisine and its warm, intimate ambiance. Experience the flavors of Venice in a cozy and authentic setting.",
+          "PlaceAddress": "Calle Larga XXII Marzo, 2266, 30121 Venezia VE, Italy",
+          "TicketPricing": "$45-65 (depends on order)",
+          "Rating": 4.5,
+          "BestTimeToVisit": "9:00 PM - 10:00 PM",
+          "TravelTime": "(15 mins from Scuola Grande di San Rocco)"
+        }
+      ]
+    },
+    {
+      "Day": "Day 3",
+      "PlacesToVisit": [
+        {
+          "PlaceName": "Morning at the Murano Glassblowing Demonstration",
+          "PlaceNameSearch": "Murano Glassblowing",
+          "PlaceDetails": "Take a boat trip to the island of Murano and witness the traditional art of glassblowing. Observe skilled artisans creating intricate glass pieces and learn about the history and techniques of this famous Venetian craft.",
+          "PlaceAddress": "Various Glassblowing Studios on Murano Island",
+          "TicketPricing": "$20-30 (includes boat trip)",
+          "Rating": 4.5,
+          "BestTimeToVisit": "10:00 AM - 12:00 PM",
+          "TravelTime": "(30 mins from The Gritti Palace)"
+        },
+        {
+          "PlaceName": "Lunch at Ristorante Da Ivo",
+          "PlaceNameSearch": "Ristorante Da Ivo",
+          "PlaceDetails": "Enjoy a delicious lunch at this popular restaurant on Murano Island, known for its authentic Venetian cuisine and its fresh seafood dishes. Experience the local flavors and the island's charm.",
+          "PlaceAddress": "Fondamenta dei Vetrai, 39, 30141 Venezia VE, Italy",
+          "TicketPricing": "$30-45 (depends on order)",
+          "Rating": 4.6,
+          "BestTimeToVisit": "1:00 PM - 2:00 PM",
+          "TravelTime": "(5 mins from Murano Glassblowing)"
+        },
+        {
+          "PlaceName": "Afternoon at the Burano Island",
+          "PlaceNameSearch": "Burano Island",
+          "PlaceDetails": "Take a boat trip to the colorful island of Burano, known for its brightly painted houses and its traditional lace-making. Stroll through the charming streets, admire the vibrant colors, and purchase unique souvenirs.",
+          "PlaceAddress": "Burano Island, Venice, Italy",
+          "TicketPricing": "$15 (includes boat trip)",
+          "Rating": 4.5,
+          "BestTimeToVisit": "3:00 PM - 5:00 PM",
+          "TravelTime": "(30 mins from Ristorante Da Ivo)"
+        },
+        {
+          "PlaceName": "Evening at the Ca' d'Oro",
+          "PlaceNameSearch": "Ca' d'Oro",
+          "PlaceDetails": "Admire the architectural beauty of this stunning palazzo, known as the \"Golden House\" for its intricate facade and its collection of Venetian art. Explore the elegant halls and enjoy the captivating views of the Grand Canal.",
+          "PlaceAddress": "Cannaregio, 3689, 30121 Venezia VE, Italy",
+          "TicketPricing": "$10",
+          "Rating": 4.6,
+          "BestTimeToVisit": "7:00 PM - 8:30 PM",
+          "TravelTime": "(40 mins from Burano Island)"
+        },
+        {
+          "PlaceName": "Dinner at Ristorante Da Fiore",
+          "PlaceNameSearch": "Ristorante Da Fiore",
+          "PlaceDetails": "Enjoy a romantic dinner at this acclaimed restaurant, known for its contemporary Venetian cuisine and its sophisticated ambiance. Savor the flavors of Venice in a stylish and modern setting.",
+          "PlaceAddress": "Calle del Pistor, 2399, 30121 Venezia VE, Italy",
+          "TicketPricing": "$55-75 (depends on order)",
+          "Rating": 4.7,
+          "BestTimeToVisit": "9:00 PM - 10:00 PM",
+          "TravelTime": "(10 mins from Ca' d'Oro)"
+        }
+      ]
+    },
+    {
+      "Day": "Day 4",
+      "PlacesToVisit": [
+        {
+          "PlaceName": "Morning at the Basilica di San Marco",
+          "PlaceNameSearch": "Basilica di San Marco",
+          "PlaceDetails": "Explore the iconic St. Mark's Basilica, renowned for its Byzantine architecture, intricate mosaics, and its rich history. Admire the stunning interior, the golden altar, and the impressive mosaics.",
+          "PlaceAddress": "Piazza San Marco, 30124 Venezia VE, Italy",
+          "TicketPricing": "Free (for entry), $5 for climbing the Campanile",
+          "Rating": 4.9,
+          "BestTimeToVisit": "9:00 AM - 11:00 AM",
+          "TravelTime": "(10 mins from The Gritti Palace)"
+        },
+        {
+          "PlaceName": "Lunch at Ristorante Vecchia Malvasia",
+          "PlaceNameSearch": "Ristorante Vecchia Malvasia",
+          "PlaceDetails": "Indulge in a delicious lunch at this charming restaurant, known for its traditional Venetian cuisine and its romantic ambiance. Enjoy fresh seafood dishes and experience the flavors of Venice.",
+          "PlaceAddress": "Calle Larga XXII Marzo, 2603, 30121 Venezia VE, Italy",
+          "TicketPricing": "$40-60 (depends on order)",
+          "Rating": 4.5,
+          "BestTimeToVisit": "1:00 PM - 2:00 PM",
+          "TravelTime": "(10 mins from Basilica di San Marco)"
+        },
+        {
+          "PlaceName": "Afternoon at the Accademia Gallery",
+          "PlaceNameSearch": "Accademia Gallery",
+          "PlaceDetails": "Admire the masterpieces of Venetian art, including works by Bellini, Titian, and Tintoretto. Explore the impressive collection of paintings and sculptures, and learn about the evolution of Venetian art.",
+          "PlaceAddress": "Dorsoduro, 1390, 30123 Venezia VE, Italy",
+          "TicketPricing": "$20",
+          "Rating": 4.7,
+          "BestTimeToVisit": "3:00 PM - 5:00 PM",
+          "TravelTime": "(20 mins from Ristorante Vecchia Malvasia)"
+        },
+        {
+          "PlaceName": "Evening at the Caffè Florian",
+          "PlaceNameSearch": "Caffè Florian",
+          "PlaceDetails": "Enjoy a leisurely evening at this historic cafe, renowned for its elegant ambiance, its literary history, and its delectable pastries. Soak up the atmosphere and savor the charm of this Venetian institution.",
+          "PlaceAddress": "Piazza San Marco, 112, 30124 Venezia VE, Italy",
+          "TicketPricing": "$15-25 (for drinks and snacks)",
+          "Rating": 4.5,
+          "BestTimeToVisit": "7:00 PM - 8:30 PM",
+          "TravelTime": "(10 mins from Accademia Gallery)"
+        },
+        {
+          "PlaceName": "Dinner at Ristorante La Fenice",
+          "PlaceNameSearch": "Ristorante La Fenice",
+          "PlaceDetails": "Enjoy a romantic dinner at this acclaimed restaurant, known for its exquisite Venetian cuisine, its elegant ambiance, and its proximity to the La Fenice opera house. Savor the flavors of Venice in a stylish and sophisticated setting.",
+          "PlaceAddress": "Campo San Fantin, 1946, 30124 Venezia VE, Italy",
+          "TicketPricing": "$70-90 (depends on order)",
+          "Rating": 4.8,
+          "BestTimeToVisit": "9:00 PM - 10:00 PM",
+          "TravelTime": "(10 mins from Caffè Florian)"
+        }
+      ]
+    },
+    {
+      "Day": "Day 5",
+      "PlacesToVisit": [
+        {
+          "PlaceName": "Morning at the Jewish Ghetto",
+          "PlaceNameSearch": "Jewish Ghetto",
+          "PlaceDetails": "Explore the historic Jewish Ghetto, a fascinating area with a rich cultural heritage. Visit the synagogues, stroll through the narrow streets, and learn about the history and traditions of Venice's Jewish community.",
+          "PlaceAddress": "Cannaregio, 30121 Venezia VE, Italy",
+          "TicketPricing": "Free (for entry to the Ghetto), $8 for the synagogues",
+          "Rating": 4.5,
+          "BestTimeToVisit": "9:00 AM - 11:00 AM",
+          "TravelTime": "(15 mins from The Gritti Palace)"
+        },
+        {
+          "PlaceName": "Lunch at Ristorante Ai Do Mori",
+          "PlaceNameSearch": "Ristorante Ai Do Mori",
+          "PlaceDetails": "Enjoy a traditional Venetian lunch at this historic restaurant, known for its classic Venetian dishes and its warm atmosphere. Experience the flavors of Venice in a cozy and authentic setting.",
+          "PlaceAddress": "Calle dei Do Mori, 4292, 30121 Venezia VE, Italy",
+          "TicketPricing": "$35-55 (depends on order)",
+          "Rating": 4.6,
+          "BestTimeToVisit": "12:30 PM - 1:30 PM",
+          "TravelTime": "(10 mins from Jewish Ghetto)"
+        },
+        {
+          "PlaceName": "Afternoon at the Palazzo Grassi",
+          "PlaceNameSearch": "Palazzo Grassi",
+          "PlaceDetails": "Admire the architectural grandeur of this stunning palazzo, home to contemporary art exhibitions. Explore the elegant halls and enjoy the captivating displays of modern and contemporary art.",
+          "PlaceAddress": "Campo San Samuele, 3231, 30124 Venezia VE, Italy",
+          "TicketPricing": "$15",
+          "Rating": 4.5,
+          "BestTimeToVisit": "3:00 PM - 5:00 PM",
+          "TravelTime": "(15 mins from Ristorante Ai Do Mori)"
+        },
+        {
+          "PlaceName": "Evening at the Punta della Dogana",
+          "PlaceNameSearch": "Punta della Dogana",
+          "PlaceDetails": "Visit this contemporary art museum, housed in a historic customs house at the tip of the Dorsoduro district. Explore the unique exhibitions and enjoy the stunning views of the Venetian lagoon.",
+          "PlaceAddress": "Dorsoduro, 2, 30123 Venezia VE, Italy",
+          "TicketPricing": "$15",
+          "Rating": 4.6,
+          "BestTimeToVisit": "7:00 PM - 8:30 PM",
+          "TravelTime": "(20 mins from Palazzo Grassi)"
+        },
+        {
+          "PlaceName": "Dinner at Ristorante La Zitella",
+          "PlaceNameSearch": "Ristorante La Zitella",
+          "PlaceDetails": "Enjoy a romantic dinner with breathtaking views at this acclaimed restaurant, located on the Giudecca island. Indulge in exquisite Venetian cuisine and savor the ambiance of this picturesque location.",
+          "PlaceAddress": "Giudecca, 281, 30133 Venezia VE, Italy",
+          "TicketPricing": "$60-80 (depends on order)",
+          "Rating": 4.7,
+          "BestTimeToVisit": "9:00 PM - 10:00 PM",
+          "TravelTime": "(25 mins from Punta della Dogana)"
+        }
+      ]
+    },
+    {
+      "Day": "Day 6",
+      "PlacesToVisit": [
+        {
+          "PlaceName": "Morning at the Frari Basilica",
+          "PlaceNameSearch": "Frari Basilica",
+          "PlaceDetails": "Admire the grandeur of this impressive church, renowned for its stunning artwork, including Titian's masterpiece \"Assumption of the Virgin\". Explore the intricate details and experience the tranquil atmosphere.",
+          "PlaceAddress": "Campo dei Frari, 30123 Venezia VE, Italy",
+          "TicketPricing": "Free (for entry), $5 for the museum",
+          "Rating": 4.7,
+          "BestTimeToVisit": "9:00 AM - 11:00 AM",
+          "TravelTime": "(15 mins from The Gritti Palace)"
+        },
+        {
+          "PlaceName": "Lunch at Ristorante Trattoria al Ponte",
+          "PlaceNameSearch": "Ristorante Trattoria al Ponte",
+          "PlaceDetails": "Enjoy a traditional Venetian lunch at this charming trattoria, known for its authentic dishes and its lively atmosphere. Experience the local flavors and the warmth of Venetian hospitality.",
+          "PlaceAddress": "Calle della Madonna, 2680, 30121 Venezia VE, Italy",
+          "TicketPricing": "$30-45 (depends on order)",
+          "Rating": 4.5,
+          "BestTimeToVisit": "12:30 PM - 1:30 PM",
+          "TravelTime": "(10 mins from Frari Basilica)"
+        },
+        {
+          "PlaceName": "Afternoon at the Venetian Arsenal",
+          "PlaceNameSearch": "Venetian Arsenal",
+          "PlaceDetails": "Explore this historic shipyard, once the center of Venetian shipbuilding and a symbol of the city's power. Learn about the history of shipbuilding and the arsenal's role in Venice's maritime dominance.",
+          "PlaceAddress": "Castello, 30122 Venezia VE, Italy",
+          "TicketPricing": "$10",
+          "Rating": 4.5,
+          "BestTimeToVisit": "3:00 PM - 5:00 PM",
+          "TravelTime": "(20 mins from Ristorante Trattoria al Ponte)"
+        },
+        {
+          "PlaceName": "Evening at the Teatro La Fenice",
+          "PlaceNameSearch": "Teatro La Fenice",
+          "PlaceDetails": "Attend a performance at this world-renowned opera house, known for its stunning architecture, its rich history, and its exceptional opera productions. Experience the magic of Venetian opera in a truly grand setting.",
+          "PlaceAddress": "Campo San Fantin, 1965, 30124 Venezia VE, Italy",
+          "TicketPricing": "$50-150 (depends on performance)",
+          "Rating": 4.9,
+          "BestTimeToVisit": "7:30 PM - 10:00 PM",
+          "TravelTime": "(15 mins from Venetian Arsenal)"
+        },
+        {
+          "PlaceName": "Dinner at Ristorante Quadri",
+          "PlaceNameSearch": "Ristorante Quadri",
+          "PlaceDetails": "Enjoy a romantic dinner with breathtaking views at this acclaimed restaurant, located in St. Mark's Square. Indulge in exquisite Venetian cuisine and savor the ambiance of this iconic landmark.",
+          "PlaceAddress": "Piazza San Marco, 120, 30124 Venezia VE, Italy",
+          "TicketPricing": "$80-100 (depends on order)",
+          "Rating": 4.8,
+          "BestTimeToVisit": "10:00 PM - 11:00 PM",
+          "TravelTime": "(5 mins from Teatro La Fenice)"
+        }
+      ]
+    },
+    {
+      "Day": "Day 7",
+      "PlacesToVisit": [
+        {
+          "PlaceName": "Morning at the Basilica di San Giorgio Maggiore",
+          "PlaceNameSearch": "Basilica di San Giorgio Maggiore",
+          "PlaceDetails": "Take a vaporetto to this island basilica, offering stunning views of St. Mark's Square and the Venetian lagoon. Admire the Renaissance architecture and enjoy the peaceful atmosphere.",
+          "PlaceAddress": "Isola di San Giorgio Maggiore, 30124 Venezia VE, Italy",
+          "TicketPricing": "$8",
+          "Rating": 4.5,
+          "BestTimeToVisit": "9:00 AM - 11:00 AM",
+          "TravelTime": "(15 mins from The Gritti Palace)"
+        },
+        {
+          "PlaceName": "Lunch at Ristorante Terrazza Danieli",
+          "PlaceNameSearch": "Ristorante Terrazza Danieli",
+          "PlaceDetails": "Enjoy a luxurious lunch with breathtaking views at this restaurant on the rooftop of Hotel Danieli. Indulge in exquisite Venetian cuisine and savor the panoramic views of the city."
+          ,"PlaceAddress": "Riva degli Schiavoni, 4196, 30122 Venezia VE, Italy",
+          "TicketPricing": "$50-75 (depends on order)",
+          "Rating": 4.8,
+          "BestTimeToVisit": "12:30 PM - 1:30 PM",
+          "TravelTime": "(20 mins from Basilica di San Giorgio Maggiore)"
+        },
+        {
+          "PlaceName": "Afternoon at the Ca' Rezzonico",
+          "PlaceNameSearch": "Ca' Rezzonico",
+          "PlaceDetails": "Explore this elegant 18th-century palazzo, known for its opulent interiors and its collection of Venetian art and furniture. Immerse yourself in the grandeur of Venetian aristocracy and the beauty of the Grand Canal.""PlaceAddress": "Dorsoduro, 3136, 30123 Venezia VE, Italy",
+          "TicketPricing": "$12",
+          "Rating": 4.5,
+          "BestTimeToVisit": "3:00 PM - 5:00 PM",
+          "TravelTime": "(15 mins from Ristorante Terrazza Danieli)"
+        },
+        {
+          "PlaceName": "Evening at the Piazza San Marco",
+          "PlaceNameSearch": "Piazza San Marco",
+          "PlaceDetails": "Enjoy a relaxing evening in this iconic square, surrounded by stunning landmarks like St. Mark's Basilica, the Doge's Palace, and the Campanile. Take a leisurely stroll, enjoy street performers, and soak up the vibrant atmosphere.""PlaceAddress": "Piazza San Marco, 30124 Venezia VE, Italy",
+          "TicketPricing": "Free",
+          "Rating": 5,
+          "BestTimeToVisit": "7:00 PM - 9:00 PM",
+          "TravelTime": "(10 mins from Ca' Rezzonico)"
+        },
+        {
+          "PlaceName": "Dinner at Ristorante Venissa",
+          "PlaceNameSearch": "Ristorante Venissa",
+          "PlaceDetails": "Enjoy a unique and unforgettable dining experience at this Michelin-starred restaurant on the island of Mazzorbo. Indulge in contemporary Venetian cuisine with a focus on local produce and sustainable practices.""PlaceAddress": "Via delle Industrie, 3, 30141 Venezia VE, Italy",
+          "TicketPricing": "$120-150 (depends on order)",
+          "Rating": 4.9,
+          "BestTimeToVisit": "9:30 PM - 11:00 PM",
+          "TravelTime": "(40 mins from Piazza San Marco)"
+        }
+      ]
+    }
+  ]
+}
+index.jsx: 179: 12

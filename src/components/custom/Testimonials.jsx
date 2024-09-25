@@ -38,13 +38,15 @@ function Testimonials() {
   const firstRow = testimonials.slice(0, Math.ceil(testimonials.length / 2));
 
   return (
-      <Marquee pauseOnHover className="[--duration:20s]">
-        {firstRow.map((testimonial, index) => (
-          <div key={index} className="w-80 flex-shrink-0 mx-4 transition-transform duration-300 hover:scale-105 mt-10">
+    <Marquee pauseOnHover className="[--duration:20s]">
+      {firstRow.map((testimonial, index) => (
+        <div
+          key={index}
+          className="w-80 flex-shrink-0 mx-4 transition-transform duration-300 hover:scale-105 mt-10">
           <UserTestimonial key={index} {...testimonial} />
-          </div>
-        ))}
-      </Marquee>
+        </div>
+      ))}
+    </Marquee>
   );
 }
 

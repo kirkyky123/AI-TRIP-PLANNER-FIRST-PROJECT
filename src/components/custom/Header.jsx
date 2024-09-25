@@ -13,7 +13,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { useTheme } from "next-themes";
 
 function Header() {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);

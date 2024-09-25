@@ -87,8 +87,8 @@ function MyTripsCard({ trip, onDelete }) {
         <div className="absolute top-2 right-2 flex space-x-2">
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <button className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 transition duration-300">
-                <IoTrashBinSharp size={18} />
+              <button className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 hover:scale-110 transition duration-300">
+                <IoTrashBinSharp size={18}/>
               </button>
             </AlertDialogTrigger>
             <AlertDialogContent>

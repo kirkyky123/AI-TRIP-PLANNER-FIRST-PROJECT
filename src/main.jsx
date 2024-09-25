@@ -64,7 +64,6 @@ const router = createBrowserRouter([
 
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
     <ClerkProvider
       appearance={{
         baseTheme: dark,
@@ -75,5 +74,4 @@ createRoot(document.getElementById("root")).render(
         <RouterProvider router={router} />
       </ThemeProvider>
     </ClerkProvider>
-  </StrictMode>
 );
