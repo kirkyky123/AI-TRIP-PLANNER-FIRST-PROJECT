@@ -1,9 +1,8 @@
 import { chatSession } from "@/AiService/AiModel";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { PROMPT, selectBudget, selectTravelers } from "@/constants/options";
 import { VscLoading } from "react-icons/vsc";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { toast } from "sonner";
 import { AiOutlineLoading } from "react-icons/ai";
@@ -12,7 +11,6 @@ import {
   DialogContent,
   DialogDescription,
 } from "@/components/ui/dialog";
-import axios from "axios";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/AiService/firedatabaseConfig";
 import { useNavigate } from "react-router-dom";
@@ -123,7 +121,7 @@ function CreateTrip() {
       return;
     }
 
-    if (formData?.days < 1 || formData?.days > 7) {
+    if (formData?.days < 1 || formData?.days > MAX_DAYS) {
       toast.error("Trip duration must be between 1 and 7 days.");
       return;
     }
@@ -164,36 +162,36 @@ function CreateTrip() {
     saveTrip(result?.response?.text());
   };
 
-  const formatTripInfo = (tripInfo) => {
-    tripInfo = tripInfo.trim();
-    if (tripInfo.startsWith("```json")) {
-      tripInfo = tripInfo.slice(7);
-    } else if (tripInfo.startsWith("```")) {
-      tripInfo = tripInfo.slice(3);
-    }
-    if (tripInfo.endsWith("```")) {
-      tripInfo = tripInfo.slice(0, -3);
-    }
+  // const formatTripInfo = (tripInfo) => {
+  //   tripInfo = tripInfo.trim();
+  //   if (tripInfo.startsWith("```json")) {
+  //     tripInfo = tripInfo.slice(7);
+  //   } else if (tripInfo.startsWith("```")) {
+  //     tripInfo = tripInfo.slice(3);
+  //   }
+  //   if (tripInfo.endsWith("```")) {
+  //     tripInfo = tripInfo.slice(0, -3);
+  //   }
 
-    let fixedJson = escapeInnerQuotes(tripInfo);
-    console.log("fixed json: " + fixedJson);
-    return fixedJson;
-  };
+  //   let fixedJson = escapeInnerQuotes(tripInfo);
+  //   console.log("fixed json: " + fixedJson);
+  //   return fixedJson;
+  // };
 
-  function escapeInnerQuotes(jsonString) {
-    return jsonString.replace(/(?<=: ?")(.+?)(?="[,}])/g, function (match) {
-      return match.replace(/"/g, '\\"');
-    });
-  }
+  // function escapeInnerQuotes(jsonString) {
+  //   return jsonString.replace(/(?<=: ?")(.+?)(?="[,}])/g, function (match) {
+  //     return match.replace(/"/g, '\\"');
+  //   });
+  // }
 
   const saveTrip = async (tripInfo) => {
-    const updatedTripInfo = formatTripInfo(tripInfo);
+    // const updatedTripInfo = formatTripInfo(tripInfo);
     setLoading(true);
     const documentId = Date.now().toString();
 
     await setDoc(doc(db, "trips", documentId), {
       userChoices: formData,
-      tripInfo: JSON.parse(updatedTripInfo),
+      tripInfo: JSON.parse(tripInfo),
       userEmail: user?.primaryEmailAddress?.emailAddress,
       id: documentId,
     });
