@@ -34,7 +34,8 @@ function PlaceCard({ place, index }) {
       target="_blank"
       rel="noopener noreferrer"
       className="block group">
-      <div className=" border border-black dark:border-white overflow-hidden shadow-md hover:shadow-xl
+      <div
+        className=" border border-black dark:border-white overflow-hidden shadow-md hover:shadow-xl
       transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2 rounded-2xl">
         <div className="relative">
           <img
@@ -65,9 +66,7 @@ function PlaceCard({ place, index }) {
             </p>
             <p className="flex items-center text-gray-700 dark:text-gray-200 group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">
               <span className="text-lg mr-2">💲</span>
-              <span>
-                {place.TicketPricing}
-              </span>
+              <span>{place.TicketPricing}</span>
             </p>
             <p className="flex items-center text-gray-700 dark:text-gray-200 group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">
               <span className="text-lg mr-2">🚕</span>
