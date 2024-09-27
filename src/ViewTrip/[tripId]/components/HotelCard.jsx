@@ -62,7 +62,7 @@ function HotelCard({ hotel }) {
             </p>
             <div className="flex justify-between items-center">
               <span className="text-md font-medium text-green-700 dark:text-green-400 tracking-wide">
-                💵 {hotel.Price}
+                💵 ${hotel.Price}
               </span>
             </div>
           </div>

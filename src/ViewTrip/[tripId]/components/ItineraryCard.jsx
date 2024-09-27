@@ -66,7 +66,7 @@ function PlaceCard({ place, index }) {
             <p className="flex items-center text-gray-700 dark:text-gray-200 group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">
               <span className="text-lg mr-2">💲</span>
               <span>
-                {place.TicketPricing !== "N/A" ? place.TicketPricing : "Free"}
+                {place.TicketPricing}
               </span>
             </p>
             <p className="flex items-center text-gray-700 dark:text-gray-200 group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">
