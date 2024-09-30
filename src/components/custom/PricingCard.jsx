@@ -4,16 +4,14 @@ import { Button } from "../ui/button";
 function PricingCard({ title, price, features, customPrice = false }) {
   const outline =
     title === "Business"
-      ? "bg-[conic-gradient(#fb7272_225deg,transparent_360deg)]"
+      ? "border-[#fb7272]"
       : title === "Pro"
-      ? "bg-[conic-gradient(#34f0ac_225deg,transparent_360deg)]"
-      : "bg-[conic-gradient(#f9e42b_225deg,transparent_360deg)]";
+      ? "border-[#34f0ac]"
+      : "border-[#f9e42b]";
 
   return (
     <div className="relative z-10 items-center overflow-hidden rounded-xl p-[2.5px] hover:scale-110 h-full transform transition duration-300">
-      <div
-        className={`animate-rotateprice absolute -inset-1 h-full w-full rounded-full ${outline}`}></div>
-      <div className="relative z-20 flex rounded-[0.60rem] bg-gradient-to-b from-white to-orange-200 dark:from-black dark:to-black p-[4px] h-full">
+      <div className={`relative z-20 flex rounded-[0.60rem] bg-gradient-to-b from-white to-orange-200 dark:from-black dark:to-black p-[4px] h-full ${outline} border-2`}>
         <div className=" rounded-[0.55rem] p-[2px] flex-grow">
           <div
             className={`rounded-lg p-6 shadow-lg border-4 border-transparent flex flex-col justify-between h-full relative`}>
