@@ -22,7 +22,12 @@ function PlaceCard({ place, index }) {
   //       "{NAME}",
   //       response.data.places[0].photos[0].name
   //     );
-  //     setPhotoUrl(updatedPhotoURL);
+  //     if (updatedPhotoURL) {
+  //       setPhotoUrl(updatedPhotoURL);
+  //     }
+  //     else {
+  //       console.log("No photo found");
+  //     }
   //   });
   // };
 
