@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaShare, FaRegCopy } from "react-icons/fa";
 import {
   Dialog,
@@ -16,27 +16,41 @@ import {
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import InfoTag from "./InfoTag";
+import { EnablePhotosContext } from "..";
+import { OpenDialogContext } from "../index";
+import { DisablePhotoDialogContext } from "../index";
 
 function InformationSection({ trip }) {
   const [photoUrl, setPhotoUrl] = useState("");
+  const enabledPhotos = useContext(EnablePhotosContext);
+  const [openDialog, setOpenDialog] = useContext(OpenDialogContext);
+  const [disablePhotoDialog, setDisablePhotoDialog] = useContext(DisablePhotoDialogContext);
+  useEffect(() => {
+    if (trip && enabledPhotos) {
+      getPhoto();
+    }
+    if (!enabledPhotos) {
+      setPhotoUrl("/banner2.jpg");
+    }
+  }, [trip, enabledPhotos]);
 
-  // useEffect(() => {
-  //   if (trip) {
-  //     getPhoto();
-  //   }
-  // }, [trip]);
-  // const getPhoto = async () => {
-  //   const data = {
-  //     textQuery: trip?.userChoices?.location?.label
-  //   };
+  const getPhoto = async () => {
+    if (!enabledPhotos) return;
 
-  //   const res = await placeDetails(data).then((response) => {
-  //     console.log(response.data.places[0].photos[0].name);
-  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
-  //     console.log(updatedPhotoURL);
-  //     setPhotoUrl(updatedPhotoURL);
-  //   })
-  // };
+    const data = {
+      textQuery: trip?.userChoices?.location?.label,
+    };
+
+    const res = await placeDetails(data).then((response) => {
+      console.log(response.data.places[0].photos[0].name);
+      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+        "{NAME}",
+        response.data.places[0].photos[0].name
+      );
+      console.log(updatedPhotoURL);
+      setPhotoUrl(updatedPhotoURL);
+    });
+  };
 
   const copyTripLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -149,7 +163,8 @@ function InformationSection({ trip }) {
             <Dialog>
               <DialogTrigger asChild>
                 <div className="relative z-10 flex justify-center cursor-pointer items-center overflow-hidden rounded-xl p-[2px] transition-transform hover:scale-105">
-                  <div className="animate-rotate absolute inset-0 h-full w-full rounded-xl bg-[conic-gradient(#ffffff_40deg,transparent_120deg)]
+                  <div
+                    className="animate-rotate absolute inset-0 h-full w-full rounded-xl bg-[conic-gradient(#ffffff_40deg,transparent_120deg)]
                               dark:bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
                   <div className="relative z-20 flex rounded-xl bg-gradient-to-br from-blue-400 via-gray-200 to-blue-400 dark:from-[#26ae75] dark:via-black dark:to-[#26ae75] p-1 border-2 border-light-border dark:border-black w-24 sm:w-full">
                     <Button className="bg-transparent h-full w-full sm:w-16 text-black dark:text-white">
@@ -181,6 +196,27 @@ function InformationSection({ trip }) {
                 </div>
               </DialogContent>
             </Dialog>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.7 }}>
+            {!enabledPhotos &&
+            <Button
+            className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300 
+            text-light-foreground px-4 py-2 rounded-xl shadow-md font-bold border-2 border-light-border dark:border-black
+            hover:scale-105 transition-all duration-100"
+            onClick={() => setOpenDialog(true)}>
+              <span className="inline-block">Enable Photos</span>
+            </Button>}
+            {enabledPhotos &&
+            <Button
+            className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300 
+            text-light-foreground px-4 py-2 rounded-xl shadow-md font-bold border-2 border-light-border dark:border-black
+            hover:scale-105 transition-all duration-100"
+            onClick={() => setDisablePhotoDialog(true)}>
+              <span className="inline-block">Disable Photos</span>
+            </Button>}
           </motion.div>
         </motion.div>
       </div>

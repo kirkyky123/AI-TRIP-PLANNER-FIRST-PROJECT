@@ -1,31 +1,34 @@
 /* eslint-disable react/prop-types */
 import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
-import React, { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { EnablePhotosContext } from "..";
 
 function PlaceCard({ place, index }) {
   const [photoUrl, setPhotoUrl] = useState("");
+  const enabledPhotos = useContext(EnablePhotosContext);
 
   // useEffect(() => {
-  //   if (place) {
+  //   if (place && enabledPhotos) {
   //     getPhoto();
   //   }
-  // }, [place]);
+  // }, [place, enabledPhotos]);
 
   // const getPhoto = async () => {
+  //   if (!enabledPhotos) return;
+
   //   const data = {
   //     textQuery: place?.PlaceName + " " + place?.PlaceAddress,
   //   };
 
-  //   const res = await placeDetails(data).then((response) => {
+  //   await placeDetails(data).then((response) => {
   //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
   //       "{NAME}",
   //       response.data.places[0].photos[0].name
   //     );
   //     if (updatedPhotoURL) {
   //       setPhotoUrl(updatedPhotoURL);
-  //     }
-  //     else {
+  //     } else {
   //       console.log("No photo found");
   //     }
   //   });
@@ -43,11 +46,11 @@ function PlaceCard({ place, index }) {
         className=" border border-black dark:border-white overflow-hidden shadow-md hover:shadow-xl
       transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2 rounded-2xl">
         <div className="relative">
-          <img
-            src={photoUrl ? photoUrl : "/banner2.jpg"}
-            alt={place.PlaceName}
-            className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-          />
+            <img
+              src={photoUrl ? photoUrl : "/banner2.jpg"}
+              alt={place.PlaceName}
+              className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+            />
           <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm font-semibold rounded">
             ⏱️ {place.BestTimeToVisit}
           </div>
