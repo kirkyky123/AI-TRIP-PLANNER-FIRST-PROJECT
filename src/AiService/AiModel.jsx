@@ -97,7 +97,7 @@ const schema = {
                 },
                 TravelTime: {
                   type: FunctionDeclarationSchemaType.STRING,
-                  description: "Time taken to travel to this place",
+                  description: "Time taken to travel to this place from previous place (if it is first place in the day, then just say depends on hotel location)",
                   nullable: false,
                 },
               },
