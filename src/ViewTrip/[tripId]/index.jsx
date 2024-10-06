@@ -57,7 +57,7 @@ function ViewTrip() {
 
   const enablePhotos = () => {
     const password = passwordInputRef.current.value;
-    if (password === "123") {
+    if (password === "0831") {
       console.log("Enabled photos before enabling: ", enabledPhotos);
       setEnabledPhotos(true);
       console.log("Enabled photos after enabling: ", enabledPhotos);
