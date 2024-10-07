@@ -57,13 +57,13 @@ function ViewTrip() {
 
   const enablePhotos = () => {
     const password = passwordInputRef.current.value;
-    if (password === "0831") {
+    if (password === import.meta.env.VITE_PASSWORD_KEY) {
       console.log("Enabled photos before enabling: ", enabledPhotos);
       setEnabledPhotos(true);
       console.log("Enabled photos after enabling: ", enabledPhotos);
       setOpenDialog(false);
     } else {
-      toast.error("Incorrect password");
+      toast.error("Incorrect password.");
     }
   };
 
@@ -84,7 +84,7 @@ function ViewTrip() {
         <AlertDialogContent backgroundColor={backgroundColor}>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-2xl font-bold">
-              Are you a recruiter?
+              Interested in hiring me?
             </AlertDialogTitle>
             <AlertDialogDescription className="text-gray-700">
               <p className="mb-4 text-black dark:text-white">
