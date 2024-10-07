@@ -1,28 +1,38 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
+import { EnablePhotosContext } from "..";
 
 function HotelCard({ hotel }) {
   const [photoUrl, setPhotoUrl] = useState("");
+  const enabledPhotos = useContext(EnablePhotosContext);
 
-  // useEffect(() => {
-  //   if (hotel) {
-  //     getPhoto();
-  //   }
-  // }, [hotel]);
-  // const getPhoto = async () => {
-  //   const data = {
-  //     textQuery: hotel?.HotelName
-  //   };
+  useEffect(() => {
+    if (hotel && enabledPhotos) {
+      getPhoto();
+    }
+    if (!enabledPhotos) {
+      setPhotoUrl("/banner2.jpg");
+    }
+  }, [hotel, enabledPhotos]);
+  const getPhoto = async () => {
+    if (!enabledPhotos) return;
+    const data = {
+      textQuery: hotel?.HotelName,
+    };
 
-  //   const res = await placeDetails(data).then((response) => {
-  //     console.log(response.data.places[0].photos[3].name);
-  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
-  //     console.log(updatedPhotoURL);
-  //     setPhotoUrl(updatedPhotoURL);
-  //   })
-  // };
+    const res = await placeDetails(data).then((response) => {
+      console.log(response.data.places[0].photos[3].name);
+      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+        "{NAME}",
+        response.data.places[0].photos[0].name
+      );
+      console.log(updatedPhotoURL);
+      setPhotoUrl(updatedPhotoURL);
+    });
+  };
 
   return (
     <motion.div

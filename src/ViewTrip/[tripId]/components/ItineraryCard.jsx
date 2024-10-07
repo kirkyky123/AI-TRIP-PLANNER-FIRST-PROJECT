@@ -8,31 +8,34 @@ function PlaceCard({ place, index }) {
   const [photoUrl, setPhotoUrl] = useState("");
   const enabledPhotos = useContext(EnablePhotosContext);
 
-  // useEffect(() => {
-  //   if (place && enabledPhotos) {
-  //     getPhoto();
-  //   }
-  // }, [place, enabledPhotos]);
+  useEffect(() => {
+    if (place && enabledPhotos) {
+      getPhoto();
+    }
+    if (!enabledPhotos) {
+      setPhotoUrl("/banner2.jpg");
+    }
+  }, [place, enabledPhotos]);
 
-  // const getPhoto = async () => {
-  //   if (!enabledPhotos) return;
+  const getPhoto = async () => {
+    if (!enabledPhotos) return;
 
-  //   const data = {
-  //     textQuery: place?.PlaceName + " " + place?.PlaceAddress,
-  //   };
+    const data = {
+      textQuery: place?.PlaceName + " " + place?.PlaceAddress,
+    };
 
-  //   await placeDetails(data).then((response) => {
-  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
-  //       "{NAME}",
-  //       response.data.places[0].photos[0].name
-  //     );
-  //     if (updatedPhotoURL) {
-  //       setPhotoUrl(updatedPhotoURL);
-  //     } else {
-  //       console.log("No photo found");
-  //     }
-  //   });
-  // };
+    await placeDetails(data).then((response) => {
+      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+        "{NAME}",
+        response.data.places[0].photos[0].name
+      );
+      if (updatedPhotoURL) {
+        setPhotoUrl(updatedPhotoURL);
+      } else {
+        console.log("No photo found");
+      }
+    });
+  };
 
   return (
     <Link

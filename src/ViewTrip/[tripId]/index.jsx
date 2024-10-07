@@ -74,10 +74,6 @@ function ViewTrip() {
     console.log("Photos disabled. New state:", false);
   };
 
-  useEffect(() => {
-    console.log("enabledPhotos state updated:", enabledPhotos);
-  }, [enabledPhotos]);
-
   return (
     <>
       <AlertDialog open={openDialog}>
@@ -90,7 +86,7 @@ function ViewTrip() {
               <p className="mb-4 text-black dark:text-white">
                 If so, please enter your
                 <span className="text-green-500 font-bold"> password </span>
-                to enable photos.
+                to enable photos for a much better experience.
               </p>
               <div className="flex flex-row gap-4 items-center">
                 <Label htmlFor="password" className="text-right text-white">
@@ -144,10 +140,10 @@ function ViewTrip() {
       <div
         className="py-10 px-10 sm:px-12 md:px-18 lg:px-30 xl:px-42 bg-gradient-to-br from-light-background via-light-secondary to-light-primary/40 
     dark:from-dark-background/20 dark:via-dark-primary/30 dark:to-dark-secondary/20">
-        <OpenDialogContext.Provider value={[openDialog, setOpenDialog]}>
+        <OpenDialogContext.Provider value={[setOpenDialog]}>
           <EnablePhotosContext.Provider value={enabledPhotos}>
             <DisablePhotoDialogContext.Provider
-              value={[disablePhotoDialog, setDisablePhotoDialog]}>
+              value={[setDisablePhotoDialog]}>
               <InformationSection trip={trip} />
               <div className="mx-2">
                 <Hotels trip={trip} />

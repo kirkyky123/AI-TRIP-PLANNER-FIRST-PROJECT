@@ -23,8 +23,8 @@ import { DisablePhotoDialogContext } from "../index";
 function InformationSection({ trip }) {
   const [photoUrl, setPhotoUrl] = useState("");
   const enabledPhotos = useContext(EnablePhotosContext);
-  const [openDialog, setOpenDialog] = useContext(OpenDialogContext);
-  const [disablePhotoDialog, setDisablePhotoDialog] = useContext(DisablePhotoDialogContext);
+  const [setOpenDialog] = useContext(OpenDialogContext);
+  const [setDisablePhotoDialog] = useContext(DisablePhotoDialogContext);
   useEffect(() => {
     if (trip && enabledPhotos) {
       getPhoto();
