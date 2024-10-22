@@ -34,6 +34,7 @@ function MyTrips() {
   const {theme} = useTheme();
   const backgroundColor = theme === "light" ? "bg-light-background" : "bg-green-950";
 
+  // Effect hook to check user authentication and fetch trips
   useEffect(() => {
     if (isLoaded) {
       if (isSignedIn) {
@@ -44,6 +45,7 @@ function MyTrips() {
     }
   }, [isLoaded, isSignedIn, user]);
 
+  // Function to fetch user trips from Firestore
   const getUserTrips = async () => {
     if (!user) return;
 
@@ -65,10 +67,12 @@ function MyTrips() {
     }
   };
 
+  // Function to remove a trip from the state
   const removeTrip = (tripId) => {
     setUserTrips((prevTrips) => prevTrips.filter((trip) => trip.id !== tripId));
   };
 
+  // Function to delete all trips from Firestore and state
   const deleteAllTrips = async () => {
     try {
       for (const trip of userTrips) {
@@ -82,6 +86,7 @@ function MyTrips() {
     }
   };
 
+  // Loading spinner while authentication is in progress
   if (!isLoaded || !isSignedIn) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -93,6 +98,7 @@ function MyTrips() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-light-background via-light-secondary to-light-primary/40 dark:from-dark-background dark:via-dark-primary/30 dark:to-dark-primary/20 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        {/* Header section with title and delete all button */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -140,7 +146,9 @@ function MyTrips() {
           )}
         </motion.div>
 
+        {/* Conditional rendering based on whether user has trips */}
         {userTrips.length > 0 ? (
+          // Grid layout for displaying trip cards
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {userTrips.map((trip, index) => (
               <motion.div
@@ -153,6 +161,7 @@ function MyTrips() {
             ))}
           </div>
         ) : (
+          // Display when user has no trips
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

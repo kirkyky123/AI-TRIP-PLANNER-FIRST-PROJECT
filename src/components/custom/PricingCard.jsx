@@ -29,7 +29,7 @@ function PricingCard({ title, price, features, customPrice = false }) {
                 {price === "$9.99/month" ? <span className="bg-gradient-to-l to-[#38da97] via-red-600 from-blue-400
             text-transparent bg-clip-text">{price}</span> : price}{" "}
                 {customPrice && (
-                  <span className="text-gray-600 text-sm font-normal">
+                  <span className="text-gray-300 text-sm font-normal">
                     (contact for pricing)
                   </span>
                 )}

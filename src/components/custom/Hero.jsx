@@ -107,7 +107,7 @@ function Hero() {
           className="flex flex-col md:flex-row lg:flex-row xl:flex-row gap-20 
                       mt-20 sm:mt-10 justify-center sm:items-center">
           <img
-            src="/laptop-landing-2.png"
+            src="/laptop-landing.png"
             className="object-contain
                     sm:h-[400px] sm:w-[467px]
                     md:h-[320px] md:w-[373px]
@@ -120,10 +120,10 @@ function Hero() {
           <img
             src="/phone-landing.png"
             className="object-contain rounded-b-full
-                     sm:size-[450px]
-                     md:size-[300px]
-                     lg:size-[400px]
-                     xl:size-[600px]
+                     sm:size-[550px]
+                     md:size-[400px]
+                     lg:size-[550px]
+                     xl:size-[700px]
                      sm:-mt-14 md:-mt-10 xl:mt-0
                      ml-10 md:-ml-14"
           />

@@ -21,7 +21,7 @@ function PlaceCard({ place, index }) {
     if (!enabledPhotos) return;
 
     const data = {
-      textQuery: place?.PlaceName + " " + place?.PlaceAddress,
+      textQuery: place?.PlaceNameSearch,
     };
 
     await placeDetails(data).then((response) => {
