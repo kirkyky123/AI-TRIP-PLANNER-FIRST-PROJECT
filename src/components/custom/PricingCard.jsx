@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "../ui/button";
 
 function PricingCard({ title, price, features, customPrice = false }) {
@@ -16,7 +15,7 @@ function PricingCard({ title, price, features, customPrice = false }) {
           <div
             className={`rounded-lg p-6 shadow-lg border-4 border-transparent flex flex-col justify-between h-full relative`}>
             {title === "Pro" && (
-              <div className="absolute top-0 right-0 bg-[#37e08b] text-gray-800 font-bold py-1 px-3 rounded-bl-lg rounded-tr-xl transform rotate-0 translate-x-2 -translate-y-2 text-sm">
+              <div className="absolute top-0 right-0 bg-[#37e08b] text-gray-800 font-bold py-1 px-3 rounded-bl-lg rounded-tr-xl transform rotate-0 translate-x-1 -translate-y-2 text-sm">
                 On Sale!
               </div>
             )}
@@ -24,12 +23,12 @@ function PricingCard({ title, price, features, customPrice = false }) {
               <h3 className="text-2xl font-semibold mb-2 underline underline-offset-4">
                 {title}
               </h3>
-              <p className="text-3xl font-bold mb-4">
+              <p className="text-xl sm:text-3xl lg:text-xl xl:text-3xl font-bold mb-4">
                 {title === "Pro" ? <span className="text-lg text-gray-400 line-through mr-2">$19.99</span> : ""}
                 {price === "$9.99/month" ? <span className="bg-gradient-to-l to-[#38da97] via-red-600 from-blue-400
             text-transparent bg-clip-text">{price}</span> : price}{" "}
                 {customPrice && (
-                  <span className="text-gray-300 text-sm font-normal">
+                  <span className="text-gray-700 dark:text-gray-300 text-sm font-normal">
                     (contact for pricing)
                   </span>
                 )}
