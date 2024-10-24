@@ -53,7 +53,8 @@ function ContactForm() {
       handleSubmit(e);
     }
   };
-  const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_KEY);
+  const formKey = import.meta.env.VITE_FORMSPREE_KEY;
+  const [state, handleSubmit] = useForm(formKey);
 
   return (
     <div className="w-full max-w-2xl mx-auto mt-4 flex flex-col">
