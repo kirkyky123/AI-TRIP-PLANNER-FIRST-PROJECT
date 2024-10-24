@@ -81,7 +81,6 @@ function CreateTrip() {
 
   // Effect for logging form data and controlling arrow animation
   useEffect(() => {
-    console.log(formData);
     if (formData.people) {
       arrowControls.stop();
     } else {
@@ -162,10 +161,8 @@ function CreateTrip() {
       .replace("{budget}", formData?.budget)
       .replace("{people}", formData?.people);
 
-    console.log(AI_PROMPT);
 
     const result = await chatSession.sendMessage(AI_PROMPT);
-    console.log(result?.response?.text());
     setLoading(false);
     saveTrip(result?.response?.text());
   };
