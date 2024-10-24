@@ -16,6 +16,9 @@ function LandingFooter() {
   const linkStyles =
     "text-gray-800 dark:text-gray-300 hover:text-blue-500 dark:hover:text-[#26ae75] transform transition-all duration-300";
 
+  // Function to scroll to a specific section on the page
+  // If on the home page, it smoothly scrolls to the section with an offset
+  // If not on the home page, it redirects to the home page with the section anchor
   const scrollToSection = (sectionId) => {
     if (isHomePage) {
       const section = document.getElementById(sectionId);

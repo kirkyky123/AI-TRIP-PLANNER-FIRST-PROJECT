@@ -21,10 +21,13 @@ import { OpenDialogContext } from "../index";
 import { DisablePhotoDialogContext } from "../index";
 
 function InformationSection({ trip }) {
+  // State and context management
   const [photoUrl, setPhotoUrl] = useState("");
   const enabledPhotos = useContext(EnablePhotosContext);
   const [setOpenDialog] = useContext(OpenDialogContext);
   const [setDisablePhotoDialog] = useContext(DisablePhotoDialogContext);
+
+  // Effect to fetch photo when trip data changes or photos are enabled
   useEffect(() => {
     if (trip && enabledPhotos) {
       getPhoto();
@@ -34,6 +37,7 @@ function InformationSection({ trip }) {
     }
   }, [trip, enabledPhotos]);
 
+  // Function to fetch photo from API
   const getPhoto = async () => {
     if (!enabledPhotos) return;
 
@@ -52,11 +56,13 @@ function InformationSection({ trip }) {
     });
   };
 
+  // Function to copy trip link to clipboard
   const copyTripLink = () => {
     navigator.clipboard.writeText(window.location.href);
     toast.success("Copied link!");
   };
 
+  // Function to format date range for display
   const formatDateRange = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -82,6 +88,7 @@ function InformationSection({ trip }) {
     }
   };
 
+  // Helper function to get ordinal suffix for dates
   const getOrdinalSuffix = (day) => {
     if (day > 3 && day < 21) return "th";
     switch (day % 10) {
@@ -98,6 +105,7 @@ function InformationSection({ trip }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Banner image with location name */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -116,6 +124,8 @@ function InformationSection({ trip }) {
           </h2>
         </div>
       </motion.div>
+
+      {/* Trip information tags */}
       <div className="mt-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -123,6 +133,7 @@ function InformationSection({ trip }) {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.5 }}
           className="flex flex-wrap gap-4 justify-center">
+          {/* Date range tag */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -136,6 +147,7 @@ function InformationSection({ trip }) {
               )})`}
             />
           </motion.div>
+          {/* Budget tag */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -146,6 +158,7 @@ function InformationSection({ trip }) {
               text={`${trip?.userChoices?.budget} Budget`}
             />
           </motion.div>
+          {/* Number of people tag */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -156,6 +169,7 @@ function InformationSection({ trip }) {
               text={trip?.userChoices?.people}
             />
           </motion.div>
+          {/* Share button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -197,6 +211,7 @@ function InformationSection({ trip }) {
               </DialogContent>
             </Dialog>
           </motion.div>
+          {/* Enable/Disable Photos button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

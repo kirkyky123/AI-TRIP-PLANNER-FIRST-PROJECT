@@ -22,6 +22,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
 function CreateTrip() {
+  // State variables for form data and UI control
   const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
@@ -34,6 +35,7 @@ function CreateTrip() {
     }
   ]);
 
+  // User authentication hooks
   const { isSignedIn, user } = useUser();
   const { openSignIn } = useClerk();
   const navigate = useNavigate();
@@ -41,6 +43,7 @@ function CreateTrip() {
   const [isWaitingForSignIn, setIsWaitingForSignIn] = useState(false);
   const arrowControls = useAnimation();
 
+  // Handle input changes for form fields
   const inputChange = (value, name) => {
     if (name === "budget") {
       const selectedBudget = selectBudget.find((budget) => budget.id === value);
@@ -78,6 +81,7 @@ function CreateTrip() {
     }));
   };
 
+  // Effect for logging form data and controlling arrow animation
   useEffect(() => {
     console.log(formData);
     if (formData.people) {
@@ -90,6 +94,7 @@ function CreateTrip() {
     }
   }, [formData.people, arrowControls]);
 
+  // Effect for handling sign-in state
   useEffect(() => {
     if (isWaitingForSignIn && isSignedIn) {
       setIsWaitingForSignIn(false);
@@ -97,6 +102,7 @@ function CreateTrip() {
     }
   }, [isSignedIn, isWaitingForSignIn]);
 
+  // Handle date range changes
   const handleDateChange = (ranges) => {
     setDateRange([ranges.selection]);
     const start = ranges.selection.startDate;
@@ -110,7 +116,9 @@ function CreateTrip() {
     }));
   };
 
+  // Main function to create a trip
   const createTrip = async () => {
+    // Validate form data
     if (!formData?.location) {
       toast.error("Please enter a location.");
       return;
@@ -136,6 +144,7 @@ function CreateTrip() {
       return;
     }
 
+    // Check if user is signed in
     if (!isSignedIn) {
       setIsWaitingForSignIn(true);
       openSignIn();
@@ -145,64 +154,47 @@ function CreateTrip() {
     createTripAfterSignIn();
   };
 
+  // Function to create trip after sign-in
   const createTripAfterSignIn = async () => {
     setLoading(true);
     setLoadingDialog(true);
 
-    const AI_PROMPT = PROMPT.replace("{location}", formData?.location.label)
-      .replace("{days}", formData?.days)
-      .replace("{budget}", formData?.budget)
-      .replace("{people}", formData?.people);
+    try {
+      // Generate trip data using AI model
+      const tripData = await chatSession(
+        PROMPT(
+          formData.location.label,
+          formData.days,
+          formData.budget,
+          formData.people
+        )
+      );
 
-    console.log(AI_PROMPT);
+      // Save trip data to Firestore
+      const tripId = crypto.randomUUID();
+      await setDoc(doc(db, "trips", tripId), {
+        id: tripId,
+        userChoices: formData,
+        tripData: tripData,
+        userId: user.id,
+      });
 
-    const result = await chatSession.sendMessage(AI_PROMPT);
-    console.log(result?.response?.text());
-    setLoading(false);
-    saveTrip(result?.response?.text());
+      setLoading(false);
+      setLoadingDialog(false);
+      navigate(`/view-trip/${tripId}`);
+    } catch (error) {
+      console.error("Error creating trip:", error);
+      toast.error("Failed to create trip. Please try again.");
+      setLoading(false);
+      setLoadingDialog(false);
+    }
   };
 
-  // const formatTripInfo = (tripInfo) => {
-  //   tripInfo = tripInfo.trim();
-  //   if (tripInfo.startsWith("```json")) {
-  //     tripInfo = tripInfo.slice(7);
-  //   } else if (tripInfo.startsWith("```")) {
-  //     tripInfo = tripInfo.slice(3);
-  //   }
-  //   if (tripInfo.endsWith("```")) {
-  //     tripInfo = tripInfo.slice(0, -3);
-  //   }
-
-  //   let fixedJson = escapeInnerQuotes(tripInfo);
-  //   console.log("fixed json: " + fixedJson);
-  //   return fixedJson;
-  // };
-
-  // function escapeInnerQuotes(jsonString) {
-  //   return jsonString.replace(/(?<=: ?")(.+?)(?="[,}])/g, function (match) {
-  //     return match.replace(/"/g, '\\"');
-  //   });
-  // }
-
-  const saveTrip = async (tripInfo) => {
-    // const updatedTripInfo = formatTripInfo(tripInfo);
-    setLoading(true);
-    const documentId = Date.now().toString();
-
-    await setDoc(doc(db, "trips", documentId), {
-      userChoices: formData,
-      tripInfo: JSON.parse(tripInfo),
-      userEmail: user?.primaryEmailAddress?.emailAddress,
-      id: documentId,
-    });
-    setLoading(false);
-    setLoadingDialog(false);
-    navigate("/view-trip/" + documentId);
-  };
-
+  // JSX for the create trip form
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-200 via-light-secondary to-light-primary/40 dark:from-dark-background dark:via-dark-primary/30 dark:to-dark-primary/20 py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:px-10 md:px-32 lg:px-46 xl:px-10 mt-10 px-5 text-light-foreground dark:text-dark-foreground">
+        {/* Header section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -227,6 +219,7 @@ function CreateTrip() {
           just for you.
         </motion.p>
 
+        {/* Location and Date selection */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -270,6 +263,7 @@ function CreateTrip() {
           </div>
         </motion.div>
 
+        {/* Budget selection */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -331,6 +325,8 @@ function CreateTrip() {
             </svg>
           </motion.h2>
         </motion.div>
+
+        {/* Number of travelers selection */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -376,6 +372,7 @@ function CreateTrip() {
               </div>
             ))}
 
+            {/* Create Trip button */}
             <motion.div
               initial={{ opacity: 0, rotateX: 90 }}
               whileInView={{ opacity: 1, rotateX: 0 }}
@@ -406,6 +403,8 @@ function CreateTrip() {
           </div>
         </motion.div>
       </div>
+
+      {/* Loading dialog */}
       <Dialog open={loadingDialog}>
         <DialogContent className="bg-light-background dark:bg-dark-background">
           <DialogDescription>
