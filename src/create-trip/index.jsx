@@ -18,8 +18,8 @@ import { MAX_DAYS } from "@/constants/variables";
 import { motion, useAnimation } from "framer-motion";
 import { useUser, useClerk } from "@clerk/clerk-react";
 import { DateRange } from "react-date-range";
-import 'react-date-range/dist/styles.css';
-import 'react-date-range/dist/theme/default.css';
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 function CreateTrip() {
   // State variables for form data and UI control
@@ -31,8 +31,8 @@ function CreateTrip() {
     {
       startDate: new Date(),
       endDate: new Date(),
-      key: 'selection'
-    }
+      key: "selection",
+    },
   ]);
 
   // User authentication hooks
@@ -81,6 +81,7 @@ function CreateTrip() {
 
   // Effect for logging form data and controlling arrow animation
   useEffect(() => {
+    console.log(formData);
     if (formData.people) {
       arrowControls.stop();
     } else {
@@ -105,11 +106,11 @@ function CreateTrip() {
     const start = ranges.selection.startDate;
     const end = ranges.selection.endDate;
     const days = Math.round((end - start) / (1000 * 60 * 60 * 24)) + 1;
-    setFormData(prevData => ({
-      ...prevData, 
+    setFormData((prevData) => ({
+      ...prevData,
       days: days,
       startDate: start.toISOString(),
-      endDate: end.toISOString()
+      endDate: end.toISOString(),
     }));
   };
 
@@ -156,35 +157,33 @@ function CreateTrip() {
     setLoading(true);
     setLoadingDialog(true);
 
-    try {
-      // Generate trip data using AI model
-      const tripData = await chatSession(
-        PROMPT(
-          formData.location.label,
-          formData.days,
-          formData.budget,
-          formData.people
-        )
-      );
+    const AI_PROMPT = PROMPT.replace("{location}", formData?.location.label)
+      .replace("{days}", formData?.days)
+      .replace("{budget}", formData?.budget)
+      .replace("{people}", formData?.people);
 
-      // Save trip data to Firestore
-      const tripId = crypto.randomUUID();
-      await setDoc(doc(db, "trips", tripId), {
-        id: tripId,
-        userChoices: formData,
-        tripData: tripData,
-        userId: user.id,
-      });
+    console.log(AI_PROMPT);
 
-      setLoading(false);
-      setLoadingDialog(false);
-      navigate(`/view-trip/${tripId}`);
-    } catch (error) {
-      console.error("Error creating trip:", error);
-      toast.error("Failed to create trip. Please try again.");
-      setLoading(false);
-      setLoadingDialog(false);
-    }
+    const result = await chatSession.sendMessage(AI_PROMPT);
+    console.log(result?.response?.text());
+    setLoading(false);
+    saveTrip(result?.response?.text());
+  };
+
+  const saveTrip = async (tripInfo) => {
+    // const updatedTripInfo = formatTripInfo(tripInfo);
+    setLoading(true);
+    const documentId = Date.now().toString();
+
+    await setDoc(doc(db, "trips", documentId), {
+      userChoices: formData,
+      tripInfo: JSON.parse(tripInfo),
+      userEmail: user?.primaryEmailAddress?.emailAddress,
+      id: documentId,
+    });
+    setLoading(false);
+    setLoadingDialog(false);
+    navigate("/view-trip/" + documentId);
   };
 
   // JSX for the create trip form
@@ -247,7 +246,9 @@ function CreateTrip() {
           <div>
             <h2 className="mb-4 text-xl text-light-foreground dark:text-dark-foreground font-semibold">
               When are you traveling?{" "}
-              <span className="text-sm text-blue-500 dark:text-dark-primary font-bold">(1-7 days)</span>
+              <span className="text-sm text-blue-500 dark:text-dark-primary font-bold">
+                (1-7 days)
+              </span>
             </h2>
             <DateRange
               editableDateInputs={true}
@@ -380,7 +381,8 @@ function CreateTrip() {
                 <div
                   className="animate-rotate absolute -inset-1 h-full w-full rounded-full bg-[conic-gradient(#4bcbeb_40deg,transparent_120deg)]
               dark:bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
-                <div className="relative z-20 flex rounded-[0.60rem] bg-light-foreground dark:bg-black hover:bg-gradient-to-br from-orange-200 to-blue-500
+                <div
+                  className="relative z-20 flex rounded-[0.60rem] bg-light-foreground dark:bg-black hover:bg-gradient-to-br from-orange-200 to-blue-500
                  dark:from-dark-background/20 dark:to-dark-primary/80 ease-in">
                   <Button
                     onClick={createTrip}
