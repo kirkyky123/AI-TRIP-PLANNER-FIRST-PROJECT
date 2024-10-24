@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 import { EnablePhotosContext } from "..";
 
-function HotelCard({ hotel }) {
+function HotelCard({ hotel}) {
   const [photoUrl, setPhotoUrl] = useState("");
   const enabledPhotos = useContext(EnablePhotosContext);
 
@@ -21,17 +21,31 @@ function HotelCard({ hotel }) {
   // Function to fetch hotel photo from API
   const getPhoto = async () => {
     if (!enabledPhotos) return;
-    const data = {
+    let data = {
       textQuery: hotel?.HotelName,
     };
 
-    const res = await placeDetails(data).then((response) => {
-      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+    let response = await placeDetails(data);
+    let updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+      "{NAME}",
+      response.data.places[0].photos[0].name
+    );
+    if (!updatedPhotoURL) {
+      data = {
+        textQuery: hotel?.HotelName + " " + hotel?.HotelAddress,
+      };
+      response = await placeDetails(data);
+      updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
         "{NAME}",
         response.data.places[0].photos[0].name
       );
+    }
+
+    if (updatedPhotoURL) {
       setPhotoUrl(updatedPhotoURL);
-    });
+    } else {
+      console.log("No photo found");
+    }
   };
 
   return (

@@ -20,21 +20,32 @@ function PlaceCard({ place, index }) {
   const getPhoto = async () => {
     if (!enabledPhotos) return;
 
-    const data = {
+    let data = {
       textQuery: place?.PlaceNameSearch,
     };
 
-    await placeDetails(data).then((response) => {
-      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+    let response = await placeDetails(data);
+    let updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+      "{NAME}",
+      response.data.places[0].photos[0].name
+    );
+
+    if (!updatedPhotoURL) {
+      data = {
+        textQuery: place?.PlaceNameSearch + " " + place?.PlaceAddress,
+      };
+      response = await placeDetails(data);
+      updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
         "{NAME}",
         response.data.places[0].photos[0].name
       );
-      if (updatedPhotoURL) {
-        setPhotoUrl(updatedPhotoURL);
-      } else {
-        console.log("No photo found");
-      }
-    });
+    }
+
+    if (updatedPhotoURL) {
+      setPhotoUrl(updatedPhotoURL);
+    } else {
+      console.log("No photo found");
+    }
   };
 
   return (
