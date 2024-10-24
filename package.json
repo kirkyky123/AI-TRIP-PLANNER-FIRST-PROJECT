@@ -12,6 +12,7 @@
   "dependencies": {
     "@clerk/clerk-react": "^5.5.0",
     "@clerk/themes": "^2.1.25",
+    "@formspree/react": "^2.5.1",
     "@google/generative-ai": "^0.16.1",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.1",

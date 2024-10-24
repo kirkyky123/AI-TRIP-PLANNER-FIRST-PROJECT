@@ -12,6 +12,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import BoxReveal from "../magicui/box-reveal";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
+import { useForm, ValidationError } from "@formspree/react";
 
 function ContactForm() {
   const { theme } = useTheme();
@@ -38,21 +39,25 @@ function ContactForm() {
       newErrors.email = "Email is invalid";
     if (!formData.message.trim()) newErrors.message = "Message is required";
     setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      toast.success("Email successfully sent! We will get back to you soon.");
+    }
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const checkForm = (e) => {
     e.preventDefault();
     if (validateForm()) {
       console.log("Form submitted:", formData);
       setFormData({ name: "", email: "", message: "" });
-      toast.success("Email successfully sent!");
+      handleSubmit(e);
     }
   };
+  const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_KEY);
 
   return (
     <div className="w-full max-w-2xl mx-auto mt-4 flex flex-col">
-      <form onSubmit={handleSubmit} className="space-y-6 mx-10 sm:mx-20">
+      <form onSubmit={checkForm} className="space-y-6 mx-10 sm:mx-20">
         <div>
           <BoxReveal
             boxColor={theme === "light" ? "#3b82f6" : "#abe3cb"}
@@ -111,6 +116,7 @@ function ContactForm() {
               } bg-white dark:bg-black text-black dark:text-white px-3 py-2 focus:border-orange-300 dark:focus:border-[#2db87e] focus:outline-none focus:ring-1 focus:ring-orange-300 dark:focus:ring-[#2db87e]`}
             />
           </BoxReveal>
+          <ValidationError prefix="Email" field="email" errors={state.errors} />
           {errors.email && (
             <p className="mt-1 text-sm text-red-500">{errors.email}</p>
           )}
@@ -141,7 +147,11 @@ function ContactForm() {
                 errors.message ? "border-red-500" : "border-gray-600"
               } bg-white dark:bg-black text-black dark:text-white px-3 py-2 focus:border-orange-300 dark:focus:border-[#2db87e] focus:outline-none focus:ring-1 focus:ring-orange-300 dark:focus:ring-[#2db87e] resize-none`}></textarea>
           </BoxReveal>
-
+          <ValidationError
+            prefix="Message"
+            field="message"
+            errors={state.errors}
+          />
           {errors.message && (
             <p className="mt-1 text-sm text-red-500">{errors.message}</p>
           )}
@@ -155,6 +165,7 @@ function ContactForm() {
             <div className="flex justify-center my-1">
               <Button
                 type="submit"
+                disabled={state.submitting}
                 className="w-fit items-center text-lg rounded-xl border-2 border-gray-700 bg-white dark:bg-black text-black dark:text-white font-semibold px-4
             hover:bg-gradient-to-tr from-orange-200 to-blue-300 dark:hover:bg-gradient-to-tr dark:from-green-600 dark:to-black 
             hover:scale-105 transition-transform duration-300">
@@ -168,43 +179,37 @@ function ContactForm() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2, delay: 1 }}
-        >
+          transition={{ duration: 0.2, delay: 1 }}>
           <FaGithub className={socialMediaStyles} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25, delay: 1.1 }}
-        >
+          transition={{ duration: 0.25, delay: 1.1 }}>
           <FaLinkedinIn className={socialMediaStyles} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 1.2 }}
-        >
+          transition={{ duration: 0.3, delay: 1.2 }}>
           <FaXTwitter className={socialMediaStyles} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 1.3 }}
-        >
+          transition={{ duration: 0.35, delay: 1.3 }}>
           <FaInstagram className={socialMediaStyles} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 1.4 }}
-        >
+          transition={{ duration: 0.4, delay: 1.4 }}>
           <FaTiktok className={socialMediaStyles} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 1.5 }}
-        >
+          transition={{ duration: 0.45, delay: 1.5 }}>
           <FaFacebookF className={socialMediaStyles} />
         </motion.div>
       </div>
