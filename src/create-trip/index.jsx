@@ -48,7 +48,6 @@ function CreateTrip() {
     if (name === "budget") {
       const selectedBudget = selectBudget.find((budget) => budget.id === value);
       const selectedImg = selectedBudget.img;
-      console.log(selectedImg);
 
       setFormData((prevData) => ({
         ...prevData,
@@ -63,7 +62,6 @@ function CreateTrip() {
         (people) => people.id === value
       );
       const selectedImg = selectedPeople.img;
-      console.log(selectedImg);
 
       setFormData((prevData) => ({
         ...prevData,
@@ -83,7 +81,6 @@ function CreateTrip() {
 
   // Effect for logging form data and controlling arrow animation
   useEffect(() => {
-    console.log(formData);
     if (formData.people) {
       arrowControls.stop();
     } else {

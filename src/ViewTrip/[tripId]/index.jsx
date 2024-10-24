@@ -51,10 +51,8 @@ function ViewTrip() {
     const documentSnapshot = await getDoc(documentReference);
 
     if (documentSnapshot.exists) {
-      console.log("Document: ", documentSnapshot.data());
       setTrip(documentSnapshot.data());
     } else {
-      console.log("No such document");
       toast.warning("No trip found");
     }
   };
@@ -63,9 +61,7 @@ function ViewTrip() {
   const enablePhotos = () => {
     const password = passwordInputRef.current.value;
     if (password === import.meta.env.VITE_PASSWORD_KEY) {
-      console.log("Enabled photos before enabling: ", enabledPhotos);
       setEnabledPhotos(true);
-      console.log("Enabled photos after enabling: ", enabledPhotos);
       setOpenDialog(false);
     } else {
       toast.error("Incorrect password.");

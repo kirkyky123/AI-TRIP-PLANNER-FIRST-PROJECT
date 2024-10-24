@@ -46,12 +46,10 @@ function InformationSection({ trip }) {
     };
 
     const res = await placeDetails(data).then((response) => {
-      console.log(response.data.places[0].photos[0].name);
       const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
         "{NAME}",
         response.data.places[0].photos[0].name
       );
-      console.log(updatedPhotoURL);
       setPhotoUrl(updatedPhotoURL);
     });
   };

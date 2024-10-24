@@ -44,7 +44,6 @@ function MyTripsCard({ trip, onDelete }) {
     try {
       const docRef = doc(db, collectionName, tripId);
       await deleteDoc(docRef);
-      console.log("Document successfully deleted!");
       onDelete(tripId);
       toast("Trip deleted successfully.");
     } catch (error) {

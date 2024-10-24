@@ -1,6 +1,6 @@
 export const MAX_DAYS = 7;
 
-// //testing to remove ""
+// testing to remove ""
 // function escapeInnerQuotes(jsonString) {
 //   return jsonString.replace(/(?<=: ?")(.+?)(?="[,}])/g, function(match) {
 //     return match.replace(/"/g, '\\"');

@@ -15,6 +15,7 @@ import { ThemeProvider } from "next-themes";
 import MouseFollower from "mouse-follower";
 import gsap from "gsap";
 import ScrollToTop from "./components/custom/ScrollToTop.jsx";
+import { Analytics } from '@vercel/analytics/react';
 
 MouseFollower.registerGSAP(gsap);
 
@@ -25,6 +26,7 @@ const Layout = () => (
     <ScrollToTop />
     <Header />
     <Outlet />
+    <Analytics />
   </>
 );
 
