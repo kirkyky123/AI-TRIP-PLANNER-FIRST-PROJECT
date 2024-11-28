@@ -210,29 +210,34 @@ function CreateTrip() {
           {/* Left Column */}
           <div className="space-y-12">
             {/* Location Selection */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col gap-8 mt-6 text-light-foreground dark:text-black max-w-[600px]">
-              <h2 className="text-2xl font-bold mb-6 text-light-foreground dark:text-dark-foreground">
-                Where are you going?{" "}
-                <span className="text-sm text-blue-500 dark:text-dark-primary block mt-2">
-                  (pick popular locations for better results)
-                </span>
-              </h2>
-              <GooglePlacesAutocomplete
-                apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
-                selectProps={{
-                  place,
-                  onChange: (v) => {
-                    setPlace(v);
-                    inputChange(v, "location");
-                  },
-                }}
-              />
-            </motion.div>
+            <div className="bg-white dark:bg-dark-background/50 rounded-2xl p-8 shadow-lg">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col text-light-foreground dark:text-black max-w-[600px]">
+                <h2 className="text-2xl font-bold mb-4 text-light-foreground dark:text-dark-foreground">
+                  <span className="text-blue-500 dark:text-dark-primary">
+                    Where
+                  </span>{" "}
+                  are you going?{" "}
+                  <span className="text-sm text-blue-600 dark:text-dark-primary block mt-2 underline underline-offset-4 decoration-black dark:decoration-white">
+                    (pick popular locations for better results)
+                  </span>
+                </h2>
+                <GooglePlacesAutocomplete
+                  apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
+                  selectProps={{
+                    place,
+                    onChange: (v) => {
+                      setPlace(v);
+                      inputChange(v, "location");
+                    },
+                  }}
+                />
+              </motion.div>
+            </div>
 
             {/* Date Selection */}
             <motion.div
@@ -242,8 +247,11 @@ function CreateTrip() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-white dark:bg-dark-background/50 rounded-2xl p-8 shadow-lg">
               <h2 className="text-2xl font-bold mb-6 text-light-foreground dark:text-dark-foreground">
-                When are you traveling?{" "}
-                <span className="text-sm text-blue-500 dark:text-dark-primary block mt-2">
+                <span className="text-blue-500 dark:text-dark-primary">
+                  When
+                </span>{" "}
+                are you traveling?{" "}
+                <span className="text-sm text-blue-600 dark:text-dark-primary block mt-2 underline underline-offset-4 decoration-black dark:decoration-white">
                   (1-7 days)
                 </span>
               </h2>
