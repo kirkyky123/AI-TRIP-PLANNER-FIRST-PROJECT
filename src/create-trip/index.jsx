@@ -161,14 +161,12 @@ function CreateTrip() {
       .replace("{budget}", formData?.budget)
       .replace("{people}", formData?.people);
 
-
     const result = await chatSession.sendMessage(AI_PROMPT);
     setLoading(false);
     saveTrip(result?.response?.text());
   };
 
   const saveTrip = async (tripInfo) => {
-    // const updatedTripInfo = formatTripInfo(tripInfo);
     setLoading(true);
     const documentId = Date.now().toString();
 
@@ -186,14 +184,15 @@ function CreateTrip() {
   // JSX for the create trip form
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-200 via-light-secondary to-light-primary/40 dark:from-dark-background dark:via-dark-primary/30 dark:to-dark-primary/20 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="sm:px-10 md:px-32 lg:px-46 xl:px-10 mt-10 px-5 text-light-foreground dark:text-dark-foreground">
+      <div className="max-w-7xl mx-auto">
         {/* Header section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}>
-          <h2 className="text-4xl font-bold">
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4">
             <span className="bg-gradient-to-l from-red-500 to-blue-400 dark:to-light-primary text-transparent bg-clip-text">
               Share your travel preferences{" "}
             </span>
@@ -201,203 +200,178 @@ function CreateTrip() {
               ️️🛩️🌴
             </span>
           </h2>
-        </motion.div>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg text-black dark:text-green-500 mt-4 tracking-normal font-semibold">
-          Provide a few details and our AI will craft a personalized itinerary
-          just for you.
-        </motion.p>
-
-        {/* Location and Date selection */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-col gap-8 mt-6 text-light-foreground dark:text-black max-w-[600px]">
-          <div>
-            <h2 className="my-4 text-xl text-light-foreground dark:text-dark-foreground font-semibold">
-              Where are you going?{" "}
-              <span className="text-sm text-blue-500 dark:text-dark-primary font-semibold">
-                (pick popular locations for better results)
-              </span>
-            </h2>
-            <GooglePlacesAutocomplete
-              apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
-              selectProps={{
-                place,
-                onChange: (v) => {
-                  setPlace(v);
-                  {
-                    inputChange(v, "location");
-                  }
-                },
-              }}
-            />
-          </div>
-
-          <div>
-            <h2 className="mb-4 text-xl text-light-foreground dark:text-dark-foreground font-semibold">
-              When are you traveling?{" "}
-              <span className="text-sm text-blue-500 dark:text-dark-primary font-bold">
-                (1-7 days)
-              </span>
-            </h2>
-            <DateRange
-              editableDateInputs={true}
-              onChange={handleDateChange}
-              moveRangeOnFirstSelection={false}
-              ranges={dateRange}
-              minDate={new Date()}
-              maxDate={new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)}
-            />
-          </div>
+          <p className="text-lg text-black dark:text-green-500 tracking-normal font-semibold">
+            Provide a few details and our AI will craft a personalized itinerary
+            just for you.
+          </p>
         </motion.div>
 
-        {/* Budget selection */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-12">
-          <h2 className="mt-3 text-xl font-semibold">
-            What&apos;s your{" "}
-            <span className="text-blue-500 dark:text-dark-primary font-semibold">
-              budget
-            </span>
-            ?
-          </h2>
-
-          <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-8 lg:gap-14 text-light-foreground dark:text-black">
-            {selectBudget.map((budget, index) => (
-              <div
-                className="hover:scale-105 sm:hover:scale-110 transition-all ease-in"
-                key={index}>
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  transition={{ duration: 0.3, delay: 0.05 * index }}
-                  onClick={() => inputChange(budget.id, "budget")}
-                  className={`my-3 sm:my-5 p-2 sm:p-4 border hover:shadow-md cursor-pointer rounded-xl select-none 
-                hover:shadow-blue-200 dark:hover:shadow-dark-primary transition-all bg-white dark:bg-white
-                ${
-                  formData?.budget === budget.title &&
-                  "shadow-lg border-light-foreground dark:border-dark-foreground border bg-gradient-to-br from-orange-200 to-blue-300 dark:to-black/70 dark:from-dark-primary"
-                }`}>
-                  <h2 className="text-2xl sm:text-3xl">{budget.img}</h2>
-                  <h2 className="text-lg sm:text-xl lg:text-2xl py-1 sm:py-2 font-bold">
-                    {budget.title}
-                  </h2>
-                  <h2 className="text-gray-700 dark:text-gray-800 text-sm sm:text-base lg:text-lg font-semibold sm:font-medium">
-                    {budget.description}
-                  </h2>
-                </motion.div>
-              </div>
-            ))}
-          </div>
-          <motion.h2
-            animate={arrowControls}
-            className="text-sm sm:text-xl text-light-foreground dark:text-dark-foreground text-center mt-4 -mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 mx-auto"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-          </motion.h2>
-        </motion.div>
-
-        {/* Number of travelers selection */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-6 sm:mt-8">
-          <h2 className="my-3 sm:my-5 text-xl font-semibold">
-            How many{" "}
-            <span className="text-blue-500 dark:text-dark-primary font-semibold">
-              people
-            </span>
-            ?
-          </h2>
-          <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-8 lg:gap-14 text-light-foreground dark:text-black">
-            {selectTravelers.map((people, index) => (
-              <div
-                className="hover:scale-105 sm:hover:scale-110 transition-all ease-in"
-                key={index}>
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  transition={{ duration: 0.3, delay: 0.05 * index }}
-                  onClick={() => inputChange(people.id, "people")}
-                  className={`my-3 sm:my-5 p-2 sm:p-4 border cursor-pointer rounded-xl select-none hover:shadow-md
-                hover:shadow-blue-200 dark:hover:shadow-dark-primary transition-all bg-white dark:bg-white
-                ${
-                  formData?.people === people.title &&
-                  "shadow-lg border-light-foreground dark:border-dark-foreground border bg-gradient-to-tl  from-orange-200 to-blue-300 dark:to-dark-primary dark:from-black/70"
-                }`}>
-                  <h2 className="text-2xl sm:text-3xl">{people.img}</h2>
-                  <h2 className="text-lg sm:text-xl lg:text-2xl py-1 sm:py-2 font-bold">
-                    {people.title}
-                  </h2>
-                  <h2 className="text-gray-700 dark:text-gray-800 text-sm sm:text-base lg:text-lg font-semibold sm:font-medium min-h-[40px] sm:min-h-[50px]">
-                    {people.description}
-                  </h2>
-                  <h2 className="text-gray-700 dark:text-black font-extralight text-xs sm:text-sm lg:text-base mt-1 sm:mt-2">
-                    ({people.amount})
-                  </h2>
-                </motion.div>
-              </div>
-            ))}
-
-            {/* Create Trip button */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Left Column */}
+          <div className="space-y-12">
+            {/* Location Selection */}
             <motion.div
-              initial={{ opacity: 0, rotateX: 90 }}
-              whileInView={{ opacity: 1, rotateX: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="flex items-center justify-center">
-              <div className="relative z-10 flex cursor-pointer items-center overflow-hidden rounded-xl p-[1.5px] hover:scale-105">
-                <div
-                  className="animate-rotate absolute -inset-1 h-full w-full rounded-full bg-[conic-gradient(#4bcbeb_40deg,transparent_120deg)]
-              dark:bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
-                <div
-                  className="relative z-20 flex rounded-[0.60rem] bg-light-foreground dark:bg-black hover:bg-gradient-to-br from-orange-200 to-blue-500
-                 dark:from-dark-background/20 dark:to-dark-primary/80 ease-in">
-                  <Button
-                    onClick={createTrip}
-                    className="bg-light-foreground dark:bg-black rounded-xl font-bold text-light-background dark:text-white hover:text-light-background dark:hover:text-white
-                       hover:bg-gradient-to-br from-orange-300 to-blue-600 dark:from-dark-background/20 dark:to-dark-primary/80 ease-in
-                         w-24 text-sm sm:text-lg sm:w-32 lg:text-xl lg:w-48"
-                    disabled={loading}>
-                    {loading ? (
-                      <AiOutlineLoading className="size-7 animate-spin" />
-                    ) : (
-                      "Create Trip"
-                    )}
-                  </Button>
-                </div>
+              className="flex flex-col gap-8 mt-6 text-light-foreground dark:text-black max-w-[600px]">
+              <h2 className="text-2xl font-bold mb-6 text-light-foreground dark:text-dark-foreground">
+                Where are you going?{" "}
+                <span className="text-sm text-blue-500 dark:text-dark-primary block mt-2">
+                  (pick popular locations for better results)
+                </span>
+              </h2>
+              <GooglePlacesAutocomplete
+                apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
+                selectProps={{
+                  place,
+                  onChange: (v) => {
+                    setPlace(v);
+                    inputChange(v, "location");
+                  },
+                }}
+              />
+            </motion.div>
+
+            {/* Date Selection */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-white dark:bg-dark-background/50 rounded-2xl p-8 shadow-lg">
+              <h2 className="text-2xl font-bold mb-6 text-light-foreground dark:text-dark-foreground">
+                When are you traveling?{" "}
+                <span className="text-sm text-blue-500 dark:text-dark-primary block mt-2">
+                  (1-7 days)
+                </span>
+              </h2>
+              <DateRange
+                editableDateInputs={true}
+                onChange={handleDateChange}
+                moveRangeOnFirstSelection={false}
+                ranges={dateRange}
+                minDate={new Date()}
+                maxDate={new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)}
+                className="rounded-lg overflow-hidden"
+              />
+            </motion.div>
+          </div>
+
+          {/* Right Column */}
+          <div className="space-y-12">
+            {/* Budget Selection */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="bg-white dark:bg-dark-background/50 rounded-2xl p-8 shadow-lg">
+              <h2 className="text-2xl font-bold mb-6 text-light-foreground dark:text-dark-foreground">
+                What's your{" "}
+                <span className="text-blue-500 dark:text-dark-primary">
+                  budget
+                </span>
+                ?
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {selectBudget.map((budget, index) => (
+                  <div
+                    className="hover:scale-105 transition-all ease-in border-black border rounded-xl"
+                    key={index}>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: 0.05 * index }}
+                      onClick={() => inputChange(budget.id, "budget")}
+                      className={`p-4 rounded-xl cursor-pointer transition-all hover:shadow-md hover:shadow-blue-200 dark:hover:shadow-dark-primary ${
+                        formData?.budget === budget.title
+                          ? "bg-gradient-to-br from-orange-200 to-blue-300 dark:from-dark-primary dark:to-black/70 shadow-lg"
+                          : "bg-white dark:bg-white"
+                      }`}>
+                      <div className="text-3xl mb-2">{budget.img}</div>
+                      <h3 className="text-xl font-bold mb-2 text-light-foreground dark:text-black">
+                        {budget.title}
+                      </h3>
+                      <p className="text-gray-700 dark:text-gray-800">
+                        {budget.description}
+                      </p>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Travelers Selection */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="bg-white dark:bg-dark-background/50 rounded-2xl p-8 shadow-lg">
+              <h2 className="text-2xl font-bold mb-6 text-light-foreground dark:text-dark-foreground">
+                How many{" "}
+                <span className="text-blue-500 dark:text-dark-primary">
+                  people
+                </span>
+                ?
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {selectTravelers.map((people, index) => (
+                  <div
+                    className="hover:scale-105 transition-all ease-in border-black border rounded-xl"
+                    key={index}>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: 0.05 * index }}
+                      onClick={() => inputChange(people.id, "people")}
+                      className={`p-4 rounded-xl cursor-pointer transition-all hover:shadow-md hover:shadow-blue-200 dark:hover:shadow-dark-primary ${
+                        formData?.people === people.title
+                          ? "bg-gradient-to-tl from-orange-200 to-blue-300 dark:from-black/70 dark:to-dark-primary shadow-lg"
+                          : "bg-white dark:bg-white"
+                      }`}>
+                      <div className="text-3xl mb-2">{people.img}</div>
+                      <h3 className="text-xl font-bold mb-2 text-light-foreground dark:text-black">
+                        {people.title}
+                      </h3>
+                      <p className="text-gray-700 dark:text-gray-800 min-h-[40px]">
+                        {people.description}
+                      </p>
+                      <p className="text-gray-700 dark:text-black text-sm mt-2">
+                        ({people.amount})
+                      </p>
+                    </motion.div>
+                  </div>
+                ))}
+                {/* Create Trip Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="w-full h-fit flex justify-center mt-6 sm:mt-16">
+                  <div className="relative z-10 flex cursor-pointer items-center overflow-hidden rounded-xl p-[1.5px] hover:scale-105">
+                    <div className="animate-rotate absolute -inset-1 h-full w-full rounded-full bg-[conic-gradient(#4bcbeb_40deg,transparent_120deg)] dark:bg-[conic-gradient(#0ee9a4_40deg,transparent_120deg)]"></div>
+                    <Button
+                      onClick={createTrip}
+                      className="relative z-20 bg-light-foreground dark:bg-black rounded-xl font-bold text-light-background dark:text-white hover:text-light-background dark:hover:text-white hover:bg-gradient-to-br from-orange-300 to-blue-600 dark:from-dark-background/20 dark:to-dark-primary/80 px-8 py-4 text-xl"
+                      disabled={loading}>
+                      {loading ? (
+                        <AiOutlineLoading className="size-7 animate-spin" />
+                      ) : (
+                        "Create Trip"
+                      )}
+                    </Button>
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Loading dialog */}

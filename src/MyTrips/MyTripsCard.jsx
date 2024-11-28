@@ -45,7 +45,7 @@ function MyTripsCard({ trip, onDelete }) {
       const docRef = doc(db, collectionName, tripId);
       await deleteDoc(docRef);
       onDelete(tripId);
-      toast("Trip deleted successfully.");
+      toast("Trip deleted successfully!");
     } catch (error) {
       console.error("Error deleting document: ", error);
     }
@@ -105,7 +105,7 @@ function MyTripsCard({ trip, onDelete }) {
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <button className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 hover:scale-110 transition duration-300">
-                <IoTrashBinSharp size={18}/>
+                <IoTrashBinSharp size={18} />
               </button>
             </AlertDialogTrigger>
             <AlertDialogContent>

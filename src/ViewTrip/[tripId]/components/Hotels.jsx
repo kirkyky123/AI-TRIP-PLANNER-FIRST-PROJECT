@@ -11,7 +11,7 @@ function Hotels({ trip }) {
       transition={{ duration: 0.5 }}
       className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <h1 className="text-3xl font-bold text-light-foreground dark:text-dark-foreground mb-2">
-        Hotel Recommendations
+        Hotels
       </h1>
       <p className="text-lg text-light-foreground/70 dark:text-dark-foreground/70 mb-8">
         Click on the hotel cards for location details

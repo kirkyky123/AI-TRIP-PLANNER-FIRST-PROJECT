@@ -31,8 +31,9 @@ function MyTrips() {
   const navigate = useNavigate();
   const [userTrips, setUserTrips] = useState([]);
   const { isLoaded, isSignedIn, user } = useUser();
-  const {theme} = useTheme();
-  const backgroundColor = theme === "light" ? "bg-light-background" : "bg-green-950";
+  const { theme } = useTheme();
+  const backgroundColor =
+    theme === "light" ? "bg-light-background" : "bg-green-950";
 
   // Effect hook to check user authentication and fetch trips
   useEffect(() => {
@@ -126,7 +127,9 @@ function MyTrips() {
                         ({userTrips.length})
                       </span>{" "}
                       of your trips? This action is{" "}
-                      <span className="font-bold text-red-600 underline underline-offset-4">permanent</span>{" "}
+                      <span className="font-bold text-red-600 underline underline-offset-4">
+                        permanent
+                      </span>{" "}
                       and cannot be undone.
                     </p>
                   </AlertDialogDescription>
@@ -167,7 +170,7 @@ function MyTrips() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
             className="text-center text-white">
-            <p className="text-xl mb-4">
+            <p className="text-xl mb-4 text-gray-700 dark:text-gray-200">
               You haven&apos;t created any trips yet.
             </p>
             <button
