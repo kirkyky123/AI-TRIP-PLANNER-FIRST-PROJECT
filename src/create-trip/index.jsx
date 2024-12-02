@@ -41,7 +41,6 @@ function CreateTrip() {
   const navigate = useNavigate();
 
   const [isWaitingForSignIn, setIsWaitingForSignIn] = useState(false);
-  const arrowControls = useAnimation();
 
   // Handle input changes for form fields
   const inputChange = (value, name) => {
@@ -78,18 +77,6 @@ function CreateTrip() {
       [name]: prevData[name] === value ? null : value,
     }));
   };
-
-  // Effect for logging form data and controlling arrow animation
-  useEffect(() => {
-    if (formData.people) {
-      arrowControls.stop();
-    } else {
-      arrowControls.start({
-        y: [0, 10, 0],
-        transition: { duration: 1, repeat: Infinity },
-      });
-    }
-  }, [formData.people, arrowControls]);
 
   // Effect for handling sign-in state
   useEffect(() => {
@@ -283,7 +270,7 @@ function CreateTrip() {
                 </span>
                 ?
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 select-none">
                 {selectBudget.map((budget, index) => (
                   <div
                     className="hover:scale-105 transition-all ease-in border-black border rounded-xl"
@@ -296,16 +283,14 @@ function CreateTrip() {
                       onClick={() => inputChange(budget.id, "budget")}
                       className={`p-4 rounded-xl cursor-pointer transition-all hover:shadow-md hover:shadow-blue-200 dark:hover:shadow-dark-primary ${
                         formData?.budget === budget.title
-                          ? "bg-gradient-to-br from-orange-200 to-blue-300 dark:from-dark-primary dark:to-black/70 shadow-lg"
-                          : "bg-white dark:bg-white"
+                          ? "bg-gradient-to-br from-orange-200 to-blue-300 dark:from-dark-primary dark:to-black/70 dark:text-gray-300 shadow-lg"
+                          : "bg-white dark:bg-white text-gray-800"
                       }`}>
                       <div className="text-3xl mb-2">{budget.img}</div>
                       <h3 className="text-xl font-bold mb-2 text-light-foreground dark:text-black">
                         {budget.title}
                       </h3>
-                      <p className="text-gray-700 dark:text-gray-800">
-                        {budget.description}
-                      </p>
+                      <p>{budget.description}</p>
                     </motion.div>
                   </div>
                 ))}
@@ -339,19 +324,15 @@ function CreateTrip() {
                       onClick={() => inputChange(people.id, "people")}
                       className={`p-4 rounded-xl cursor-pointer transition-all hover:shadow-md hover:shadow-blue-200 dark:hover:shadow-dark-primary ${
                         formData?.people === people.title
-                          ? "bg-gradient-to-tl from-orange-200 to-blue-300 dark:from-black/70 dark:to-dark-primary shadow-lg"
-                          : "bg-white dark:bg-white"
+                          ? "bg-gradient-to-tl from-orange-200 to-blue-300 dark:from-black/70 dark:to-dark-primary dark:text-gray-200 shadow-lg"
+                          : "bg-white dark:bg-white text-gray-800"
                       }`}>
                       <div className="text-3xl mb-2">{people.img}</div>
                       <h3 className="text-xl font-bold mb-2 text-light-foreground dark:text-black">
                         {people.title}
                       </h3>
-                      <p className="text-gray-700 dark:text-gray-800 min-h-[40px]">
-                        {people.description}
-                      </p>
-                      <p className="text-gray-700 dark:text-black text-sm mt-2">
-                        ({people.amount})
-                      </p>
+                      <p className=" min-h-[40px]">{people.description}</p>
+                      <p className="text-sm mt-2">({people.amount})</p>
                     </motion.div>
                   </div>
                 ))}
@@ -388,7 +369,7 @@ function CreateTrip() {
           <DialogDescription>
             <div className="flex flex-col items-center mx-10 select-none">
               <h2 className="text-xl text-light-foreground dark:text-dark-foreground">
-                Trip Loading
+                Generating Trip...
               </h2>
               <VscLoading className="size-12 animate-spin mt-5 text-blue-400 dark:text-dark-primary" />
             </div>

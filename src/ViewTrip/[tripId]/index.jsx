@@ -58,13 +58,25 @@ function ViewTrip() {
   };
 
   // Function to enable photos with password verification
-  const enablePhotos = () => {
+  const enablePhotos = async () => {
     const password = passwordInputRef.current.value;
-    if (password === import.meta.env.VITE_PASSWORD_KEY) {
-      setEnabledPhotos(true);
-      setOpenDialog(false);
-    } else {
-      toast.error("Incorrect password.");
+
+    try {
+      const response = await fetch("/api/validate-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }), // Send the password to the API
+      });
+
+      if (response.ok) {
+        setEnabledPhotos(true); // Enable photos if the password is correct
+        setOpenDialog(false);
+      } else {
+        toast.error("Incorrect password."); // Show error for incorrect password
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again."); // Handle network or server errors
+      console.log(error);
     }
   };
 
@@ -86,17 +98,19 @@ function ViewTrip() {
               <p className="mb-4 text-black dark:text-white">
                 If so, please enter your
                 <span className="text-green-500 font-bold"> password </span>
-                to enable photos for a much better experience.
+                to enable images for a much better experience.
               </p>
               <div className="flex flex-row gap-4 items-center">
-                <Label htmlFor="password" className="text-right text-white">
+                <Label
+                  htmlFor="password"
+                  className="text-right text-black dark:text-white">
                   Password
                 </Label>
                 <Input
                   id="password"
                   ref={passwordInputRef}
                   defaultValue=""
-                  className="text-white border-gray-500 w-20 h-8"
+                  className="text-black dark:text-white border-gray-500 w-20 h-8"
                 />
               </div>
             </AlertDialogDescription>

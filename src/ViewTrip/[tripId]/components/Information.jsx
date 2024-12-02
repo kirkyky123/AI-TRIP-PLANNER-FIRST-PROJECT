@@ -214,22 +214,24 @@ function InformationSection({ trip }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.7 }}>
-            {!enabledPhotos &&
-            <Button
-            className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300 
+            {!enabledPhotos && (
+              <Button
+                className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300 
             text-light-foreground px-4 py-2 rounded-xl shadow-md font-bold border-2 border-light-border dark:border-black
             hover:scale-105 transition-all duration-100"
-            onClick={() => setOpenDialog(true)}>
-              <span className="inline-block">Enable Photos</span>
-            </Button>}
-            {enabledPhotos &&
-            <Button
-            className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300 
+                onClick={() => setOpenDialog(true)}>
+                <span className="inline-block">Enable Images</span>
+              </Button>
+            )}
+            {enabledPhotos && (
+              <Button
+                className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300 
             text-light-foreground px-4 py-2 rounded-xl shadow-md font-bold border-2 border-light-border dark:border-black
             hover:scale-105 transition-all duration-100"
-            onClick={() => setDisablePhotoDialog(true)}>
-              <span className="inline-block">Disable Photos</span>
-            </Button>}
+                onClick={() => setDisablePhotoDialog(true)}>
+                <span className="inline-block">Disable Photos</span>
+              </Button>
+            )}
           </motion.div>
         </motion.div>
       </div>

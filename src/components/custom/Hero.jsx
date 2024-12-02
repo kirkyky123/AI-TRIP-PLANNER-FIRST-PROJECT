@@ -75,7 +75,7 @@ function Hero() {
                     ? "linear-gradient(to right, #ffffff, #fed7aa)"
                     : "linear-gradient(to right, #000000, #26ae75)"
                 }
-                duration={0.8}>
+                duration={0.6}>
                 <div className="flex justify-center m-2">
                   <div className="relative z-10 flex cursor-pointer items-center overflow-hidden rounded-xl p-[3.5px] w-full hover:scale-105">
                     <div
@@ -100,33 +100,24 @@ function Hero() {
           </Link>
         </SignedIn>
         <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, rotateX: 90 }}
+          whileInView={{ opacity: 1, rotateX: 0 }}
           viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 1 }}
-          className="flex flex-col md:flex-row lg:flex-row xl:flex-row gap-20 
-                      mt-20 sm:mt-10 justify-center sm:items-center">
-          <img
-            src="/laptop-landing.png"
-            className="object-contain
-                    sm:h-[400px] sm:w-[467px]
-                    md:h-[320px] md:w-[373px]
-                    lg:h-[400px] lg:w-[467px]
-                    xl:h-[600px] xl:w-[700px]
-                    md:-ml-20 xl:ml-0
-                    lg:-mr-8 xl:-mr-0
-                    -mt-20 lg:-mt-32"
-          />
-          <img
-            src="/phone-landing.png"
-            className="object-contain rounded-b-full
-                     sm:size-[550px]
-                     md:size-[400px]
-                     lg:size-[550px]
-                     xl:size-[700px]
-                     sm:-mt-14 md:-mt-10 xl:mt-0
-                     ml-10 md:-ml-14"
-          />
+          transition={{ duration: 1.5 }}
+          className="flex items-center justify-center">
+          <BoxReveal
+            boxColor={
+              theme === "light"
+                ? "linear-gradient(to right, #ffffff, #fed7aa)"
+                : "linear-gradient(to right, #000000, #26ae75)"
+            }
+            duration={1.5}>
+            <iframe
+              src="https://player.vimeo.com/video/1034373275?h=68a7de1c74&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+              className="w-[90vw] h-[50.625vw] max-w-[1000px] max-h-[563px]"
+              title="xQc reacts to"></iframe>
+          </BoxReveal>
         </motion.div>
 
         <div id="features" className="mt-20">

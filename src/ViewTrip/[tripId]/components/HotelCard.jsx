@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 import { EnablePhotosContext } from "..";
 
-function HotelCard({ hotel}) {
+function HotelCard({ hotel }) {
   const [photoUrl, setPhotoUrl] = useState("");
   const enabledPhotos = useContext(EnablePhotosContext);
 
@@ -82,7 +82,7 @@ function HotelCard({ hotel}) {
               {hotel.HotelName}
             </h2>
             {/* Hotel address */}
-            <p className="text-md text-gray-500 dark:text-gray-300 mb-4 flex items-center">
+            <p className="text-md text-gray-600 dark:text-gray-300 mb-4 flex items-center">
               <span className="text-xl mr-2">📍</span>
               <span className="text-sm underline underline-offset-2 line-clamp-2">
                 {hotel.HotelAddress}

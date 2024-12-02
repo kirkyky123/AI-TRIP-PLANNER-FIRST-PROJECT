@@ -60,11 +60,11 @@ function PlaceCard({ place, index }) {
         className=" border border-black dark:border-white overflow-hidden shadow-md hover:shadow-xl
       transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2 rounded-2xl">
         <div className="relative">
-            <img
-              src={photoUrl ? photoUrl : "/banner2.jpg"}
-              alt={place.PlaceName}
-              className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-            />
+          <img
+            src={photoUrl ? photoUrl : "/banner2.jpg"}
+            alt={place.PlaceName}
+            className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+          />
           <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm font-semibold rounded">
             ⏱️ {place.BestTimeToVisit}
           </div>
