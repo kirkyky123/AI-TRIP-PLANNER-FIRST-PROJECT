@@ -112,11 +112,11 @@ function Hero() {
                 : "linear-gradient(to right, #000000, #26ae75)"
             }
             duration={1.5}>
-            <iframe
+            {/* <iframe
               src="https://player.vimeo.com/video/1034373275?h=68a7de1c74&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
               className="w-[90vw] h-[50.625vw] max-w-[1000px] max-h-[563px]"
-              title="xQc reacts to"></iframe>
+              title="xQc reacts to"></iframe> */}
           </BoxReveal>
         </motion.div>
 
