@@ -220,7 +220,7 @@ function InformationSection({ trip }) {
             text-light-foreground px-4 py-2 rounded-xl shadow-md font-bold border-2 border-light-border dark:border-black
             hover:scale-105 transition-all duration-100"
                 onClick={() => setOpenDialog(true)}>
-                <span className="inline-block">Enable Images</span>
+                <span className="inline-block">Enable Photos</span>
               </Button>
             )}
             {enabledPhotos && (

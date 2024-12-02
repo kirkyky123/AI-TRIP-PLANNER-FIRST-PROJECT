@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { EnablePhotosContext } from "..";
 
-function PlaceCard({ place, index }) {
+function PlaceCard({ place, index, location }) {
   const [photoUrl, setPhotoUrl] = useState("");
   const enabledPhotos = useContext(EnablePhotosContext);
 
@@ -51,7 +51,7 @@ function PlaceCard({ place, index }) {
   return (
     <Link
       to={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-        place.PlaceNameSearch + " " + place.PlaceAddress
+        place.PlaceNameSearch + " " + location
       )}`}
       target="_blank"
       rel="noopener noreferrer"

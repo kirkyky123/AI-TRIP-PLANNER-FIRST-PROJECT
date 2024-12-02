@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 export default function Itinerary({ trip }) {
   const [expandedDays, setExpandedDays] = useState({});
+  const [location, setLocation] = useState("");
 
   useEffect(() => {
     if (trip?.tripInfo?.ItineraryDetails) {
@@ -14,6 +15,7 @@ export default function Itinerary({ trip }) {
         initialExpandedState[itinerary.Day] = true;
       });
       setExpandedDays(initialExpandedState);
+      setLocation(trip?.userChoices?.location?.label);
     }
   }, [trip]);
 
@@ -24,7 +26,7 @@ export default function Itinerary({ trip }) {
   const getDateForDay = (dayNumber) => {
     if (!trip?.userChoices?.startDate) return "Invalid Date";
     const startDate = new Date(trip.userChoices.startDate);
-    const date = new Date(startDate); 
+    const date = new Date(startDate);
     date.setDate(startDate.getDate() + dayNumber - 1);
     const day = date.getDate();
     return `${date.toLocaleDateString("en-US", {
@@ -88,7 +90,11 @@ export default function Itinerary({ trip }) {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.1 }}
                         transition={{ duration: 0.5, delay: placeIndex * 0.1 }}>
-                        <ItineraryCard place={place} index={placeIndex} />
+                        <ItineraryCard
+                          place={place}
+                          index={placeIndex}
+                          location={location}
+                        />
                       </motion.div>
                     ))}
                   </div>

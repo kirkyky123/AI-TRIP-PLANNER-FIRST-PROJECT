@@ -58,25 +58,13 @@ function ViewTrip() {
   };
 
   // Function to enable photos with password verification
-  const enablePhotos = async () => {
+  const enablePhotos = () => {
     const password = passwordInputRef.current.value;
-
-    try {
-      const response = await fetch("/api/validate-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }), // Send the password to the API
-      });
-
-      if (response.ok) {
-        setEnabledPhotos(true); // Enable photos if the password is correct
-        setOpenDialog(false);
-      } else {
-        toast.error("Incorrect password."); // Show error for incorrect password
-      }
-    } catch (error) {
-      toast.error("An error occurred. Please try again."); // Handle network or server errors
-      console.log(error);
+    if (password === import.meta.env.VITE_PASSWORD_KEY) {
+      setEnabledPhotos(true);
+      setOpenDialog(false);
+    } else {
+      toast.error("Incorrect password.");
     }
   };
 
