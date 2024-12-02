@@ -22,23 +22,26 @@ import { Link } from "react-router-dom";
 function MyTripsCard({ trip, onDelete }) {
   const [photoUrl, setPhotoUrl] = useState("");
 
-  // useEffect(() => {
-  //   if (trip) {
-  //     getPhoto();
-  //   }
-  // }, [trip]);
-  // const getPhoto = async () => {
-  //   const data = {
-  //     textQuery: trip?.userChoices?.location?.label
-  //   };
+  useEffect(() => {
+    if (trip) {
+      getPhoto();
+    }
+  }, [trip]);
+  const getPhoto = async () => {
+    const data = {
+      textQuery: trip?.userChoices?.location?.label,
+    };
 
-  //   const res = await placeDetails(data).then((response) => {
-  //     console.log(response.data.places[0].photos[3].name);
-  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace("{NAME}", response.data.places[0].photos[0].name);
-  //     console.log(updatedPhotoURL);
-  //     setPhotoUrl(updatedPhotoURL);
-  //   })
-  // };
+    const res = await placeDetails(data).then((response) => {
+      console.log(response.data.places[0].photos[3].name);
+      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+        "{NAME}",
+        response.data.places[0].photos[0].name
+      );
+      console.log(updatedPhotoURL);
+      setPhotoUrl(updatedPhotoURL);
+    });
+  };
 
   const deleteTripById = async (collectionName, tripId) => {
     try {
