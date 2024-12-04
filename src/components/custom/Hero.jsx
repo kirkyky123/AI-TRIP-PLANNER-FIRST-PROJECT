@@ -112,11 +112,13 @@ function Hero() {
                 : "linear-gradient(to right, #000000, #26ae75)"
             }
             duration={1.5}>
-            <iframe
-              src="https://player.vimeo.com/video/1035440085?h=35beb72353&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
-              className="w-[90vw] h-[50.625vw] max-w-[1000px] max-h-[563px]"
-              title="Explanation video"></iframe>
+            <div className="w-[90vw] h-[50.625vw] max-w-[1000px] max-h-[563px] rounded-3xl overflow-hidden">
+              <iframe
+                src="https://player.vimeo.com/video/1035809354?h=2823dbfee1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                className="w-full h-full"
+                title="Explanation video"></iframe>
+            </div>
           </BoxReveal>
         </motion.div>
 
