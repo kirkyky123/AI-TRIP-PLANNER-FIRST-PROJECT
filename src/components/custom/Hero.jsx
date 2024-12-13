@@ -114,10 +114,13 @@ function Hero() {
             duration={1.5}>
             <div className="w-[90vw] h-[50.625vw] max-w-[1000px] max-h-[563px] rounded-3xl overflow-hidden">
               <iframe
-                src="https://player.vimeo.com/video/1035809354?h=2823dbfee1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
-                className="w-full h-full"
-                title="Explanation video"></iframe>
+                src="https://www.youtube.com/embed/E1_19kNs79c?si=7yEEUjwJ_fpWlZPK"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                className="w-full h-full rounded-3xl"></iframe>
             </div>
           </BoxReveal>
         </motion.div>
