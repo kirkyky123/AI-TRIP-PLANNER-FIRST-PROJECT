@@ -11,40 +11,61 @@ function HotelCard({ hotel, location }) {
   // Effect to fetch hotel photo when component mounts or when enabledPhotos changes
   useEffect(() => {
     if (hotel && enabledPhotos) {
-      getPhoto();
+      getHotelPhoto();
     }
     if (!enabledPhotos) {
       setPhotoUrl("/banner2.jpg");
     }
   }, [hotel, enabledPhotos]);
 
-  // Function to fetch hotel photo from API
-  const getPhoto = async () => {
+  const getHotelPhoto = async () => {
     if (!enabledPhotos) return;
-    let data = {
-      textQuery: hotel?.HotelName,
+
+    // Helper function to try a photo at a given index.
+    const tryPhotoAtIndex = async (photos, index) => {
+      if (index >= photos.length) {
+        return null;
+      }
+      const photo = photos[index];
+      if (!photo?.name) {
+        return tryPhotoAtIndex(photos, index + 1);
+      }
+      try {
+        const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+          "{NAME}",
+          photo.name
+        );
+        return updatedPhotoURL;
+      } catch (err) {
+        console.error(`Error using hotel photo at index ${index}:`, err);
+        return tryPhotoAtIndex(photos, index + 1);
+      }
     };
 
-    let response = await placeDetails(data);
-    let updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
-      "{NAME}",
-      response.data.places[0].photos[0].name
-    );
-    if (!updatedPhotoURL) {
-      data = {
-        textQuery: hotel?.HotelName + " " + hotel?.HotelAddress,
-      };
-      response = await placeDetails(data);
-      updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
-        "{NAME}",
-        response.data.places[0].photos[0].name
-      );
-    }
+    try {
+      // First attempt using just the HotelName
+      let data = { textQuery: hotel?.HotelName };
+      let response = await placeDetails(data);
+      let photos = response.data.places[0]?.photos || [];
+      let updatedPhotoURL = await tryPhotoAtIndex(photos, 0);
 
-    if (updatedPhotoURL) {
-      setPhotoUrl(updatedPhotoURL);
-    } else {
-      console.log("No photo found");
+      // If no valid photo was found, try again with HotelName and HotelAddress.
+      if (!updatedPhotoURL) {
+        data = { textQuery: `${hotel?.HotelName} ${hotel?.HotelAddress}` };
+        response = await placeDetails(data);
+        photos = response.data.places[0]?.photos || [];
+        updatedPhotoURL = await tryPhotoAtIndex(photos, 0);
+      }
+
+      if (updatedPhotoURL) {
+        setPhotoUrl(updatedPhotoURL);
+      } else {
+        console.log("No hotel photo found");
+        setPhotoUrl("/banner2.jpg");
+      }
+    } catch (error) {
+      console.error("Error fetching hotel photo:", error);
+      setPhotoUrl("/banner2.jpg");
     }
   };
 

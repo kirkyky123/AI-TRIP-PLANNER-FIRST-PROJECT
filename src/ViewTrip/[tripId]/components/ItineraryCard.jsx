@@ -32,7 +32,8 @@ function PlaceCard({ place, index, location }) {
 
     if (!updatedPhotoURL) {
       data = {
-        textQuery: place?.PlaceNameSearch + " " + place?.PlaceAddress,
+        textQuery:
+          place?.PlaceNameSearch + " " + place?.PlaceAddress + " " + location,
       };
       response = await placeDetails(data);
       updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
@@ -47,7 +48,6 @@ function PlaceCard({ place, index, location }) {
       console.log("No photo found");
     }
   };
-
   return (
     <Link
       to={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(

@@ -61,11 +61,11 @@ function ViewTrip() {
   const enablePhotos = () => {
     const password = passwordInputRef.current.value;
     if (password === import.meta.env.VITE_PASSWORD_KEY) {
-      setEnabledPhotos(false);
+      setEnabledPhotos(true);
       setOpenDialog(false);
-      toast.error(
-        "Images currently disabled. Please contact me if you require them."
-      );
+      // toast.error(
+      //   "Images currently disabled. Please contact me if you require them."
+      // );
     } else {
       toast.error("Incorrect password.");
     }
