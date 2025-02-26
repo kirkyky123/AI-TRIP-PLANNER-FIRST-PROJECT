@@ -33,7 +33,7 @@ function ViewTrip() {
     theme === "light" ? "bg-light-background" : "bg-green-950";
   const [trip, setTrip] = useState([]);
   const { tripId } = useParams();
-  const [enabledPhotos, setEnabledPhotos] = useState(false);
+  const [enabledPhotos, setEnabledPhotos] = useState(true);
   const passwordInputRef = useRef(null);
   const [openDialog, setOpenDialog] = useState(true);
   const [disablePhotoDialog, setDisablePhotoDialog] = useState(false);
