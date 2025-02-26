@@ -99,7 +99,7 @@ function Hero() {
             <CreateTripButton theme={theme} />
           </Link>
         </SignedIn>
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, rotateX: 90 }}
           whileInView={{ opacity: 1, rotateX: 0 }}
           viewport={{ once: false, amount: 0.3 }}
@@ -123,7 +123,7 @@ function Hero() {
                 className="w-full h-full rounded-3xl"></iframe>
             </div>
           </BoxReveal>
-        </motion.div>
+        </motion.div> */}
 
         <div id="features" className="mt-20">
           {/* Features Section */}
