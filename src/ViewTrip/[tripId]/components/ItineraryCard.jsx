@@ -8,46 +8,47 @@ function PlaceCard({ place, index, location }) {
   const [photoUrl, setPhotoUrl] = useState("");
   const enabledPhotos = useContext(EnablePhotosContext);
 
-  useEffect(() => {
-    if (place && enabledPhotos) {
-      getPhoto();
-    }
-    if (!enabledPhotos) {
-      setPhotoUrl("/banner2.jpg");
-    }
-  }, [place, enabledPhotos]);
+  // useEffect(() => {
+  //   if (place && enabledPhotos) {
+  //     getPhoto();
+  //   }
+  //   if (!enabledPhotos) {
+  //     setPhotoUrl("/banner2.jpg");
+  //   }
+  // }, [place, enabledPhotos]);
 
-  const getPhoto = async () => {
-    if (!enabledPhotos) return;
+  // const getPhoto = async () => {
+  //   if (!enabledPhotos) return;
 
-    let data = {
-      textQuery: place?.PlaceNameSearch,
-    };
+  //   let data = {
+  //     textQuery: place?.PlaceNameSearch,
+  //   };
 
-    let response = await placeDetails(data);
-    let updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
-      "{NAME}",
-      response.data.places[0].photos[0].name
-    );
+  //   let response = await placeDetails(data);
+  //   let updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+  //     "{NAME}",
+  //     response.data.places[0].photos[0].name
+  //   );
 
-    if (!updatedPhotoURL) {
-      data = {
-        textQuery:
-          place?.PlaceNameSearch + " " + place?.PlaceAddress + " " + location,
-      };
-      response = await placeDetails(data);
-      updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
-        "{NAME}",
-        response.data.places[0].photos[0].name
-      );
-    }
+  //   if (!updatedPhotoURL) {
+  //     data = {
+  //       textQuery:
+  //         place?.PlaceNameSearch + " " + place?.PlaceAddress + " " + location,
+  //     };
+  //     response = await placeDetails(data);
+  //     updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
+  //       "{NAME}",
+  //       response.data.places[0].photos[0].name
+  //     );
+  //   }
 
-    if (updatedPhotoURL) {
-      setPhotoUrl(updatedPhotoURL);
-    } else {
-      console.log("No photo found");
-    }
-  };
+  //   if (updatedPhotoURL) {
+  //     setPhotoUrl(updatedPhotoURL);
+  //   } else {
+  //     console.log("No photo found");
+  //   }
+  // };
+  
   return (
     <Link
       to={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(

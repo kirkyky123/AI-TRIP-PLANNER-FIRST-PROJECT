@@ -10,12 +10,12 @@ function HotelCard({ hotel, location }) {
 
   // Effect to fetch hotel photo when component mounts or when enabledPhotos changes
   useEffect(() => {
-    if (hotel && enabledPhotos) {
-      getHotelPhoto();
-    }
-    if (!enabledPhotos) {
+    // if (hotel && enabledPhotos) {
+    //   getHotelPhoto();
+    // }
+    // if (!enabledPhotos) {
       setPhotoUrl("/banner2.jpg");
-    }
+    //}
   }, [hotel, enabledPhotos]);
 
   const getHotelPhoto = async () => {
