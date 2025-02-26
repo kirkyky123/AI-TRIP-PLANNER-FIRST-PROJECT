@@ -33,7 +33,7 @@ function ViewTrip() {
     theme === "light" ? "bg-light-background" : "bg-green-950";
   const [trip, setTrip] = useState([]);
   const { tripId } = useParams();
-  const [enabledPhotos, setEnabledPhotos] = useState(true);
+  const [enabledPhotos, setEnabledPhotos] = useState(false);
   const passwordInputRef = useRef(null);
   const [openDialog, setOpenDialog] = useState(true);
   const [disablePhotoDialog, setDisablePhotoDialog] = useState(false);
@@ -59,16 +59,16 @@ function ViewTrip() {
 
   // Function to enable photos with password verification
   const enablePhotos = () => {
-    const password = passwordInputRef.current.value;
-    if (password === import.meta.env.VITE_PASSWORD_KEY) {
-      setEnabledPhotos(true);
-      setOpenDialog(false);
-      // toast.error(
-      //   "Images currently disabled. Please contact me if you require them."
-      // );
-    } else {
-      toast.error("Incorrect password.");
-    }
+    //const password = passwordInputRef.current.value;
+    // if (password === import.meta.env.VITE_PASSWORD_KEY) {
+    setEnabledPhotos(true);
+    setOpenDialog(false);
+    // toast.error(
+    //   "Images currently disabled. Please contact me if you require them."
+    // );
+    // } else {
+    //   toast.error("Incorrect password.");
+    // }
   };
 
   // Function to disable photos
