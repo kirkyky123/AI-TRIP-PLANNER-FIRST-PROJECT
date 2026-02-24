@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
+import { scrollToSection } from "@/lib/scrollUtils";
 
 function LandingFooter() {
   const location = useLocation();
@@ -16,18 +17,9 @@ function LandingFooter() {
   const linkStyles =
     "text-gray-800 dark:text-gray-300 hover:text-blue-500 dark:hover:text-[#26ae75] transform transition-all duration-300";
 
-  // Function to scroll to a specific section on the page
-  // If on the home page, it smoothly scrolls to the section with an offset
-  // If not on the home page, it redirects to the home page with the section anchor
-  const scrollToSection = (sectionId) => {
+  const handleScrollToSection = (sectionId) => {
     if (isHomePage) {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        const yOffset = -200;
-        const y =
-          section.getBoundingClientRect().top + window.scrollY + yOffset;
-        window.scrollTo({ top: y, behavior: "smooth" });
-      }
+      scrollToSection(sectionId);
     } else {
       window.location.href = `/#${sectionId}`;
     }
@@ -57,14 +49,14 @@ function LandingFooter() {
               </li>
               <li>
                 <button
-                  onClick={() => scrollToSection("features")}
+                  onClick={() => handleScrollToSection("features")}
                   className={linkStyles}>
                   Features
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => scrollToSection("pricing")}
+                  onClick={() => handleScrollToSection("pricing")}
                   className={linkStyles}>
                   Pricing
                 </button>

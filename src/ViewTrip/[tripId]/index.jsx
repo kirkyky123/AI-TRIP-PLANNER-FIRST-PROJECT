@@ -61,14 +61,12 @@ function ViewTrip() {
   const enablePhotos = () => {
     const password = passwordInputRef.current.value;
     if (password === import.meta.env.VITE_PASSWORD_KEY) {
-    setEnabledPhotos(false);
-    setOpenDialog(false);
-    toast.error(
-      "Images currently disabled. Please contact me if you require them."
-    );
+      setEnabledPhotos(true);
+      setOpenDialog(false);
+      toast.success("Photos enabled successfully!");
     } else {
       toast.error("Incorrect password.");
-    // }
+    }
   };
 
   // Function to disable photos
@@ -153,7 +151,7 @@ function ViewTrip() {
                 <Hotels trip={trip} />
               </div>
               <Itinerary trip={trip} />
-              <Summary trip={trip} />
+              <Summary />
             </DisablePhotoDialogContext.Provider>
           </EnablePhotosContext.Provider>
         </OpenDialogContext.Provider>

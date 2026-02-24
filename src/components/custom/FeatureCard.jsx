@@ -1,5 +1,3 @@
-import React from 'react'
-
 function FeatureCard({ icon, title, description }) {
   return (
     <div className="bg-white rounded-lg p-6 shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-lg

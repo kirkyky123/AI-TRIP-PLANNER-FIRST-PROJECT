@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { IoTrashBinSharp } from "react-icons/io5";
-import { FaCalendarAlt, FaMoneyBillWave, FaUsers } from "react-icons/fa";
+import { FaCalendarAlt } from "react-icons/fa";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,91 +15,29 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/AiService/firedatabaseConfig";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 import { Link } from "react-router-dom";
+import { formatDateRange } from "@/lib/dateUtils";
 
 function MyTripsCard({ trip, onDelete }) {
-  const [photoUrl, setPhotoUrl] = useState("");
-
-  // useEffect(() => {
-  //   if (trip) {
-  //     getPhoto();
-  //   }
-  // }, [trip]);
-  // const getPhoto = async () => {
-  //   const data = {
-  //     textQuery: trip?.userChoices?.location?.label,
-  //   };
-
-  //   const res = await placeDetails(data).then((response) => {
-  //     console.log(response.data.places[0].photos[0].name);
-  //     const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
-  //       "{NAME}",
-  //       response.data.places[0].photos[2].name
-  //     );
-  //     console.log(updatedPhotoURL);
-  //     setPhotoUrl(updatedPhotoURL);
-  //   });
-  // };
-
   const deleteTripById = async (collectionName, tripId) => {
     try {
       const docRef = doc(db, collectionName, tripId);
       await deleteDoc(docRef);
       onDelete(tripId);
       toast("Trip deleted successfully!");
-    } catch (error) {
-      console.error("Error deleting document: ", error);
-    }
-  };
-
-  const formatDateRange = (startDate, endDate) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const options = { month: "short", day: "numeric", year: "2-digit" };
-
-    if (
-      start.getMonth() === end.getMonth() &&
-      start.getFullYear() === end.getFullYear()
-    ) {
-      return `${start.toLocaleDateString("en-US", {
-        month: "short",
-      })} ${start.getDate()}${getOrdinalSuffix(
-        start.getDate()
-      )} - ${end.getDate()}${getOrdinalSuffix(end.getDate())}, ${start
-        .getFullYear()
-        .toString()
-        .slice(-2)}`;
-    } else {
-      return `${start.toLocaleDateString(
-        "en-US",
-        options
-      )} - ${end.toLocaleDateString("en-US", options)}`;
-    }
-  };
-
-  const getOrdinalSuffix = (day) => {
-    if (day > 3 && day < 21) return "th";
-    switch (day % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
+    } catch {
+      toast.error("Failed to delete trip. Please try again.");
     }
   };
 
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
-      className="bg-gradient-to-b from-light-background to-light-secondary dark:from-gray-700 dark:to-gray-900 overflow-hidden hover:shadow-white dark:hover:shadow-gray-400 hover:shadow-lg 
+      className="bg-gradient-to-b from-light-background to-light-secondary dark:from-gray-700 dark:to-gray-900 overflow-hidden hover:shadow-white dark:hover:shadow-gray-400 hover:shadow-lg
       border-black dark:border-white border transition-all duration-300 transform group-hover:scale-105 group-hover:-translate-y-2 rounded-t-2xl">
       <div className="relative">
         <img
-          src={photoUrl ? photoUrl : "/banner2.jpg"}
+          src="/banner2.jpg"
           alt={trip?.userChoices?.location?.label}
           className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-150"
         />

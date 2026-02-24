@@ -1,14 +1,11 @@
 /* eslint-disable react/prop-types */
-import { placeDetails, REFERENCE_PHOTO_URL } from "@/AiService/API";
 import { Button } from "@/components/ui/button";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { FaShare, FaRegCopy } from "react-icons/fa";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -19,86 +16,17 @@ import InfoTag from "./InfoTag";
 import { EnablePhotosContext } from "..";
 import { OpenDialogContext } from "../index";
 import { DisablePhotoDialogContext } from "../index";
+import { formatDateRange } from "@/lib/dateUtils";
 
 function InformationSection({ trip }) {
-  // State and context management
-  const [photoUrl, setPhotoUrl] = useState("");
   const enabledPhotos = useContext(EnablePhotosContext);
   const [setOpenDialog] = useContext(OpenDialogContext);
   const [setDisablePhotoDialog] = useContext(DisablePhotoDialogContext);
-
-  // Effect to fetch photo when trip data changes or photos are enabled
-  useEffect(() => {
-    if (trip && enabledPhotos) {
-      getPhoto();
-    }
-    if (!enabledPhotos) {
-      setPhotoUrl("/banner2.jpg");
-    }
-  }, [trip, enabledPhotos]);
-
-  // Function to fetch photo from API
-  const getPhoto = async () => {
-    if (!enabledPhotos) return;
-
-    const data = {
-      textQuery: trip?.userChoices?.location?.label,
-    };
-
-    const res = await placeDetails(data).then((response) => {
-      const updatedPhotoURL = REFERENCE_PHOTO_URL.replace(
-        "{NAME}",
-        response.data.places[0].photos[0].name
-      );
-      setPhotoUrl(updatedPhotoURL);
-    });
-  };
 
   // Function to copy trip link to clipboard
   const copyTripLink = () => {
     navigator.clipboard.writeText(window.location.href);
     toast.success("Copied link!");
-  };
-
-  // Function to format date range for display
-  const formatDateRange = (startDate, endDate) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const options = { month: "short", day: "numeric", year: "2-digit" };
-
-    if (
-      start.getMonth() === end.getMonth() &&
-      start.getFullYear() === end.getFullYear()
-    ) {
-      return `${start.toLocaleDateString("en-US", {
-        month: "short",
-      })} ${start.getDate()}${getOrdinalSuffix(
-        start.getDate()
-      )} - ${end.getDate()}${getOrdinalSuffix(end.getDate())}, ${start
-        .getFullYear()
-        .toString()
-        .slice(-2)}`;
-    } else {
-      return `${start.toLocaleDateString(
-        "en-US",
-        options
-      )} - ${end.toLocaleDateString("en-US", options)}`;
-    }
-  };
-
-  // Helper function to get ordinal suffix for dates
-  const getOrdinalSuffix = (day) => {
-    if (day > 3 && day < 21) return "th";
-    switch (day % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
   };
 
   return (
@@ -111,7 +39,7 @@ function InformationSection({ trip }) {
         transition={{ duration: 0.5 }}
         className="relative">
         <img
-          src={photoUrl ? photoUrl : "/banner2.jpg"}
+          src="/banner2.jpg"
           alt="trip-banner"
           className="w-full h-64 sm:h-80 md:h-96 object-cover rounded-xl shadow-lg"
         />
@@ -216,7 +144,7 @@ function InformationSection({ trip }) {
             transition={{ duration: 0.3, delay: 0.7 }}>
             {!enabledPhotos && (
               <Button
-                className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300 
+                className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300
             text-light-foreground px-4 py-2 rounded-xl shadow-md font-bold border-2 border-light-border dark:border-black
             hover:scale-105 transition-all duration-100"
                 onClick={() => setOpenDialog(true)}>
@@ -225,7 +153,7 @@ function InformationSection({ trip }) {
             )}
             {enabledPhotos && (
               <Button
-                className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300 
+                className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300
             text-light-foreground px-4 py-2 rounded-xl shadow-md font-bold border-2 border-light-border dark:border-black
             hover:scale-105 transition-all duration-100"
                 onClick={() => setDisablePhotoDialog(true)}>

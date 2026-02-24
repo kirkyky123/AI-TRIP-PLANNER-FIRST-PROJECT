@@ -63,8 +63,8 @@ function MyTrips() {
         ...doc.data(),
       }));
       setUserTrips(trips);
-    } catch (error) {
-      console.error("Error fetching user trips:", error);
+    } catch {
+      toast.error("Failed to load trips. Please try again.");
     }
   };
 
@@ -81,8 +81,7 @@ function MyTrips() {
       }
       setUserTrips([]);
       toast.success("All trips deleted successfully.");
-    } catch (error) {
-      console.error("Error deleting all trips:", error);
+    } catch {
       toast.error("Failed to delete all trips. Please try again.");
     }
   };

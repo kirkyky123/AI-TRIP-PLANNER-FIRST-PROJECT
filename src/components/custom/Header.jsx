@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu } from "lucide-react";
 import {
   SignedIn,
@@ -11,6 +11,7 @@ import {
 } from "@clerk/clerk-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { useTheme } from "next-themes";
+import { scrollToSection } from "@/lib/scrollUtils";
 
 function Header() {
   const { theme } = useTheme();
@@ -20,19 +21,12 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isSignedIn } = useUser();
 
-  const scrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const yOffset = -200;
-      const y =
-        section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
+  const handleScrollToSection = (sectionId) => {
+    scrollToSection(sectionId);
     setIsMenuOpen(false);
   };
 
   const goToContact = () => {
-    console.log("contact");
     navigate("/contact");
   };
 
@@ -69,7 +63,7 @@ function Header() {
                     key={item}
                     onClick={
                       item !== "Contact"
-                        ? () => scrollToSection(item.toLowerCase())
+                        ? () => handleScrollToSection(item.toLowerCase())
                         : () => goToContact()
                     }
                     className="text-black dark:text-white font-semibold dark:hover:text-[#38da97] transition-all duration-300 px-3 py-2 rounded-lg hover:bg-black hover:text-white dark:hover:bg-white/10 transform hover:scale-105">
@@ -143,7 +137,7 @@ function Header() {
                 key={item}
                 onClick={
                   item !== "Contact"
-                    ? () => scrollToSection(item.toLowerCase())
+                    ? () => handleScrollToSection(item.toLowerCase())
                     : () => goToContact()
                 }
                 className="block w-full text-left text-light-foreground dark:text-white font-semibold hover:text-white dark:hover:text-[#38da97] transition-all duration-300 px-6 py-2

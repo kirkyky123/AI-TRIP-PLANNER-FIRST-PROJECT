@@ -48,7 +48,6 @@ function ContactForm() {
   const checkForm = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form submitted:", formData);
       setFormData({ name: "", email: "", message: "" });
       handleSubmit(e);
     }
