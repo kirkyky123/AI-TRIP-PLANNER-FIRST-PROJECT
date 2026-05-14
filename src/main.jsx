@@ -15,11 +15,10 @@ import { ThemeProvider } from "next-themes";
 import MouseFollower from "mouse-follower";
 import gsap from "gsap";
 import ScrollToTop from "./components/custom/ScrollToTop.jsx";
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react";
 
 MouseFollower.registerGSAP(gsap);
-
-const cursor = new MouseFollower();
+new MouseFollower();
 
 const Layout = () => (
   <>
@@ -40,26 +39,11 @@ const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      {
-        path: "/",
-        element: <App />,
-      },
-      {
-        path: "/create-trip",
-        element: <CreateTrip />,
-      },
-      {
-        path: "/view-trip/:tripId",
-        element: <ViewTrip />,
-      },
-      {
-        path: "/my-trips",
-        element: <MyTrips />,
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
+      { path: "/", element: <App /> },
+      { path: "/create-trip", element: <CreateTrip /> },
+      { path: "/view-trip/:tripId", element: <ViewTrip /> },
+      { path: "/my-trips", element: <MyTrips /> },
+      { path: "/contact", element: <Contact /> },
     ],
   },
 ]);
@@ -67,9 +51,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-      }}
+      appearance={{ baseTheme: dark }}
       publishableKey={PUBLISHABLE_KEY}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <Toaster />

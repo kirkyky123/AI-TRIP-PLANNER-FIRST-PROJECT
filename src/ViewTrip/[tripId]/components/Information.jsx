@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Button } from "@/components/ui/button";
 import { useContext } from "react";
 import { FaShare, FaRegCopy } from "react-icons/fa";
@@ -13,9 +12,11 @@ import {
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import InfoTag from "./InfoTag";
-import { EnablePhotosContext } from "..";
-import { OpenDialogContext } from "../index";
-import { DisablePhotoDialogContext } from "../index";
+import {
+  EnablePhotosContext,
+  OpenDialogContext,
+  DisablePhotoDialogContext,
+} from "..";
 import { formatDateRange } from "@/lib/dateUtils";
 
 function InformationSection({ trip }) {
@@ -23,7 +24,6 @@ function InformationSection({ trip }) {
   const [setOpenDialog] = useContext(OpenDialogContext);
   const [setDisablePhotoDialog] = useContext(DisablePhotoDialogContext);
 
-  // Function to copy trip link to clipboard
   const copyTripLink = () => {
     navigator.clipboard.writeText(window.location.href);
     toast.success("Copied link!");
@@ -31,7 +31,6 @@ function InformationSection({ trip }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Banner image with location name */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -51,7 +50,6 @@ function InformationSection({ trip }) {
         </div>
       </motion.div>
 
-      {/* Trip information tags */}
       <div className="mt-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -59,7 +57,6 @@ function InformationSection({ trip }) {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.5 }}
           className="flex flex-wrap gap-4 justify-center">
-          {/* Date range tag */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -73,7 +70,6 @@ function InformationSection({ trip }) {
               )})`}
             />
           </motion.div>
-          {/* Budget tag */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -84,7 +80,6 @@ function InformationSection({ trip }) {
               text={`${trip?.userChoices?.budget} Budget`}
             />
           </motion.div>
-          {/* Number of people tag */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -95,7 +90,6 @@ function InformationSection({ trip }) {
               text={trip?.userChoices?.people}
             />
           </motion.div>
-          {/* Share button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -137,12 +131,11 @@ function InformationSection({ trip }) {
               </DialogContent>
             </Dialog>
           </motion.div>
-          {/* Enable/Disable Photos button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.7 }}>
-            {!enabledPhotos && (
+            {!enabledPhotos ? (
               <Button
                 className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300
             text-light-foreground px-4 py-2 rounded-xl shadow-md font-bold border-2 border-light-border dark:border-black
@@ -150,8 +143,7 @@ function InformationSection({ trip }) {
                 onClick={() => setOpenDialog(true)}>
                 <span className="inline-block">Enable Photos</span>
               </Button>
-            )}
-            {enabledPhotos && (
+            ) : (
               <Button
                 className="bg-light-secondary dark:bg-gray-200 hover:bg-light-secondary/80 dark:hover:bg-gray-300
             text-light-foreground px-4 py-2 rounded-xl shadow-md font-bold border-2 border-light-border dark:border-black

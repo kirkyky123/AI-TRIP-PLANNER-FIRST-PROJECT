@@ -21,13 +21,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "next-themes";
 
-// Create contexts for managing photo enablement and dialog states
 export const EnablePhotosContext = createContext();
 export const OpenDialogContext = createContext();
 export const DisablePhotoDialogContext = createContext();
 
 function ViewTrip() {
-  // Set up theme and state variables
   const { theme } = useTheme();
   const backgroundColor =
     theme === "light" ? "bg-light-background" : "bg-green-950";
@@ -38,26 +36,19 @@ function ViewTrip() {
   const [openDialog, setOpenDialog] = useState(true);
   const [disablePhotoDialog, setDisablePhotoDialog] = useState(false);
 
-  // Fetch trip data when component mounts or tripId changes
   useEffect(() => {
-    if (tripId) {
-      getTripData();
-    }
+    if (!tripId) return;
+    const loadTrip = async () => {
+      const snapshot = await getDoc(doc(db, "trips", tripId));
+      if (snapshot.exists()) {
+        setTrip(snapshot.data());
+      } else {
+        toast.warning("No trip found");
+      }
+    };
+    loadTrip();
   }, [tripId]);
 
-  // Function to fetch trip data from Firestore
-  const getTripData = async () => {
-    const documentReference = doc(db, "trips", tripId);
-    const documentSnapshot = await getDoc(documentReference);
-
-    if (documentSnapshot.exists) {
-      setTrip(documentSnapshot.data());
-    } else {
-      toast.warning("No trip found");
-    }
-  };
-
-  // Function to enable photos with password verification
   const enablePhotos = () => {
     const password = passwordInputRef.current.value;
     if (password === import.meta.env.VITE_PASSWORD_KEY) {
@@ -69,7 +60,6 @@ function ViewTrip() {
     }
   };
 
-  // Function to disable photos
   const disablePhotos = () => {
     setEnabledPhotos(false);
     setDisablePhotoDialog(false);
@@ -141,7 +131,7 @@ function ViewTrip() {
         </AlertDialogContent>
       </AlertDialog>
       <div
-        className="py-10 px-10 sm:px-12 md:px-18 lg:px-30 xl:px-42 bg-gradient-to-br from-light-background via-light-secondary to-light-primary/40 
+        className="py-10 px-10 sm:px-12 md:px-18 lg:px-30 xl:px-42 bg-gradient-to-br from-light-background via-light-secondary to-light-primary/40
     dark:from-dark-background/20 dark:via-dark-primary/30 dark:to-dark-secondary/20">
         <OpenDialogContext.Provider value={[setOpenDialog]}>
           <EnablePhotosContext.Provider value={enabledPhotos}>

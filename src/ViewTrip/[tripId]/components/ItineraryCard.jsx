@@ -1,12 +1,13 @@
-/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 
 function PlaceCard({ place, index, location }) {
+  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    place.PlaceNameSearch + " " + location
+  )}`;
+
   return (
     <Link
-      to={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-        place.PlaceNameSearch + " " + location
-      )}`}
+      to={mapUrl}
       target="_blank"
       rel="noopener noreferrer"
       className="block group">

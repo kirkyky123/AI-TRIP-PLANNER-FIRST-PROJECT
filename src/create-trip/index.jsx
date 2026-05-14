@@ -1,4 +1,4 @@
-import { chatSession } from "@/AiService/AiModel";
+import { startChatSession } from "@/AiService/AiModel";
 import { Button } from "@/components/ui/button";
 import { PROMPT, selectBudget, selectTravelers } from "@/constants/options";
 import { VscLoading } from "react-icons/vsc";
@@ -15,14 +15,15 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/AiService/firedatabaseConfig";
 import { useNavigate } from "react-router-dom";
 import { MAX_DAYS } from "@/constants/variables";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import { useUser, useClerk } from "@clerk/clerk-react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
 function CreateTrip() {
-  // State variables for form data and UI control
   const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
@@ -35,14 +36,12 @@ function CreateTrip() {
     },
   ]);
 
-  // User authentication hooks
   const { isSignedIn, user } = useUser();
   const { openSignIn } = useClerk();
   const navigate = useNavigate();
 
   const [isWaitingForSignIn, setIsWaitingForSignIn] = useState(false);
 
-  // Handle input changes for form fields
   const inputChange = (value, name) => {
     if (name === "budget") {
       const selectedBudget = selectBudget.find((budget) => budget.id === value);
@@ -52,11 +51,13 @@ function CreateTrip() {
         ...prevData,
         [name]:
           prevData[name] === selectedBudget.title ? null : selectedBudget.title,
-        ["budgetImg"]:
+        budgetImg:
           prevData["budgetImg"] === selectedImg ? null : selectedImg,
       }));
       return;
-    } else if (name === "people") {
+    }
+
+    if (name === "people") {
       const selectedPeople = selectTravelers.find(
         (people) => people.id === value
       );
@@ -66,7 +67,7 @@ function CreateTrip() {
         ...prevData,
         [name]:
           prevData[name] === selectedPeople.title ? null : selectedPeople.title,
-        ["peopleImg"]:
+        peopleImg:
           prevData["peopleImg"] === selectedImg ? null : selectedImg,
       }));
       return;
@@ -78,31 +79,31 @@ function CreateTrip() {
     }));
   };
 
-  // Effect for handling sign-in state
   useEffect(() => {
     if (isWaitingForSignIn && isSignedIn) {
       setIsWaitingForSignIn(false);
       createTripAfterSignIn();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSignedIn, isWaitingForSignIn]);
 
-  // Handle date range changes
   const handleDateChange = (ranges) => {
     setDateRange([ranges.selection]);
     const start = ranges.selection.startDate;
     const end = ranges.selection.endDate;
-    const days = Math.round((end - start) / (1000 * 60 * 60 * 24)) + 1;
+    // Strip time so DST shifts don't push the difference under a full day.
+    const startUTC = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
+    const endUTC = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+    const days = Math.round((endUTC - startUTC) / MS_PER_DAY) + 1;
     setFormData((prevData) => ({
       ...prevData,
-      days: days,
+      days,
       startDate: start.toISOString(),
       endDate: end.toISOString(),
     }));
   };
 
-  // Main function to create a trip
-  const createTrip = async () => {
-    // Validate form data
+  const createTrip = () => {
     if (!formData?.location) {
       toast.error("Please enter a location.");
       return;
@@ -113,8 +114,8 @@ function CreateTrip() {
       return;
     }
 
-    if (formData?.days < 1 || formData?.days > MAX_DAYS) {
-      toast.error("Trip duration must be between 1 and 7 days.");
+    if (formData.days < 1 || formData.days > MAX_DAYS) {
+      toast.error(`Trip duration must be between 1 and ${MAX_DAYS} days.`);
       return;
     }
 
@@ -128,7 +129,6 @@ function CreateTrip() {
       return;
     }
 
-    // Check if user is signed in
     if (!isSignedIn) {
       setIsWaitingForSignIn(true);
       openSignIn();
@@ -138,24 +138,31 @@ function CreateTrip() {
     createTripAfterSignIn();
   };
 
-  // Function to create trip after sign-in
   const createTripAfterSignIn = async () => {
     setLoading(true);
     setLoadingDialog(true);
 
-    const AI_PROMPT = PROMPT.replace("{location}", formData?.location.label)
-      .replace("{days}", formData?.days)
-      .replace("{budget}", formData?.budget)
-      .replace("{people}", formData?.people);
+    try {
+      const prompt = PROMPT.replace("{location}", formData?.location.label)
+        .replace("{days}", formData?.days)
+        .replace("{budget}", formData?.budget)
+        .replace("{people}", formData?.people);
 
-    const result = await chatSession.sendMessage(AI_PROMPT);
-    setLoading(false);
-    saveTrip(result?.response?.text());
+      const chat = startChatSession();
+      const result = await chat.sendMessage(prompt);
+      await saveTrip(result?.response?.text());
+    } catch {
+      toast.error("Could not generate trip. Please try again.");
+      setLoading(false);
+      setLoadingDialog(false);
+    }
   };
 
   const saveTrip = async (tripInfo) => {
-    setLoading(true);
-    const documentId = Date.now().toString();
+    const documentId =
+      typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : Date.now().toString();
 
     await setDoc(doc(db, "trips", documentId), {
       userChoices: formData,
@@ -168,11 +175,9 @@ function CreateTrip() {
     navigate("/view-trip/" + documentId);
   };
 
-  // JSX for the create trip form
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-200 via-light-secondary to-light-primary/40 dark:from-dark-background dark:via-dark-primary/30 dark:to-dark-primary/20 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -194,9 +199,7 @@ function CreateTrip() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left Column */}
           <div className="space-y-12">
-            {/* Location Selection */}
             <div className="bg-white dark:bg-dark-background/50 rounded-2xl p-8 shadow-lg">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
@@ -226,7 +229,6 @@ function CreateTrip() {
               </motion.div>
             </div>
 
-            {/* Date Selection */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -239,7 +241,7 @@ function CreateTrip() {
                 </span>{" "}
                 are you traveling?{" "}
                 <span className="text-sm text-blue-600 dark:text-dark-primary block mt-2 underline underline-offset-4 decoration-black dark:decoration-white">
-                  (1-7 days)
+                  (1-{MAX_DAYS} days)
                 </span>
               </h2>
               <DateRange
@@ -248,15 +250,13 @@ function CreateTrip() {
                 moveRangeOnFirstSelection={false}
                 ranges={dateRange}
                 minDate={new Date()}
-                maxDate={new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)}
+                maxDate={new Date(Date.now() + 365 * MS_PER_DAY)}
                 className="rounded-lg overflow-hidden"
               />
             </motion.div>
           </div>
 
-          {/* Right Column */}
           <div className="space-y-12">
-            {/* Budget Selection */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -264,7 +264,7 @@ function CreateTrip() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="bg-white dark:bg-dark-background/50 rounded-2xl p-8 shadow-lg">
               <h2 className="text-2xl font-bold mb-6 text-light-foreground dark:text-dark-foreground">
-                What's your{" "}
+                What&apos;s your{" "}
                 <span className="text-blue-500 dark:text-dark-primary">
                   budget
                 </span>
@@ -274,7 +274,7 @@ function CreateTrip() {
                 {selectBudget.map((budget, index) => (
                   <div
                     className="hover:scale-105 transition-all ease-in border-black border rounded-xl"
-                    key={index}>
+                    key={budget.id}>
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
@@ -297,7 +297,6 @@ function CreateTrip() {
               </div>
             </motion.div>
 
-            {/* Travelers Selection */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -315,7 +314,7 @@ function CreateTrip() {
                 {selectTravelers.map((people, index) => (
                   <div
                     className="hover:scale-105 transition-all ease-in border-black border rounded-xl"
-                    key={index}>
+                    key={people.id}>
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
@@ -336,7 +335,6 @@ function CreateTrip() {
                     </motion.div>
                   </div>
                 ))}
-                {/* Create Trip Button */}
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -363,7 +361,6 @@ function CreateTrip() {
         </div>
       </div>
 
-      {/* Loading dialog */}
       <Dialog open={loadingDialog}>
         <DialogContent className="bg-light-background dark:bg-dark-background">
           <DialogDescription>

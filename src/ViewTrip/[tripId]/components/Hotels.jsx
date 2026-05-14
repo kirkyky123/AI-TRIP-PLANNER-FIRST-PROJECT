@@ -1,4 +1,3 @@
-import React from "react";
 import HotelCard from "./HotelCard";
 import { motion } from "framer-motion";
 
@@ -21,7 +20,7 @@ function Hotels({ trip }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {trip?.tripInfo?.HotelOptions?.map((hotel, index) => (
           <motion.div
-            key={index}
+            key={hotel.HotelName ?? index}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}

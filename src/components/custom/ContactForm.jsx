@@ -14,6 +14,8 @@ import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { useForm, ValidationError } from "@formspree/react";
 
+const EMAIL_PATTERN = /\S+@\S+\.\S+/;
+
 function ContactForm() {
   const { theme } = useTheme();
   const socialMediaStyles =
@@ -25,6 +27,7 @@ function ContactForm() {
     message: "",
   });
   const [errors, setErrors] = useState({});
+  const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_KEY);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,32 +35,31 @@ function ContactForm() {
   };
 
   const validateForm = () => {
-    let newErrors = {};
+    const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(formData.email))
+    else if (!EMAIL_PATTERN.test(formData.email))
       newErrors.email = "Email is invalid";
     if (!formData.message.trim()) newErrors.message = "Message is required";
     setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) {
-      toast.success("Email successfully sent! We will get back to you soon.");
-    }
     return Object.keys(newErrors).length === 0;
   };
 
-  const checkForm = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (!validateForm()) return;
+    const result = await handleSubmit(e);
+    if (result?.response?.ok || state.succeeded) {
+      toast.success("Email successfully sent! We will get back to you soon.");
       setFormData({ name: "", email: "", message: "" });
-      handleSubmit(e);
+    } else {
+      toast.error("Failed to send. Please try again.");
     }
   };
-  const formKey = import.meta.env.VITE_FORMSPREE_KEY;
-  const [state, handleSubmit] = useForm(formKey);
 
   return (
     <div className="w-full max-w-2xl mx-auto mt-4 flex flex-col">
-      <form onSubmit={checkForm} className="space-y-6 mx-10 sm:mx-20">
+      <form onSubmit={onSubmit} className="space-y-6 mx-10 sm:mx-20">
         <div>
           <BoxReveal
             boxColor={theme === "light" ? "#3b82f6" : "#abe3cb"}
@@ -167,7 +169,7 @@ function ContactForm() {
                 type="submit"
                 disabled={state.submitting}
                 className="w-fit items-center text-lg rounded-xl border-2 border-gray-700 bg-white dark:bg-black text-black dark:text-white font-semibold px-4
-            hover:bg-gradient-to-tr from-orange-200 to-blue-300 dark:hover:bg-gradient-to-tr dark:from-green-600 dark:to-black 
+            hover:bg-gradient-to-tr from-orange-200 to-blue-300 dark:hover:bg-gradient-to-tr dark:from-green-600 dark:to-black
             hover:scale-105 transition-transform duration-300">
                 Send Message
               </Button>

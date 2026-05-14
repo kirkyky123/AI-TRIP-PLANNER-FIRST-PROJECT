@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ItineraryCard from "./ItineraryCard";
 import { Separator } from "@/components/ui/separator";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import { getOrdinalSuffix } from "@/lib/dateUtils";
 
 export default function Itinerary({ trip }) {
   const [expandedDays, setExpandedDays] = useState({});
   const [location, setLocation] = useState("");
 
   useEffect(() => {
-    if (trip?.tripInfo?.ItineraryDetails) {
-      const initialExpandedState = {};
-      trip.tripInfo.ItineraryDetails.forEach((itinerary) => {
-        initialExpandedState[itinerary.Day] = true;
-      });
-      setExpandedDays(initialExpandedState);
-      setLocation(trip?.userChoices?.location?.label);
-    }
+    if (!trip?.tripInfo?.ItineraryDetails) return;
+    const expanded = {};
+    trip.tripInfo.ItineraryDetails.forEach((itinerary) => {
+      expanded[itinerary.Day] = true;
+    });
+    setExpandedDays(expanded);
+    setLocation(trip?.userChoices?.location?.label);
   }, [trip]);
 
   const toggleDay = (day) => {
@@ -25,27 +25,12 @@ export default function Itinerary({ trip }) {
 
   const getDateForDay = (dayNumber) => {
     if (!trip?.userChoices?.startDate) return "Invalid Date";
-    const startDate = new Date(trip.userChoices.startDate);
-    const date = new Date(startDate);
-    date.setDate(startDate.getDate() + dayNumber - 1);
+    const date = new Date(trip.userChoices.startDate);
+    date.setDate(date.getDate() + dayNumber - 1);
     const day = date.getDate();
     return `${date.toLocaleDateString("en-US", {
       month: "short",
     })} ${day}${getOrdinalSuffix(day)}`;
-  };
-
-  const getOrdinalSuffix = (day) => {
-    if (day > 3 && day < 21) return "th";
-    switch (day % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
   };
 
   return (
@@ -57,52 +42,55 @@ export default function Itinerary({ trip }) {
         Click on each location for more details
       </p>
       <div className="space-y-8">
-        {trip?.tripInfo?.ItineraryDetails?.map((itinerary, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="bg-gradient-to-br from-light-background to-light-secondary dark:from-green-800 dark:to-black border border-black dark:border-white rounded-lg overflow-hidden shadow-lg">
-            <button
-              onClick={() => toggleDay(itinerary.Day)}
-              className="w-full flex items-center justify-between p-6 text-left focus:outline-none hover:bg-gradient-to-b from-light-background to-light-secondary dark:from-green-800 dark:to-black transition-colors duration-300">
-              <h2 className="text-2xl font-semibold text-black dark:text-white">
-                {getDateForDay(parseInt(itinerary.Day.split(" ")[1]))} -{" "}
-                {itinerary.Day}
-              </h2>
-              <ChevronDown
-                className={`w-6 h-6 text-white transition-transform duration-300 ${
-                  expandedDays[itinerary.Day] ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {expandedDays[itinerary.Day] && (
-              <div>
-                <Separator className="bg-gradient-to-b from-gray-700 to-gray-900 dark:from-gray-400 dark:to-gray-600" />
-                <div className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {itinerary.PlacesToVisit.map((place, placeIndex) => (
-                      <motion.div
-                        key={placeIndex}
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        transition={{ duration: 0.5, delay: placeIndex * 0.1 }}>
-                        <ItineraryCard
-                          place={place}
-                          index={placeIndex}
-                          location={location}
-                        />
-                      </motion.div>
-                    ))}
+        {trip?.tripInfo?.ItineraryDetails?.map((itinerary, index) => {
+          const dayNumber = parseInt(itinerary.Day.split(" ")[1], 10);
+          const isExpanded = expandedDays[itinerary.Day];
+          return (
+            <motion.div
+              key={itinerary.Day}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-gradient-to-br from-light-background to-light-secondary dark:from-green-800 dark:to-black border border-black dark:border-white rounded-lg overflow-hidden shadow-lg">
+              <button
+                onClick={() => toggleDay(itinerary.Day)}
+                className="w-full flex items-center justify-between p-6 text-left focus:outline-none hover:bg-gradient-to-b from-light-background to-light-secondary dark:from-green-800 dark:to-black transition-colors duration-300">
+                <h2 className="text-2xl font-semibold text-black dark:text-white">
+                  {getDateForDay(dayNumber)} - {itinerary.Day}
+                </h2>
+                <ChevronDown
+                  className={`w-6 h-6 text-white transition-transform duration-300 ${
+                    isExpanded ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {isExpanded && (
+                <div>
+                  <Separator className="bg-gradient-to-b from-gray-700 to-gray-900 dark:from-gray-400 dark:to-gray-600" />
+                  <div className="p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {itinerary.PlacesToVisit.map((place, placeIndex) => (
+                        <motion.div
+                          key={`${itinerary.Day}-${placeIndex}`}
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, amount: 0.1 }}
+                          transition={{ duration: 0.5, delay: placeIndex * 0.1 }}>
+                          <ItineraryCard
+                            place={place}
+                            index={placeIndex}
+                            location={location}
+                          />
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </motion.div>
-        ))}
+              )}
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );

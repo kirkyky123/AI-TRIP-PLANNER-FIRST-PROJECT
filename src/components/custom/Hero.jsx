@@ -116,17 +116,16 @@ function Hero() {
               <iframe
                 src="https://www.youtube.com/embed/E1_19kNs79c?si=7yEEUjwJ_fpWlZPK"
                 title="YouTube video player"
-                frameborder="0"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
                 className="w-full h-full rounded-3xl"></iframe>
             </div>
           </BoxReveal>
         </motion.div>
 
         <div id="features" className="mt-20">
-          {/* Features Section */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -177,7 +176,6 @@ function Hero() {
             </div>
           </motion.div>
 
-          {/* Pricing Section */}
           <motion.div
             id="pricing"
             className="w-full max-w-6xl mt-20 sm:mb-10"
@@ -265,7 +263,6 @@ function Hero() {
           </motion.div>
         </div>
 
-        {/* Testimonials Section */}
         <motion.section
           id="testimonials"
           className="px-20 pb-20 pt-10 w-full rounded-xl flex justify-center"
@@ -297,7 +294,6 @@ function Hero() {
           </div>
         </motion.section>
 
-        {/* Contact Section */}
         <motion.section
           id="contact"
           className="px-20 pb-20 pt-10 w-full flex justify-center border-b-2 border-blue-200 dark:border-[#38da97]"
@@ -330,7 +326,6 @@ function Hero() {
           </div>
         </motion.section>
 
-        {/* Footer */}
         <motion.footer
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}

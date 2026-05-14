@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
 import { BoxReveal } from "../magicui/box-reveal";
 import { Button } from "../ui/button";

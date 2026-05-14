@@ -19,13 +19,13 @@ import { Link } from "react-router-dom";
 import { formatDateRange } from "@/lib/dateUtils";
 
 function MyTripsCard({ trip, onDelete }) {
-  const deleteTripById = async (collectionName, tripId) => {
+  const deleteTrip = async () => {
     try {
-      const docRef = doc(db, collectionName, tripId);
-      await deleteDoc(docRef);
-      onDelete(tripId);
+      await deleteDoc(doc(db, "trips", trip.id));
+      onDelete(trip.id);
       toast("Trip deleted successfully!");
-    } catch {
+    } catch (err) {
+      console.error(err);
       toast.error("Failed to delete trip. Please try again.");
     }
   };
@@ -101,7 +101,7 @@ function MyTripsCard({ trip, onDelete }) {
                   Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction
-                  onClick={() => deleteTripById("trips", trip?.id)}
+                  onClick={deleteTrip}
                   className="bg-red-600 hover:bg-red-700 text-white rounded-xl">
                   Delete Permanently
                 </AlertDialogAction>

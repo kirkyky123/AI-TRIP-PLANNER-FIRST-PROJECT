@@ -1,4 +1,4 @@
-const getOrdinalSuffix = (day) => {
+export const getOrdinalSuffix = (day) => {
   if (day > 3 && day < 21) return "th";
   switch (day % 10) {
     case 1:
@@ -29,10 +29,10 @@ export const formatDateRange = (startDate, endDate) => {
       .getFullYear()
       .toString()
       .slice(-2)}`;
-  } else {
-    return `${start.toLocaleDateString(
-      "en-US",
-      options
-    )} - ${end.toLocaleDateString("en-US", options)}`;
   }
+
+  return `${start.toLocaleDateString(
+    "en-US",
+    options
+  )} - ${end.toLocaleDateString("en-US", options)}`;
 };
